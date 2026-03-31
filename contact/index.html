@@ -17,6 +17,7 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
         <span>+1 (555) 123-4567</span><span class="utility-sep">|</span><span>info@smartercity.com</span>
       </div>
+    </div>
   </div>
   <nav class="navbar" id="navbar">
     <div class="container nav-inner">
@@ -74,9 +75,10 @@
           </div>
           <h3>Unique Challenges</h3>
           <p>Have a specific requirement that no one else can solve? Tell us about it. Our team specializes in custom solutions.</p>
-          <form style="margin-top:24px">
-            <div class="form-group"><label>Email</label><input type="email" placeholder="jane@university.edu" required></div>
-            <div class="form-group" style="margin-top:12px"><label>Describe your challenge</label><textarea rows="3" placeholder="What's unique about your situation?"></textarea></div>
+          <form method="POST" action="/api/submit" style="margin-top:24px">
+            <input type="hidden" name="form_name" value="Unique Challenges">
+            <div class="form-group"><label>Email</label><input type="email" name="email" placeholder="jane@university.edu" required></div>
+            <div class="form-group" style="margin-top:12px"><label>Describe your challenge</label><textarea name="challenge" rows="3" placeholder="What's unique about your situation?"></textarea></div>
             <button type="submit" class="form-submit" style="margin-top:12px">Send</button>
           </form>
         </div>
@@ -88,9 +90,10 @@
           </div>
           <h3>Operational Discovery</h3>
           <p>Not sure what you need? Let's start with a conversation about your current operations and where SCS might add value.</p>
-          <form style="margin-top:24px">
-            <div class="form-group"><label>Email</label><input type="email" placeholder="jane@university.edu" required></div>
-            <div class="form-group" style="margin-top:12px"><label>Tell us about your operations</label><textarea rows="3" placeholder="Current systems, team size, pain points..."></textarea></div>
+          <form method="POST" action="/api/submit" style="margin-top:24px">
+            <input type="hidden" name="form_name" value="Operational Discovery">
+            <div class="form-group"><label>Email</label><input type="email" name="email" placeholder="jane@university.edu" required></div>
+            <div class="form-group" style="margin-top:12px"><label>Tell us about your operations</label><textarea name="operations" rows="3" placeholder="Current systems, team size, pain points..."></textarea></div>
             <button type="submit" class="form-submit" style="margin-top:12px">Send</button>
           </form>
         </div>

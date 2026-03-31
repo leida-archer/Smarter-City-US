@@ -137,11 +137,20 @@
   });
 
   // ── Form submit mockup handler ─────────────────
-  document.querySelectorAll('form').forEach(form => {
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      alert('Demo request received! (This is a mockup)');
-    });
-  });
+  // ── Form submission success banner ─────────────
+  const params = new URLSearchParams(window.location.search);
+  const submitted = params.get('submitted');
+  if (submitted) {
+    const banner = document.createElement('div');
+    banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:#15626C;color:#fff;padding:16px 24px;text-align:center;font-family:Inter,sans-serif;font-size:15px;font-weight:500;box-shadow:0 4px 12px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center;gap:12px;';
+    banner.innerHTML = '<span>✓ Your ' + submitted.toLowerCase() + ' has been received. We\'ll be in touch shortly.</span><button style="background:none;border:none;color:#fff;font-size:20px;cursor:pointer;padding:0 4px;opacity:0.7" onclick="this.parentElement.remove()">&times;</button>';
+    document.body.prepend(banner);
+    // Clean URL
+    const clean = new URL(window.location);
+    clean.searchParams.delete('submitted');
+    history.replaceState(null, '', clean);
+    // Auto-dismiss after 8s
+    setTimeout(() => { if (banner.parentElement) banner.remove(); }, 8000);
+  }
 
 })();

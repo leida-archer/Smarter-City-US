@@ -1201,9 +1201,9 @@ section { position: relative; }
   text-transform: uppercase; letter-spacing: 1.5px;
   margin-bottom: 16px;
 }
-.page-hero-inner h1 { margin-bottom: 20px; }
+.page-hero-inner h1 { margin-bottom: 20px; font-weight: 400; color: var(--dark); }
 .page-hero-inner > p {
-  font-size: 19px; color: var(--gray); line-height: 1.8;
+  font-size: 19px; color: var(--slate); line-height: 1.8;
   margin-bottom: 32px; max-width: 560px;
 }
 
@@ -1481,7 +1481,7 @@ section { position: relative; }
   gap: 80px;
   align-items: flex-start;
 }
-.demo-value-col h1 { margin-bottom: 20px; }
+.demo-value-col h1 { margin-bottom: 20px; font-weight: 400; color: var(--dark); }
 .demo-value-col > p {
   font-size: 18px; color: var(--gray); line-height: 1.8;
   max-width: 440px; margin-bottom: 36px;

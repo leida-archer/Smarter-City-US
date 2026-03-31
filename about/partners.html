@@ -17,6 +17,7 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
         <span>+1 (555) 123-4567</span><span class="utility-sep">|</span><span>info@smartercity.com</span>
       </div>
+    </div>
   </div>
   <nav class="navbar" id="navbar">
     <div class="container nav-inner">
@@ -74,7 +75,7 @@
         <div class="partner-category reveal">
           <h4>Payments</h4>
           <p style="font-size:14px;color:var(--gray);margin-bottom:16px">Accept every major payment method including mobile wallets and campus card systems.</p>
-          <div class="partner-logos"><img src="../assets/logos/b2b/paypal.png" alt="PayPal"><img src="../assets/logos/b2b/apple-pay.png" alt="Apple Pay"><img src="../assets/logos/b2b/google-pay.png" alt="Google Pay"><span>ADVAM</span></div>
+          <div class="partner-logos"><img src="../assets/logos/b2b/paypal.png" alt="PayPal"><img src="../assets/logos/b2b/apple-pay.png" alt="Apple Pay"><img src="../assets/logos/b2b/google-pay.png" alt="Google Pay"><img src="../assets/logos/b2b/advam.png" alt="ADVAM"></div>
         </div>
         <div class="partner-category reveal">
           <h4>BI / Analytics</h4>
@@ -84,7 +85,7 @@
         <div class="partner-category reveal">
           <h4>Cloud &amp; PARCS</h4>
           <p style="font-size:14px;color:var(--gray);margin-bottom:16px">Cloud-native deployment with connectors for PARCS systems, gates, barriers, and access control.</p>
-          <div class="partner-logos"><img src="../assets/logos/b2b/aws.png" alt="AWS"><img src="../assets/logos/b2b/azure.png" alt="Azure"><span>Google Cloud</span><img src="../assets/logos/b2b/skidata.png" alt="SKIDATA"><img src="../assets/logos/b2b/liftango.png" alt="Liftango"></div>
+          <div class="partner-logos"><img src="../assets/logos/b2b/aws.png" alt="AWS"><img src="../assets/logos/b2b/azure.png" alt="Azure"><img src="../assets/logos/b2b/google-cloud.png" alt="Google Cloud"><img src="../assets/logos/b2b/skidata.png" alt="SKIDATA"><img src="../assets/logos/b2b/liftango.png" alt="Liftango"></div>
         </div>
       </div>
     </div>
@@ -100,12 +101,13 @@
         </div>
         <div class="cta-form-card reveal reveal-delay-2">
           <h3>Partner Inquiry</h3><p>Tell us about your technology and how it complements SCS.</p>
-          <form>
-            <div class="form-row"><div class="form-group"><label>Full Name</label><input type="text" placeholder="Jane Smith" required></div><div class="form-group"><label>Work Email</label><input type="email" placeholder="jane@company.com" required></div></div>
-            <div class="form-row"><div class="form-group"><label>Company</label><input type="text" placeholder="Company name" required></div><div class="form-group"><label>Category</label>
-              <select><option value="">Select category</option><option>Identity / SSO</option><option>LPR / Cameras</option><option>Payments</option><option>HR / SIS</option><option>Analytics</option><option>Cloud / PARCS</option><option>Other</option></select>
+          <form method="POST" action="/api/submit">
+            <input type="hidden" name="form_name" value="Partner Inquiry">
+            <div class="form-row"><div class="form-group"><label>Full Name</label><input type="text" name="full_name" placeholder="Jane Smith" required></div><div class="form-group"><label>Work Email</label><input type="email" name="email" placeholder="jane@company.com" required></div></div>
+            <div class="form-row"><div class="form-group"><label>Company</label><input type="text" name="company" placeholder="Company name" required></div><div class="form-group"><label>Category</label>
+              <select name="category"><option value="">Select category</option><option>Identity / SSO</option><option>LPR / Cameras</option><option>Payments</option><option>HR / SIS</option><option>Analytics</option><option>Cloud / PARCS</option><option>Other</option></select>
             </div></div>
-            <div class="form-row"><div class="form-group full"><label>How does your technology complement SCS?</label><textarea rows="3" placeholder="Brief description..."></textarea></div></div>
+            <div class="form-row"><div class="form-group full"><label>How does your technology complement SCS?</label><textarea name="message" rows="3" placeholder="Brief description..."></textarea></div></div>
             <button type="submit" class="form-submit">Submit Inquiry</button>
           </form>
         </div>

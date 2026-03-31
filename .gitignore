@@ -2,3 +2,4 @@
 .superpowers/
 *.pid
 *.log
+.gstack/
