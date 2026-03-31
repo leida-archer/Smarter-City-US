@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SCS USA — Design Direction Comparison</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #030712;
+      color: #fff;
+      min-height: 100vh;
+    }
+    .header {
+      text-align: center;
+      padding: 80px 24px 48px;
+    }
+    .header h1 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 48px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #47BBE8, #4DAE37, #F0AE25, #EB5B25, #D41B24);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .header p {
+      font-size: 18px;
+      color: rgba(255,255,255,0.5);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+    .card {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255,255,255,0.2);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .card-preview {
+      height: 320px;
+      position: relative;
+      overflow: hidden;
+    }
+    .card-preview iframe {
+      width: 1440px;
+      height: 900px;
+      border: none;
+      transform: scale(0.389);
+      transform-origin: top left;
+      pointer-events: none;
+    }
+    .card-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(180deg, transparent 50%, rgba(3,7,18,0.9) 100%);
+      display: flex;
+      align-items: flex-end;
+      padding: 24px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .card:hover .card-overlay {
+      opacity: 1;
+    }
+    .card-overlay span {
+      background: #D41B24;
+      color: #fff;
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .card-info {
+      padding: 24px;
+      background: rgba(255,255,255,0.03);
+    }
+    .card-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+    .card:nth-child(1) .card-label { background: rgba(44,116,128,0.2); color: #47BBE8; }
+    .card:nth-child(2) .card-label { background: rgba(240,174,37,0.15); color: #F0AE25; }
+    .card:nth-child(3) .card-label { background: rgba(212,27,36,0.15); color: #D41B24; }
+    .card:nth-child(4) .card-label { background: rgba(77,174,55,0.15); color: #4DAE37; }
+    .card-info h3 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .card-info p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.6;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      font-size: 14px;
+      padding: 24px;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: rgba(255,255,255,0.7); }
+
+    /* Placeholder for when iframes haven't loaded */
+    .preview-placeholder {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* Dark cinematic preview bg */
+    .card:nth-child(1) .card-preview { background: #030712; }
+    /* Light editorial preview bg */
+    .card:nth-child(2) .card-preview { background: #FAFAF8; }
+    /* Bold geometric preview bg */
+    .card:nth-child(3) .card-preview { background: #0F172A; }
+    /* Glass depth preview bg */
+    .card:nth-child(4) .card-preview { background: linear-gradient(160deg, #0c2d33, #15626C); }
+
+    @media (max-width: 768px) {
+      .grid { grid-template-columns: 1fr; }
+      .header h1 { font-size: 32px; }
+      .card-preview { height: 200px; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="index.html" class="back-link">&larr; Back to Original v1</a>
+
+  <div class="header">
+    <h1>Choose Your Direction</h1>
+    <p>Four complete homepage mockups for the SCS USA website. Same content, radically different presentation. Click any to view the full page.</p>
+  </div>
+
+  <div class="grid">
+
+    <a href="v2-dark-cinematic.html" class="card">
+      <div class="card-preview">
+        <iframe src="v2-dark-cinematic.html" loading="lazy" tabindex="-1"></iframe>
+        <div class="card-overlay"><span>View Full Page &rarr;</span></div>
+      </div>
+      <div class="card-info">
+        <div class="card-label">Direction A</div>
+        <h3>Dark Cinematic</h3>
+        <p>Deep blacks, floating glow effects, dramatic lighting. Text emerges from darkness. Inspired by Apple product pages and Linear.app.</p>
+      </div>
+    </a>
+
+    <a href="v2-light-editorial.html" class="card">
+      <div class="card-preview">
+        <iframe src="v2-light-editorial.html" loading="lazy" tabindex="-1"></iframe>
+        <div class="card-overlay"><span>View Full Page &rarr;</span></div>
+      </div>
+      <div class="card-info">
+        <div class="card-label">Direction B</div>
+        <h3>Light Editorial</h3>
+        <p>Generous whitespace, oversized thin typography, asymmetric layouts. Inspired by Stripe and Notion. Elegant and confident.</p>
+      </div>
+    </a>
+
+    <a href="v2-bold-geometric.html" class="card">
+      <div class="card-preview">
+        <iframe src="v2-bold-geometric.html" loading="lazy" tabindex="-1"></iframe>
+        <div class="card-overlay"><span>View Full Page &rarr;</span></div>
+      </div>
+      <div class="card-info">
+        <div class="card-label">Direction C</div>
+        <h3>Bold Geometric</h3>
+        <p>Strong shapes, dynamic angles, bold color blocking with the SCS rainbow. High-energy and confident. Inspired by Vercel and Figma.</p>
+      </div>
+    </a>
+
+    <a href="v2-glass-depth.html" class="card">
+      <div class="card-preview">
+        <iframe src="v2-glass-depth.html" loading="lazy" tabindex="-1"></iframe>
+        <div class="card-overlay"><span>View Full Page &rarr;</span></div>
+      </div>
+      <div class="card-info">
+        <div class="card-label">Direction D</div>
+        <h3>Glass & Depth</h3>
+        <p>Frosted glass panels, layered depth, floating elements. The Apple Vision Pro aesthetic applied to web. Modern and dimensional.</p>
+      </div>
+    </a>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,179 @@
+# SCS USA — Shared Nav & Footer Partials
+
+Copy-paste reference for all site pages. Keep in sync with `index.html`.
+
+---
+
+## Utility Bar
+
+```html
+<div class="utility-bar">
+  <div class="container utility-inner">
+    <div class="utility-left">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      <span>+1 (555) 123-4567</span>
+      <span class="utility-sep">|</span>
+      <span>info@smartercity.com</span>
+    </div>
+    <div class="utility-right">
+      <a href="#">Customer Portal</a>
+      <span class="utility-sep">|</span>
+      <a href="#">Support</a>
+    </div>
+  </div>
+</div>
+```
+
+## Sticky Navigation
+
+Adjust `href` paths relative to page depth (e.g., `../solutions/vpermit.html` for pages in subdirectories).
+
+```html
+<nav class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/scs-logo.png" alt="Smarter City Solutions">
+    </a>
+    <div class="nav-links">
+      <div class="nav-item has-dropdown">
+        <a href="#solutions">Solutions <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></a>
+        <div class="dropdown">
+          <a href="solutions/vpermit.html"><span class="dot green"></span>vPermit</a>
+          <a href="solutions/vcompliance.html"><span class="dot orange"></span>vCompliance</a>
+          <a href="solutions/vpark.html"><span class="dot amber"></span>vPark</a>
+          <div class="dropdown-divider"></div>
+          <a href="solutions/platform.html">The Platform</a>
+          <a href="solutions/integrations.html">Integrations</a>
+        </div>
+      </div>
+      <div class="nav-item has-dropdown">
+        <a href="#industries">Industries <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></a>
+        <div class="dropdown">
+          <a href="industries/higher-education.html">Higher Education</a>
+          <a href="industries/municipalities.html">Municipalities</a>
+          <a href="industries/healthcare.html">Healthcare</a>
+          <a href="industries/k12.html">K-12 Schools</a>
+        </div>
+      </div>
+      <div class="nav-item has-dropdown">
+        <a href="#about">About <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></a>
+        <div class="dropdown">
+          <a href="about/index.html">Our Story</a>
+          <a href="about/team.html">Team</a>
+          <a href="about/partners.html">Partners</a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="resources/case-studies.html">Resources</a>
+      </div>
+    </div>
+    <a href="contact/request-demo.html" class="nav-cta">Request a Demo</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+```
+
+## Mobile Menu Overlay
+
+```html
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-inner">
+    <a href="solutions/vpermit.html">vPermit</a>
+    <a href="solutions/vcompliance.html">vCompliance</a>
+    <a href="solutions/vpark.html">vPark</a>
+    <a href="solutions/platform.html">The Platform</a>
+    <a href="industries/higher-education.html">Higher Education</a>
+    <a href="industries/municipalities.html">Municipalities</a>
+    <a href="about/index.html">About</a>
+    <a href="resources/case-studies.html">Resources</a>
+    <a href="contact/request-demo.html" class="mobile-cta">Request a Demo</a>
+  </div>
+</div>
+```
+
+## Footer
+
+```html
+<footer class="footer">
+  <div class="rainbow-bar">
+    <div style="background:#15626C"></div>
+    <div style="background:#47BBE8"></div>
+    <div style="background:#429839"></div>
+    <div style="background:#88BF57"></div>
+    <div style="background:#F0AE25"></div>
+    <div style="background:#EB5B25"></div>
+    <div style="background:#D41B24"></div>
+  </div>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="assets/scs-logo.png" alt="Smarter City Solutions">
+        <p>Integrated (for) Life</p>
+        <p class="footer-contact-info">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          +1 (555) 123-4567
+        </p>
+        <p class="footer-contact-info">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          info@smartercity.com
+        </p>
+      </div>
+      <div class="footer-col">
+        <h5>Solutions</h5>
+        <a href="solutions/vpermit.html">vPermit</a>
+        <a href="solutions/vcompliance.html">vCompliance</a>
+        <a href="solutions/vpark.html">vPark</a>
+        <a href="solutions/platform.html">The Platform</a>
+        <a href="solutions/integrations.html">Integrations</a>
+      </div>
+      <div class="footer-col">
+        <h5>Industries</h5>
+        <a href="industries/higher-education.html">Higher Education</a>
+        <a href="industries/municipalities.html">Municipalities</a>
+        <a href="industries/healthcare.html">Healthcare</a>
+        <a href="industries/k12.html">K-12 Schools</a>
+      </div>
+      <div class="footer-col">
+        <h5>Resources</h5>
+        <a href="resources/case-studies.html">Case Studies</a>
+        <a href="#">Blog</a>
+        <a href="#">Webinars</a>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <a href="about/index.html">About</a>
+        <a href="about/team.html">Team</a>
+        <a href="#">Contact</a>
+        <a href="#">Careers</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Smarter City Solutions. All Rights Reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Accessibility Statement</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+```
+
+## Required Assets
+
+Each page needs in `<head>`:
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+```
+
+And before `</body>`:
+```html
+<script src="script.js"></script>
+```
+
+Adjust paths for subdirectory pages (e.g., `../styles.css`, `../script.js`, `../assets/scs-logo.png`).

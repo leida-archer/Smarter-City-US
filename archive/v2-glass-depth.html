@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smarter City Solutions — The Modern Parking Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: linear-gradient(160deg, #0c2d33 0%, #15626C 40%, #1a4a52 100%);
+  color: rgba(255,255,255,0.75);
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ===== AMBIENT BACKGROUND ===== */
+body::before {
+  content: '';
+  position: fixed;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background:
+    radial-gradient(ellipse 600px 600px at 20% 30%, rgba(71,187,232,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 500px at 80% 60%, rgba(49,148,182,0.05) 0%, transparent 70%),
+    radial-gradient(ellipse 400px 400px at 50% 80%, rgba(21,98,108,0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  animation: ambientDrift 30s ease-in-out infinite alternate;
+}
+@keyframes ambientDrift {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-20px, -15px) scale(1.02); }
+}
+
+/* ===== TYPOGRAPHY ===== */
+h1, h2, h3, h4, h5 { font-family: 'DM Sans', sans-serif; color: #fff; font-weight: 700; line-height: 1.15; }
+h1 { font-size: clamp(2.4rem, 5vw, 3.8rem); letter-spacing: -0.03em; }
+h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); letter-spacing: -0.02em; }
+h3 { font-size: clamp(1.2rem, 2vw, 1.5rem); letter-spacing: -0.01em; }
+p { font-size: 1rem; }
+a { color: inherit; text-decoration: none; }
+
+/* ===== UTILITY ===== */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+.section { padding: 120px 0; position: relative; }
+.section-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #47BBE8;
+  margin-bottom: 16px;
+  display: inline-block;
+}
+.section-sub {
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  color: rgba(255,255,255,0.55);
+  max-width: 560px;
+  margin: 16px auto 0;
+  line-height: 1.65;
+}
+.text-center { text-align: center; }
+.rainbow-line {
+  height: 2px;
+  background: linear-gradient(90deg, #4DAE37, #47BBE8, #3194B6, #F0AE25, #EB5B25, #D41B24);
+  border: none;
+  border-radius: 1px;
+}
+
+/* ===== GLASS COMPONENTS ===== */
+.glass {
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+}
+.glass-strong {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 24px;
+}
+.glass-subtle {
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 16px;
+}
+
+/* ===== ANIMATIONS ===== */
+.fade-up {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1), transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(0.5deg); }
+}
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.8; }
+}
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ===== NAV ===== */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 0 24px;
+  transition: all 0.4s ease;
+}
+.nav-inner {
+  max-width: 1200px;
+  margin: 12px auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  background: rgba(12,45,51,0.6);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  transition: all 0.4s ease;
+}
+.nav.scrolled .nav-inner {
+  margin-top: 0;
+  border-radius: 0 0 16px 16px;
+  background: rgba(12,45,51,0.85);
+  border-top: none;
+}
+.nav-logo img { height: 44px; filter: brightness(0) invert(1); }
+.nav-links { display: flex; gap: 32px; align-items: center; }
+.nav-links a {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.7);
+  transition: color 0.25s;
+  position: relative;
+}
+.nav-links a:hover { color: #fff; }
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0;
+  width: 0; height: 2px;
+  background: #47BBE8;
+  border-radius: 1px;
+  transition: width 0.3s ease;
+}
+.nav-links a:hover::after { width: 100%; }
+.nav-cta {
+  padding: 10px 24px;
+  background: #D41B24;
+  color: #fff !important;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(212,27,36,0.3);
+}
+.nav-cta:hover {
+  background: #e52d36;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(212,27,36,0.4);
+}
+.nav-cta::after { display: none !important; }
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+.nav-toggle span { display: block; width: 22px; height: 2px; background: rgba(255,255,255,0.8); margin: 5px 0; border-radius: 1px; transition: all 0.3s; }
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 140px 24px 100px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-bg-panels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.hero-panel {
+  position: absolute;
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.hero-panel-1 {
+  width: 380px; height: 260px;
+  top: 15%; left: -5%;
+  transform: rotate(-8deg);
+  animation: floatSlow 8s ease-in-out infinite;
+}
+.hero-panel-2 {
+  width: 300px; height: 200px;
+  top: 25%; right: -3%;
+  transform: rotate(6deg);
+  animation: floatSlow 10s ease-in-out infinite 1s;
+}
+.hero-panel-3 {
+  width: 260px; height: 180px;
+  bottom: 15%; left: 8%;
+  transform: rotate(4deg);
+  animation: floatSlow 9s ease-in-out infinite 2s;
+}
+.hero-panel-4 {
+  width: 340px; height: 220px;
+  bottom: 20%; right: 5%;
+  transform: rotate(-5deg);
+  animation: floatSlow 11s ease-in-out infinite 0.5s;
+}
+.hero-panel-5 {
+  width: 200px; height: 140px;
+  top: 10%; right: 20%;
+  transform: rotate(12deg);
+  animation: floatSlow 7s ease-in-out infinite 3s;
+  background: rgba(71,187,232,0.04);
+}
+.hero-content { position: relative; z-index: 2; max-width: 800px; }
+.hero-content h1 { margin-bottom: 20px; }
+.hero-content h1 span {
+  background: linear-gradient(135deg, #47BBE8, #3194B6, #2C7480);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-content p {
+  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+  color: rgba(255,255,255,0.55);
+  max-width: 580px;
+  margin: 0 auto 40px;
+  line-height: 1.7;
+}
+.hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: #D41B24;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(212,27,36,0.35);
+}
+.btn-primary:hover {
+  background: #e52d36;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(212,27,36,0.45);
+}
+.btn-glass {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #fff;
+  font-weight: 500;
+  font-size: 1rem;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-glass:hover {
+  background: rgba(255,255,255,0.14);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 100px;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 24px;
+}
+.hero-badge .dot {
+  width: 8px; height: 8px;
+  background: #4DAE37;
+  border-radius: 50%;
+  animation: glowPulse 2s ease-in-out infinite;
+  box-shadow: 0 0 8px rgba(77,174,55,0.5);
+}
+
+/* ===== PRODUCT PILLARS ===== */
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-top: 60px;
+}
+.pillar-card {
+  position: relative;
+  padding: 40px 32px 36px;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 24px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.pillar-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+  border-color: rgba(255,255,255,0.16);
+}
+.pillar-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 0 0 24px 24px;
+}
+.pillar-card.green::before { background: linear-gradient(90deg, transparent, #4DAE37, transparent); }
+.pillar-card.orange::before { background: linear-gradient(90deg, transparent, #EB5B25, transparent); }
+.pillar-card.amber::before { background: linear-gradient(90deg, transparent, #F0AE25, transparent); }
+.pillar-glow {
+  position: absolute;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.15;
+  top: -40px; right: -40px;
+  animation: glowPulse 4s ease-in-out infinite;
+  pointer-events: none;
+}
+.pillar-card.green .pillar-glow { background: #4DAE37; }
+.pillar-card.orange .pillar-glow { background: #EB5B25; }
+.pillar-card.amber .pillar-glow { background: #F0AE25; }
+.pillar-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+.pillar-card.green .pillar-icon { background: rgba(77,174,55,0.15); color: #4DAE37; }
+.pillar-card.orange .pillar-icon { background: rgba(235,91,37,0.15); color: #EB5B25; }
+.pillar-card.amber .pillar-icon { background: rgba(240,174,37,0.15); color: #F0AE25; }
+.pillar-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 1;
+}
+.pillar-card.green .pillar-name { color: #4DAE37; }
+.pillar-card.orange .pillar-name { color: #EB5B25; }
+.pillar-card.amber .pillar-name { color: #F0AE25; }
+.pillar-card h3 { margin-bottom: 12px; position: relative; z-index: 1; }
+.pillar-card p { font-size: 0.95rem; color: rgba(255,255,255,0.55); position: relative; z-index: 1; line-height: 1.65; }
+.pillar-features {
+  list-style: none;
+  margin-top: 20px;
+  position: relative;
+  z-index: 1;
+}
+.pillar-features li {
+  padding: 6px 0;
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.6);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pillar-features li .check {
+  width: 18px; height: 18px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  flex-shrink: 0;
+}
+.pillar-card.green .check { background: rgba(77,174,55,0.15); color: #4DAE37; }
+.pillar-card.orange .check { background: rgba(235,91,37,0.15); color: #EB5B25; }
+.pillar-card.amber .check { background: rgba(240,174,37,0.15); color: #F0AE25; }
+
+/* ===== INTEGRATION SECTION ===== */
+.integration-visual {
+  margin-top: 60px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 360px;
+}
+.integration-hub {
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 2px solid rgba(255,255,255,0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 3;
+  box-shadow: 0 0 60px rgba(71,187,232,0.1);
+}
+.integration-hub .hub-label {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #fff;
+  letter-spacing: 0.05em;
+}
+.integration-hub .hub-sub {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.5);
+  margin-top: 2px;
+}
+.orbit-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.orbit-ring-1 { width: 320px; height: 320px; }
+.orbit-ring-2 { width: 500px; height: 500px; border-style: dashed; border-color: rgba(255,255,255,0.04); }
+.integration-node {
+  position: absolute;
+  padding: 14px 22px;
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.8);
+  white-space: nowrap;
+  z-index: 2;
+  transition: all 0.3s ease;
+  animation: float 6s ease-in-out infinite;
+}
+.integration-node:hover {
+  background: rgba(255,255,255,0.12);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+}
+.node-1 { top: 0; left: 50%; transform: translateX(-50%); animation-delay: 0s; }
+.node-2 { top: 20%; right: 5%; animation-delay: 0.8s; }
+.node-3 { bottom: 20%; right: 8%; animation-delay: 1.6s; }
+.node-4 { bottom: 0; left: 50%; transform: translateX(-50%); animation-delay: 2.4s; }
+.node-5 { bottom: 20%; left: 8%; animation-delay: 3.2s; }
+.node-6 { top: 20%; left: 5%; animation-delay: 4s; }
+.node-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+/* ===== CLIENT LOGO BAR ===== */
+.logo-bar {
+  padding: 48px 0;
+  position: relative;
+  overflow: hidden;
+}
+.logo-bar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.logo-bar .container { position: relative; z-index: 1; }
+.logo-bar-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  text-align: center;
+  margin-bottom: 28px;
+}
+.logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+.logos span {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.04em;
+  transition: color 0.3s;
+  white-space: nowrap;
+}
+.logos span:hover { color: rgba(255,255,255,0.6); }
+
+/* ===== VALUE PROPS ===== */
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 60px;
+}
+.value-card {
+  padding: 36px 28px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+  overflow: hidden;
+}
+.value-card:hover {
+  transform: translateY(-4px);
+  background: rgba(255,255,255,0.08);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  border-color: rgba(255,255,255,0.14);
+}
+.value-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #4DAE37, #47BBE8, #3194B6, #F0AE25, #EB5B25, #D41B24);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.value-card:hover::after { opacity: 1; }
+.value-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: rgba(71,187,232,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  margin-bottom: 18px;
+  color: #47BBE8;
+}
+.value-card h3 { font-size: 1.15rem; margin-bottom: 10px; }
+.value-card p { font-size: 0.9rem; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
+/* ===== TESTIMONIAL FEATURED ===== */
+.featured-quote {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 60px 56px;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 28px;
+  overflow: hidden;
+}
+.featured-quote::before {
+  content: '';
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(71,187,232,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.featured-quote .quote-mark {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 5rem;
+  line-height: 1;
+  color: rgba(71,187,232,0.2);
+  position: absolute;
+  top: 24px; left: 40px;
+}
+.featured-quote blockquote {
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  color: rgba(255,255,255,0.85);
+  line-height: 1.7;
+  font-weight: 400;
+  position: relative;
+  z-index: 1;
+  font-style: italic;
+}
+.featured-quote .quote-author {
+  margin-top: 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+}
+.quote-avatar {
+  width: 48px; height: 48px;
+  border-radius: 14px;
+  background: rgba(71,187,232,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: #47BBE8;
+  font-weight: 600;
+}
+.quote-author-info .name { font-weight: 600; color: #fff; font-size: 0.95rem; }
+.quote-author-info .role { font-size: 0.85rem; color: rgba(255,255,255,0.45); }
+
+/* ===== SWITCHING ===== */
+.switching-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 60px;
+  position: relative;
+}
+.switching-steps::before {
+  content: '';
+  position: absolute;
+  top: 48px; left: 12%; right: 12%;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(71,187,232,0.2), rgba(71,187,232,0.2), rgba(255,255,255,0.06));
+  z-index: 0;
+}
+.step-card {
+  text-align: center;
+  padding: 32px 20px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  position: relative;
+  z-index: 1;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.step-card:hover {
+  transform: translateY(-4px);
+  background: rgba(255,255,255,0.09);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.2);
+}
+.step-num {
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  background: rgba(71,187,232,0.12);
+  color: #47BBE8;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+.step-card h3 { font-size: 1.05rem; margin-bottom: 8px; }
+.step-card p { font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.55; }
+
+/* ===== TESTIMONIAL CARDS ===== */
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 60px;
+}
+.testimonial-card {
+  padding: 32px 28px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.testimonial-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.2);
+  border-color: rgba(255,255,255,0.14);
+}
+.testimonial-card .stars {
+  color: #F0AE25;
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+  letter-spacing: 2px;
+}
+.testimonial-card blockquote {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.65;
+  font-style: italic;
+  margin-bottom: 20px;
+}
+.testimonial-card .card-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.card-avatar {
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.card-author .name { font-weight: 600; color: #fff; font-size: 0.88rem; }
+.card-author .role { font-size: 0.8rem; color: rgba(255,255,255,0.4); }
+
+/* ===== CTA BLOCK ===== */
+.cta-section {
+  padding: 120px 0;
+  position: relative;
+}
+.cta-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 600px 400px at center, rgba(212,27,36,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cta-card {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 56px 48px;
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 28px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.3);
+}
+.cta-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #4DAE37, #47BBE8, #3194B6, #F0AE25, #EB5B25, #D41B24);
+}
+.cta-card h2 { margin-bottom: 12px; }
+.cta-card p { margin-bottom: 36px; }
+.cta-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 420px;
+  margin: 0 auto;
+}
+.cta-form input, .cta-form select {
+  padding: 14px 18px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.3s;
+  -webkit-appearance: none;
+}
+.cta-form input::placeholder { color: rgba(255,255,255,0.35); }
+.cta-form input:focus, .cta-form select:focus {
+  border-color: rgba(71,187,232,0.4);
+  background: rgba(255,255,255,0.09);
+  box-shadow: 0 0 0 3px rgba(71,187,232,0.1);
+}
+.cta-form select { cursor: pointer; }
+.cta-form select option { background: #15626C; color: #fff; }
+.cta-form button {
+  padding: 16px;
+  background: #D41B24;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 20px rgba(212,27,36,0.35);
+  font-family: 'Inter', sans-serif;
+}
+.cta-form button:hover {
+  background: #e52d36;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(212,27,36,0.45);
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  position: relative;
+  padding: 60px 0 40px;
+}
+.footer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.2);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+.footer-rainbow {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #4DAE37, #47BBE8, #3194B6, #F0AE25, #EB5B25, #D41B24);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px;
+  position: relative;
+  z-index: 1;
+}
+.footer-brand p {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.4);
+  margin-top: 16px;
+  line-height: 1.6;
+  max-width: 280px;
+}
+.footer-col h4 {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 18px;
+}
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 10px; }
+.footer-col a {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.4);
+  transition: color 0.25s;
+}
+.footer-col a:hover { color: rgba(255,255,255,0.8); }
+.footer-bottom {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+.footer-bottom p {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.3);
+}
+.footer-bottom a { color: rgba(255,255,255,0.3); transition: color 0.25s; }
+.footer-bottom a:hover { color: rgba(255,255,255,0.6); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .pillars-grid, .values-grid, .testimonial-grid { grid-template-columns: repeat(2, 1fr); }
+  .switching-steps { grid-template-columns: repeat(2, 1fr); }
+  .switching-steps::before { display: none; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+@media (max-width: 768px) {
+  .section { padding: 80px 0; }
+  .nav-links { display: none; }
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 70px; left: 16px; right: 16px;
+    background: rgba(12,45,51,0.95);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 24px;
+    gap: 16px;
+  }
+  .nav-toggle { display: block; }
+  .pillars-grid, .values-grid, .testimonial-grid { grid-template-columns: 1fr; }
+  .switching-steps { grid-template-columns: 1fr; }
+  .hero-panel { display: none; }
+  .integration-visual { min-height: auto; flex-direction: column; gap: 16px; }
+  .orbit-ring { display: none; }
+  .integration-node { position: static !important; transform: none !important; animation: none !important; }
+  .integration-hub { margin: 24px 0; }
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  .featured-quote { padding: 40px 28px; }
+  .cta-card { padding: 40px 28px; }
+  .logos { gap: 24px; }
+  .hero { padding: 120px 24px 80px; }
+  .hero-actions { flex-direction: column; align-items: center; }
+}
+@media (max-width: 480px) {
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.6rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- Compare Link -->
+<a href="compare.html" style="position:fixed;top:16px;right:16px;z-index:9999;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.8);padding:8px 16px;border-radius:12px;font-size:13px;text-decoration:none;backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.1);">&larr; Compare All</a>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <img src="assets/scs-logo.png" height="44" style="filter:brightness(0) invert(1);" alt="SCS">
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="#products">Products</a>
+      <a href="#integration">Platform</a>
+      <a href="#why">Why SCS</a>
+      <a href="#switching">Switching</a>
+      <a href="#contact" class="nav-cta">Get a Demo</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-panels">
+    <div class="hero-panel hero-panel-1"></div>
+    <div class="hero-panel hero-panel-2"></div>
+    <div class="hero-panel hero-panel-3"></div>
+    <div class="hero-panel hero-panel-4"></div>
+    <div class="hero-panel hero-panel-5"></div>
+  </div>
+  <div class="hero-content fade-up">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      Trusted by 200+ universities &amp; cities
+    </div>
+    <h1>The Modern Parking Platform<br>for <span>Higher Education</span></h1>
+    <p>vPermit, vCompliance, and vPark -- three integrated modules built from the ground up for the way campuses actually work today.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">
+        Schedule a Demo
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#products" class="btn-glass">
+        Explore Products
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M4 9l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="section" id="products">
+  <div class="container">
+    <div class="text-center fade-up">
+      <span class="section-label">Product Suite</span>
+      <h2>Three Modules. One Platform.</h2>
+      <p class="section-sub">Each product is powerful alone -- together they form the most integrated parking management system in higher education.</p>
+    </div>
+    <div class="pillars-grid">
+      <div class="pillar-card green fade-up" style="transition-delay:0.1s">
+        <div class="pillar-glow"></div>
+        <div class="pillar-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="pillar-name">vPermit</div>
+        <h3>Digital Permits &amp; Management</h3>
+        <p>Cloud-based permit management with real-time availability, waitlists, and dynamic pricing. No more physical decals.</p>
+        <ul class="pillar-features">
+          <li><span class="check">&#10003;</span> Virtual permits &amp; digital wallet</li>
+          <li><span class="check">&#10003;</span> Real-time waitlist management</li>
+          <li><span class="check">&#10003;</span> Dynamic pricing engine</li>
+          <li><span class="check">&#10003;</span> Event &amp; visitor permitting</li>
+        </ul>
+      </div>
+      <div class="pillar-card orange fade-up" style="transition-delay:0.2s">
+        <div class="pillar-glow"></div>
+        <div class="pillar-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="pillar-name">vCompliance</div>
+        <h3>Enforcement &amp; Compliance</h3>
+        <p>LPR-powered enforcement with automated citations, appeals workflow, and real-time violation tracking.</p>
+        <ul class="pillar-features">
+          <li><span class="check">&#10003;</span> LPR &amp; mobile enforcement</li>
+          <li><span class="check">&#10003;</span> Digital citation management</li>
+          <li><span class="check">&#10003;</span> Automated appeals process</li>
+          <li><span class="check">&#10003;</span> Boot &amp; tow tracking</li>
+        </ul>
+      </div>
+      <div class="pillar-card amber fade-up" style="transition-delay:0.3s">
+        <div class="pillar-glow"></div>
+        <div class="pillar-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="pillar-name">vPark</div>
+        <h3>Guidance &amp; Wayfinding</h3>
+        <p>Sensor-driven real-time availability maps with turn-by-turn guidance, reducing circling and emissions campus-wide.</p>
+        <ul class="pillar-features">
+          <li><span class="check">&#10003;</span> Real-time occupancy sensing</li>
+          <li><span class="check">&#10003;</span> Interactive wayfinding maps</li>
+          <li><span class="check">&#10003;</span> Mobile-first parker experience</li>
+          <li><span class="check">&#10003;</span> Sustainability analytics</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTEGRATION -->
+<section class="section" id="integration">
+  <div class="container">
+    <div class="text-center fade-up">
+      <span class="section-label">Platform Architecture</span>
+      <h2>Integrated (for) Life</h2>
+      <p class="section-sub">Our modules aren't bolted together -- they're built on a single data layer with shared APIs, unified reporting, and real-time sync.</p>
+    </div>
+    <div class="integration-visual fade-up">
+      <div class="orbit-ring orbit-ring-1" style="position:absolute;"></div>
+      <div class="orbit-ring orbit-ring-2" style="position:absolute;"></div>
+      <div class="integration-hub">
+        <div class="hub-label">SCS Core</div>
+        <div class="hub-sub">Unified Data</div>
+      </div>
+      <div class="integration-node node-1">
+        <span class="node-dot" style="background:#4DAE37;box-shadow:0 0 8px rgba(77,174,55,0.4);"></span>
+        vPermit
+      </div>
+      <div class="integration-node node-2">
+        <span class="node-dot" style="background:#EB5B25;box-shadow:0 0 8px rgba(235,91,37,0.4);"></span>
+        vCompliance
+      </div>
+      <div class="integration-node node-3">
+        <span class="node-dot" style="background:#F0AE25;box-shadow:0 0 8px rgba(240,174,37,0.4);"></span>
+        vPark
+      </div>
+      <div class="integration-node node-4">
+        <span class="node-dot" style="background:#47BBE8;box-shadow:0 0 8px rgba(71,187,232,0.4);"></span>
+        Analytics &amp; BI
+      </div>
+      <div class="integration-node node-5">
+        <span class="node-dot" style="background:#3194B6;box-shadow:0 0 8px rgba(49,148,182,0.4);"></span>
+        POS &amp; Payments
+      </div>
+      <div class="integration-node node-6">
+        <span class="node-dot" style="background:#2C7480;box-shadow:0 0 8px rgba(44,116,128,0.4);"></span>
+        SIS &amp; ERP
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENT LOGO BAR -->
+<div class="logo-bar">
+  <div class="container">
+    <div class="logo-bar-label">Trusted by Leading Institutions</div>
+    <div class="logos">
+      <span>Harvard</span>
+      <span>Princeton</span>
+      <span>St. Edward's</span>
+      <span>Chapman</span>
+      <span>Seton Hall</span>
+      <span>USD</span>
+      <span>U. Akron</span>
+      <span>U. Toledo</span>
+    </div>
+  </div>
+</div>
+
+<!-- VALUE PROPS -->
+<section class="section" id="why">
+  <div class="container">
+    <div class="text-center fade-up">
+      <span class="section-label">Why SCS</span>
+      <h2>Built Different. Built Better.</h2>
+      <p class="section-sub">Six reasons parking professionals choose Smarter City Solutions over legacy vendors.</p>
+    </div>
+    <div class="values-grid">
+      <div class="value-card fade-up" style="transition-delay:0.05s">
+        <div class="value-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Modern Operations</h3>
+        <p>Cloud-native architecture means no on-premise servers, automatic updates, and 99.9% uptime SLA.</p>
+      </div>
+      <div class="value-card fade-up" style="transition-delay:0.1s">
+        <div class="value-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7c0-2-1-3-3-3H7c-2 0-3 1-3 3z" stroke="currentColor" stroke-width="1.8"/><path d="M9 12h6M12 9v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Open Ecosystem</h3>
+        <p>RESTful APIs, webhooks, and pre-built connectors for PeopleSoft, Banner, Workday, and 40+ systems.</p>
+      </div>
+      <div class="value-card fade-up" style="transition-delay:0.15s">
+        <div class="value-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Superior UX</h3>
+        <p>Parker-facing apps that people actually want to use. 4.8-star app store rating across 200+ campuses.</p>
+      </div>
+      <div class="value-card fade-up" style="transition-delay:0.2s">
+        <div class="value-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Data &amp; AI</h3>
+        <p>Predictive occupancy, demand forecasting, and automated pricing recommendations powered by real-time data.</p>
+      </div>
+      <div class="value-card fade-up" style="transition-delay:0.25s">
+        <div class="value-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.573-1.066z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Configurable</h3>
+        <p>Your rules, your workflows. Business rules engine adapts to your institution's policies -- not the other way around.</p>
+      </div>
+      <div class="value-card fade-up" style="transition-delay:0.3s">
+        <div class="value-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>True Partnership</h3>
+        <p>Dedicated success manager, 24/7 support, and a product roadmap shaped by client advisory board feedback.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED TESTIMONIAL -->
+<section class="section">
+  <div class="container">
+    <div class="featured-quote fade-up">
+      <div class="quote-mark">&ldquo;</div>
+      <blockquote>SCS transformed our parking operation from a constant source of complaints into one of the most praised services on campus. The platform is intuitive, the data is actionable, and their team genuinely cares about our success.</blockquote>
+      <div class="quote-author">
+        <div class="quote-avatar">CG</div>
+        <div class="quote-author-info">
+          <div class="name">Claire Guo</div>
+          <div class="role">Director of Parking &amp; Transportation, University of San Diego</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SWITCHING -->
+<section class="section" id="switching">
+  <div class="container">
+    <div class="text-center fade-up">
+      <span class="section-label">Switching Made Simple</span>
+      <h2>Replacing Your Legacy System?</h2>
+      <p class="section-sub">We've migrated dozens of campuses from T2, ParkMobile, AIMS, and custom solutions. Here's how it works.</p>
+    </div>
+    <div class="switching-steps">
+      <div class="step-card fade-up" style="transition-delay:0.1s">
+        <div class="step-num">1</div>
+        <h3>Discovery</h3>
+        <p>We audit your current system, map data schemas, and identify integration touchpoints in a 2-week sprint.</p>
+      </div>
+      <div class="step-card fade-up" style="transition-delay:0.2s">
+        <div class="step-num">2</div>
+        <h3>Migration</h3>
+        <p>Automated data migration with validation checkpoints. Permits, citations, accounts -- everything transfers cleanly.</p>
+      </div>
+      <div class="step-card fade-up" style="transition-delay:0.3s">
+        <div class="step-num">3</div>
+        <h3>Parallel Run</h3>
+        <p>Both systems run side-by-side for 30 days. Your team gets hands-on training before anything switches over.</p>
+      </div>
+      <div class="step-card fade-up" style="transition-delay:0.4s">
+        <div class="step-num">4</div>
+        <h3>Go Live</h3>
+        <p>Cutover with on-site support. Dedicated success manager stays embedded through your first full cycle.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL CARDS -->
+<section class="section">
+  <div class="container">
+    <div class="text-center fade-up">
+      <span class="section-label">Client Stories</span>
+      <h2>What Our Partners Say</h2>
+    </div>
+    <div class="testimonial-grid">
+      <div class="testimonial-card fade-up" style="transition-delay:0.1s">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote>&ldquo;The transition from our legacy system was seamless. SCS handled the data migration flawlessly, and their team was on-site for every step. Our citation appeals process went from 3 weeks to 48 hours.&rdquo;</blockquote>
+        <div class="card-author">
+          <div class="card-avatar" style="background:rgba(77,174,55,0.15);color:#4DAE37;">DM</div>
+          <div>
+            <div class="name">Don McKinnon</div>
+            <div class="role">VP of Operations, St. Edward's University</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-up" style="transition-delay:0.2s">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote>&ldquo;Princeton needed a partner who could handle the complexity of our mixed-use campus. SCS delivered a system that manages 14,000 permits across 47 lots with real-time occupancy data we actually trust.&rdquo;</blockquote>
+        <div class="card-author">
+          <div class="card-avatar" style="background:rgba(235,91,37,0.15);color:#EB5B25;">SH</div>
+          <div>
+            <div class="name">Scott Herrington</div>
+            <div class="role">Director of Transportation, Princeton University</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-up" style="transition-delay:0.3s">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote>&ldquo;Our students love the app. Permit purchases went from a 30-minute office visit to a 2-minute mobile transaction. Parent weekend parking went from chaos to completely self-service.&rdquo;</blockquote>
+        <div class="card-author">
+          <div class="card-avatar" style="background:rgba(240,174,37,0.15);color:#F0AE25;">SL</div>
+          <div>
+            <div class="name">Sheryl Lyons</div>
+            <div class="role">Parking Services Manager, Chapman University</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="container">
+    <div class="cta-card fade-up">
+      <span class="section-label">Get Started</span>
+      <h2>See the Platform in Action</h2>
+      <p class="section-sub" style="margin:12px auto 36px;max-width:440px;">Book a 30-minute demo tailored to your campus. No slides -- just the live product.</p>
+      <form class="cta-form" onsubmit="event.preventDefault();">
+        <input type="text" placeholder="Full Name" required>
+        <input type="email" placeholder="Work Email" required>
+        <input type="text" placeholder="Institution">
+        <select>
+          <option value="" disabled selected>What are you interested in?</option>
+          <option>vPermit -- Digital Permits</option>
+          <option>vCompliance -- Enforcement</option>
+          <option>vPark -- Guidance</option>
+          <option>Full Platform</option>
+        </select>
+        <button type="submit">Request a Demo</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-rainbow"></div>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="assets/scs-logo.png" height="36" style="filter:brightness(0) invert(1);opacity:0.7;" alt="SCS">
+        <p>Smarter City Solutions builds integrated parking technology for higher education, municipalities, and private operators.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="#">vPermit</a></li>
+          <li><a href="#">vCompliance</a></li>
+          <li><a href="#">vPark</a></li>
+          <li><a href="#">Integrations</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">Case Studies</a></li>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">Support</a></li>
+          <li><a href="#">Status</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Smarter City Solutions. All rights reserved.</p>
+      <div style="display:flex;gap:24px;">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Security</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Nav scroll effect
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// Mobile nav toggle
+document.getElementById('navToggle').addEventListener('click', () => {
+  document.getElementById('navLinks').classList.toggle('open');
+});
+
+// Close mobile nav on link click
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.getElementById('navLinks').classList.remove('open');
+  });
+});
+
+// Intersection Observer for fade-in
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+
+</body>
+</html>

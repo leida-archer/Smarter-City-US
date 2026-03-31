@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smarter City Solutions — The Modern Parking Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ═══ Utility Bar ═══════════════════════════════ -->
+  <div class="utility-bar">
+    <div class="container utility-inner">
+      <div class="utility-left">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        <span>+1 (555) 123-4567</span>
+        <span class="utility-sep">|</span>
+        <span>info@smartercity.com</span>
+      </div>
+      <div class="utility-right">
+        <a href="#">Customer Portal</a>
+        <span class="utility-sep">|</span>
+        <a href="#">Support</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Sticky Navigation ════════════════════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/scs-icon.png" alt="Smarter City Solutions">
+      </a>
+      <div class="nav-links">
+        <!-- Solutions dropdown -->
+        <div class="nav-item has-dropdown">
+          <a href="#solutions">Solutions <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></a>
+          <div class="dropdown">
+            <a href="solutions/vpermit.html"><span class="dot green"></span>vPermit</a>
+            <a href="solutions/vcompliance.html"><span class="dot orange"></span>vCompliance</a>
+            <a href="solutions/vpark.html"><span class="dot amber"></span>vPark</a>
+            <div class="dropdown-divider"></div>
+            <a href="solutions/platform.html">The Platform</a>
+            <a href="solutions/integrations.html">Integrations</a>
+          </div>
+        </div>
+        <!-- Industries dropdown -->
+        <div class="nav-item has-dropdown">
+          <a href="#industries">Industries <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></a>
+          <div class="dropdown">
+            <a href="industries/higher-education.html">Higher Education</a>
+            <a href="industries/municipalities.html">Municipalities</a>
+            <a href="industries/healthcare.html">Healthcare</a>
+            <a href="industries/k12.html">K-12 Schools</a>
+          </div>
+        </div>
+        <!-- About dropdown -->
+        <div class="nav-item has-dropdown">
+          <a href="#about">About <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></a>
+          <div class="dropdown">
+            <a href="about/index.html">Our Story</a>
+            <a href="about/team.html">Team</a>
+            <a href="about/partners.html">Partners</a>
+          </div>
+        </div>
+        <!-- Resources -->
+        <div class="nav-item">
+          <a href="resources/case-studies.html">Resources</a>
+        </div>
+      </div>
+      <a href="contact/request-demo.html" class="nav-cta">Request a Demo</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══ Mobile Menu Overlay ══════════════════════ -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <a href="solutions/vpermit.html">vPermit</a>
+      <a href="solutions/vcompliance.html">vCompliance</a>
+      <a href="solutions/vpark.html">vPark</a>
+      <a href="solutions/platform.html">The Platform</a>
+      <a href="industries/higher-education.html">Higher Education</a>
+      <a href="industries/municipalities.html">Municipalities</a>
+      <a href="about/index.html">About</a>
+      <a href="resources/case-studies.html">Resources</a>
+      <a href="contact/request-demo.html" class="mobile-cta">Request a Demo</a>
+    </div>
+  </div>
+
+  <!-- ═══ Hero — Two-Column Editorial ══════════════ -->
+  <section class="hero" id="hero">
+    <div class="container-wide">
+      <div class="hero-grid">
+        <div class="hero-content reveal">
+          <div class="hero-eyebrow">Trusted by Harvard, Princeton &amp; leading universities</div>
+          <h1>The Modern Parking Platform for <span>Higher Education</span></h1>
+          <p>Cloud-native permits, enforcement, and payments &mdash; integrated from day one. Built from 15+ years of real-world campus parking expertise.</p>
+          <div class="hero-actions">
+            <a href="contact/request-demo.html" class="btn-primary">
+              Request a Demo
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="#solutions" class="btn-text">
+              Explore the platform
+              <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="hero-visual reveal reveal-delay-2">
+          <div class="hero-image-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            <span>Campus Parking Dashboard</span>
+          </div>
+          <div class="hero-float-card card-1">
+            <div class="float-stat">75%</div>
+            <div class="float-label">AU/NZ universities</div>
+          </div>
+          <div class="hero-float-card card-2">
+            <div class="float-stat">15+</div>
+            <div class="float-label">Years experience</div>
+          </div>
+          <div class="hero-float-card card-3">
+            <div class="float-stat">8</div>
+            <div class="float-label">US universities</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rainbow Bar -->
+  <div class="rainbow-bar">
+    <div style="background:#15626C"></div>
+    <div style="background:#47BBE8"></div>
+    <div style="background:#429839"></div>
+    <div style="background:#88BF57"></div>
+    <div style="background:#F0AE25"></div>
+    <div style="background:#EB5B25"></div>
+    <div style="background:#D41B24"></div>
+  </div>
+
+  <!-- ═══ Product Pillars ══════════════════════════ -->
+  <section class="products" id="solutions">
+    <div class="container">
+      <div class="products-header reveal">
+        <h2>One platform.<br>Three pillars.</h2>
+        <p>vPermit, vCompliance, and vPark work together seamlessly &mdash; or deploy each independently. The only provider offering all three core parking solutions under one roof.</p>
+      </div>
+      <div class="product-grid">
+
+        <!-- vPermit -->
+        <div class="product-card vpermit reveal reveal-delay-1">
+          <div class="product-accent"></div>
+          <div class="product-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><rect x="3" y="3" width="18" height="18" rx="3"/></svg>
+          </div>
+          <div class="product-subtitle">vPermit</div>
+          <h3>Virtual Permit Management</h3>
+          <p>Virtual permits with unlimited rules, SSO, and self-service for every parker &mdash; students, staff, visitors, and contractors.</p>
+          <ul class="product-features">
+            <li>Unlimited permit rules &amp; types</li>
+            <li>Automated waitlist &amp; communications</li>
+            <li>API-first, SSO &amp; 2FA</li>
+            <li>Payroll deduction support</li>
+            <li>Self-service portal &amp; mobile app</li>
+            <li>Dynamic pricing &amp; allocation</li>
+          </ul>
+          <a href="solutions/vpermit.html" class="product-link green">Learn More &rarr;</a>
+        </div>
+
+        <!-- vCompliance -->
+        <div class="product-card vcompliance reveal reveal-delay-2">
+          <div class="product-accent"></div>
+          <div class="product-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="product-subtitle">vCompliance</div>
+          <h3>Enforcement &amp; Citations</h3>
+          <p>LPR-powered enforcement with real-time validation, automated workflows, and a customer portal for payments and appeals.</p>
+          <ul class="product-features">
+            <li>Mobile &amp; fixed LPR integration</li>
+            <li>Electronic &amp; physical citations</li>
+            <li>Route optimization</li>
+            <li>Online payment &amp; appeals portal</li>
+            <li>Configurable violation rules</li>
+            <li>Progressive enforcement</li>
+          </ul>
+          <a href="solutions/vcompliance.html" class="product-link orange">Learn More &rarr;</a>
+        </div>
+
+        <!-- vPark -->
+        <div class="product-card vpark reveal reveal-delay-3">
+          <div class="product-accent"></div>
+          <div class="product-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <div class="product-subtitle">vPark</div>
+          <h3>Mobile Payments &amp; Sessions</h3>
+          <p>Pay by the minute via QR, app, or voice. Differential rates, zone alerts, and real-time availability &mdash; no ticket machines needed.</p>
+          <ul class="product-features">
+            <li>PayGo, QR code &amp; Alexa voice</li>
+            <li>Apple Pay, Google Pay &amp; more</li>
+            <li>Real-time zone occupancy</li>
+            <li>Corporate accounts</li>
+            <li>Sensor &amp; camera integration</li>
+            <li>Occupancy analytics &amp; heatmaps</li>
+          </ul>
+          <a href="solutions/vpark.html" class="product-link amber">Learn More &rarr;</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══ Integration Story ════════════════════════ -->
+  <section class="integration" id="integration">
+    <div class="container-wide">
+      <div class="integration-grid">
+        <div class="integration-content reveal">
+          <h2>Integrated <em>(for) Life</em></h2>
+          <p>The only platform where permits, enforcement, and payments reinforce each other &mdash; sharing data in real time to eliminate silos and reduce manual work.</p>
+          <ul class="integration-list">
+            <li>
+              <span class="integration-check"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7l3 3 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span><strong>Student Information Systems</strong> &mdash; Banner, PeopleSoft, Workday</span>
+            </li>
+            <li>
+              <span class="integration-check"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7l3 3 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span><strong>Access Control</strong> &mdash; PACS, gate systems, barriers</span>
+            </li>
+            <li>
+              <span class="integration-check"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7l3 3 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span><strong>Payment Gateways</strong> &mdash; TouchNet, CashNet, Transact</span>
+            </li>
+            <li>
+              <span class="integration-check"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7l3 3 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span><strong>LPR Hardware</strong> &mdash; Genetec, Vigilant, vendor-agnostic</span>
+            </li>
+          </ul>
+        </div>
+        <div class="integration-diagram reveal reveal-delay-2">
+          <div class="diagram-hub">SCS<br>Platform</div>
+          <div class="diagram-spokes">
+            <div class="diagram-spoke">
+              <div class="diagram-spoke-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#15626C" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1 2 3 6 3s6-2 6-3v-5"/></svg>
+              </div>
+              <div class="diagram-spoke-label">SIS / ERP</div>
+              <div class="diagram-spoke-sub">Banner, Workday</div>
+            </div>
+            <div class="diagram-spoke">
+              <div class="diagram-spoke-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#15626C" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+              </div>
+              <div class="diagram-spoke-label">Payments</div>
+              <div class="diagram-spoke-sub">TouchNet, CashNet</div>
+            </div>
+            <div class="diagram-spoke">
+              <div class="diagram-spoke-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#15626C" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              </div>
+              <div class="diagram-spoke-label">LPR / Sensors</div>
+              <div class="diagram-spoke-sub">Multi-vendor</div>
+            </div>
+            <div class="diagram-spoke">
+              <div class="diagram-spoke-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#15626C" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+              </div>
+              <div class="diagram-spoke-label">Access Control</div>
+              <div class="diagram-spoke-sub">Gates, barriers</div>
+            </div>
+            <div class="diagram-spoke">
+              <div class="diagram-spoke-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#15626C" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              </div>
+              <div class="diagram-spoke-label">Analytics</div>
+              <div class="diagram-spoke-sub">BI dashboards</div>
+            </div>
+            <div class="diagram-spoke">
+              <div class="diagram-spoke-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#15626C" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+              </div>
+              <div class="diagram-spoke-label">Mobile</div>
+              <div class="diagram-spoke-sub">iOS &amp; Android</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Client Logo Bar — Animated Marquee ═══════ -->
+  <section class="logo-bar">
+    <div class="container">
+      <p class="logo-bar-label">Trusted by leading universities across the United States</p>
+      <div class="logo-marquee">
+        <div class="logo-track">
+          <div class="client-logo"><img src="assets/logos/university/harvard-university.png" alt="Harvard University"></div>
+          <div class="client-logo"><img src="assets/logos/university/princeton-university.png" alt="Princeton University"></div>
+          <div class="client-logo"><img src="assets/logos/university/st-edwards-university.png" alt="St. Edward's University"></div>
+          <div class="client-logo"><img src="assets/logos/university/chapman-university.png" alt="Chapman University"></div>
+          <div class="client-logo"><img src="assets/logos/university/seton-hall-university.png" alt="Seton Hall University"></div>
+          <div class="client-logo"><img src="assets/logos/university/university-of-san-diego.png" alt="University of San Diego"></div>
+          <div class="client-logo"><img src="assets/logos/university/university-of-akron.png" alt="University of Akron"></div>
+          <div class="client-logo"><img src="assets/logos/university/university-of-toledo.png" alt="University of Toledo"></div>
+          <!-- Duplicate for seamless loop -->
+          <div class="client-logo"><img src="assets/logos/university/harvard-university.png" alt="Harvard University"></div>
+          <div class="client-logo"><img src="assets/logos/university/princeton-university.png" alt="Princeton University"></div>
+          <div class="client-logo"><img src="assets/logos/university/st-edwards-university.png" alt="St. Edward's University"></div>
+          <div class="client-logo"><img src="assets/logos/university/chapman-university.png" alt="Chapman University"></div>
+          <div class="client-logo"><img src="assets/logos/university/seton-hall-university.png" alt="Seton Hall University"></div>
+          <div class="client-logo"><img src="assets/logos/university/university-of-san-diego.png" alt="University of San Diego"></div>
+          <div class="client-logo"><img src="assets/logos/university/university-of-akron.png" alt="University of Akron"></div>
+          <div class="client-logo"><img src="assets/logos/university/university-of-toledo.png" alt="University of Toledo"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Value Propositions — 3x2 Grid ════════════ -->
+  <section class="values" id="why-scs">
+    <div class="container">
+      <div class="values-header reveal">
+        <h2>Why universities choose SCS</h2>
+        <p>Purpose-built for higher education. No one else offers this depth of campus-specific capability.</p>
+      </div>
+      <div class="values-grid">
+        <div class="value-item reveal reveal-delay-1">
+          <div class="value-number">01</div>
+          <h4>Modern Operations</h4>
+          <p>Cloud-native, API-first architecture replacing legacy client-server systems with faster updates and stronger security.</p>
+        </div>
+        <div class="value-item reveal reveal-delay-2">
+          <div class="value-number">02</div>
+          <h4>Open Ecosystem</h4>
+          <p>No vendor lock-in. Robust APIs and 30+ integration partners across identity, payments, LPR, HR, and BI systems.</p>
+        </div>
+        <div class="value-item reveal reveal-delay-3">
+          <div class="value-number">03</div>
+          <h4>Superior User Experience</h4>
+          <p>Consumer-grade mobile and web experience for students, faculty, visitors, and administrators alike.</p>
+        </div>
+        <div class="value-item reveal reveal-delay-1">
+          <div class="value-number">04</div>
+          <h4>Data &amp; AI Insights</h4>
+          <p>Real-time dashboards, predictive analytics, and automated reporting to drive smarter decisions about utilization and compliance.</p>
+        </div>
+        <div class="value-item reveal reveal-delay-2">
+          <div class="value-number">05</div>
+          <h4>Fully Configurable</h4>
+          <p>Your rules, your workflows, your branding. Unlimited permit structures and automated workflows &mdash; no custom development required.</p>
+        </div>
+        <div class="value-item reveal reveal-delay-3">
+          <div class="value-number">06</div>
+          <h4>True Partnership</h4>
+          <p>Not just software &mdash; hands-on onboarding with two in-person visits, collaborative configuration, and customer-led feature development.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Featured Testimonial ═════════════════════ -->
+  <section class="testimonial-featured">
+    <div class="container">
+      <div class="reveal">
+        <blockquote>No one has confidently told us that a product is out there that can do what SCS can do. When existing clients tell parking reps to switch, SCS was the right choice.</blockquote>
+        <div class="testimonial-author">Claire Guo</div>
+        <div class="testimonial-role">Executive Director, ParkUToledo &mdash; University of Toledo</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══ Switching Section ════════════════════════ -->
+  <section class="switching" id="onboarding">
+    <div class="container-wide">
+      <div class="switching-grid">
+        <div class="switching-content reveal">
+          <h2>Replacing your legacy system?<br>Switching is easier than you think.</h2>
+          <p>We've helped universities migrate from T2, NuPark, and iParq &mdash; with hands-on support, zero disruption to operations, and transparent, all-inclusive pricing with no hidden fees.</p>
+          <a href="contact/request-demo.html" class="btn-primary">Talk to Our Team &rarr;</a>
+        </div>
+        <div class="reveal reveal-delay-2">
+          <div class="timeline">
+            <div class="timeline-step">
+              <div class="timeline-dot"></div>
+              <div class="timeline-week">Week 1-2</div>
+              <h4>Discovery Workshop</h4>
+              <p>We learn your unique rules, workflows, and pain points. Full audit of your current system.</p>
+            </div>
+            <div class="timeline-step">
+              <div class="timeline-dot"></div>
+              <div class="timeline-week">Week 3-4</div>
+              <h4>Agile Configuration</h4>
+              <p>Iterative setup with your team, not a rigid waterfall rollout. Platform configured to your policies.</p>
+            </div>
+            <div class="timeline-step">
+              <div class="timeline-dot"></div>
+              <div class="timeline-week">Week 5-6</div>
+              <h4>IT Partnership</h4>
+              <p>Deep integration with your identity, payment, and HR systems.</p>
+            </div>
+            <div class="timeline-step">
+              <div class="timeline-dot"></div>
+              <div class="timeline-week">Week 7-8</div>
+              <h4>Data Migration</h4>
+              <p>Seamless transfer of permits, citations, and customer records. Historical data validated and reconciled.</p>
+            </div>
+            <div class="timeline-step">
+              <div class="timeline-dot"></div>
+              <div class="timeline-week">Week 9+</div>
+              <h4>Training &amp; Go-Live</h4>
+              <p>Two in-person visits, hands-on training, ongoing dedicated support.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Testimonial Cards ════════════════════════ -->
+  <section class="testimonials">
+    <div class="container">
+      <div class="testimonials-header reveal">
+        <h2>What our partners say</h2>
+      </div>
+      <div class="testimonial-grid">
+
+        <div class="testimonial-card reveal reveal-delay-1">
+          <blockquote>"Working with Smarter City during our transition from NuPark has been a breath of fresh air. They have worked with us to understand how we could adopt the way we have done things in the past to the way we will need to do them now."</blockquote>
+          <div class="testimonial-card-author">
+            <div class="testimonial-avatar" style="background:linear-gradient(135deg,#4DAE37,#88BF57)">DY</div>
+            <div>
+              <div class="testimonial-card-name">Don Yarosevit</div>
+              <div class="testimonial-card-role">St. Edward's University</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal reveal-delay-2">
+          <blockquote>"The team approaches simple to understand and use interfaces that significantly reduce the burden. We're excited for the future and look forward to our continued partnership with Smarter City Solutions."</blockquote>
+          <div class="testimonial-card-author">
+            <div class="testimonial-avatar" style="background:linear-gradient(135deg,#3194B6,#47BBE8)">SG</div>
+            <div>
+              <div class="testimonial-card-name">Scott Gulliford, CMP</div>
+              <div class="testimonial-card-role">Deputy Director, Princeton University</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal reveal-delay-3">
+          <blockquote>"Our Parking Team's productivity increased exponentially with vCompliance, and the response from the community has been overwhelmingly positive. Smarter Cities industry leading solutions have added value to every aspect."</blockquote>
+          <div class="testimonial-card-author">
+            <div class="testimonial-avatar" style="background:linear-gradient(135deg,#EB5B25,#F0AE25)">SB</div>
+            <div>
+              <div class="testimonial-card-name">Sheryl Boyd</div>
+              <div class="testimonial-card-role">Chapman University</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══ Integration Partners Grid ════════════════ -->
+  <section class="partners" id="integrations">
+    <div class="container">
+      <div class="partners-header reveal">
+        <h2>30+ Integration Partners</h2>
+        <p>Connect SCS with the systems you already use &mdash; no vendor lock-in, no costly custom development.</p>
+      </div>
+      <div class="partners-grid">
+        <div class="partner-category">
+          <h4>SSO / Identity</h4>
+          <div class="partner-logos">
+            <img src="assets/logos/b2b/okta.png" alt="Okta"><img src="assets/logos/b2b/azure-ad.png" alt="Azure AD"><img src="assets/logos/b2b/shibboleth.png" alt="Shibboleth">
+          </div>
+        </div>
+        <div class="partner-category">
+          <h4>Cameras &amp; LPR</h4>
+          <div class="partner-logos">
+            <img src="assets/logos/b2b/genetec.png" alt="Genetec"><img src="assets/logos/b2b/openalpr.png" alt="OpenALPR"><img src="assets/logos/b2b/sensen-ai.png" alt="Sensen.ai">
+          </div>
+        </div>
+        <div class="partner-category">
+          <h4>HR / Student Systems</h4>
+          <div class="partner-logos">
+            <img src="assets/logos/b2b/oracle-peoplesoft.png" alt="PeopleSoft"><img src="assets/logos/b2b/ellucian.png" alt="Ellucian"><img src="assets/logos/b2b/workday.png" alt="Workday"><img src="assets/logos/b2b/sap.png" alt="SAP">
+          </div>
+        </div>
+        <div class="partner-category">
+          <h4>Payments</h4>
+          <div class="partner-logos">
+            <img src="assets/logos/b2b/paypal.png" alt="PayPal"><img src="assets/logos/b2b/apple-pay.png" alt="Apple Pay"><img src="assets/logos/b2b/google-pay.png" alt="Google Pay">
+          </div>
+        </div>
+        <div class="partner-category">
+          <h4>BI / Analytics</h4>
+          <div class="partner-logos">
+            <img src="assets/logos/b2b/power-bi.png" alt="Power BI"><img src="assets/logos/b2b/tableau.png" alt="Tableau"><img src="assets/logos/b2b/qlik.png" alt="Qlik">
+          </div>
+        </div>
+        <div class="partner-category">
+          <h4>Cloud &amp; PARCS</h4>
+          <div class="partner-logos">
+            <img src="assets/logos/b2b/aws.png" alt="AWS"><img src="assets/logos/b2b/azure.png" alt="Azure"><img src="assets/logos/b2b/skidata.png" alt="SKIDATA"><img src="assets/logos/b2b/liftango.png" alt="Liftango">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CTA Block — Teal Gradient + Form ═════════ -->
+  <section class="cta-section" id="demo">
+    <div class="container-wide">
+      <div class="cta-grid">
+        <div class="cta-content reveal">
+          <h2>Ready to modernize your campus parking?</h2>
+          <p>Whether you're replacing a legacy system or starting fresh, our team is ready to show you a better way. No hard sell &mdash; just a walk-through with our experts.</p>
+          <div class="cta-stats">
+            <div class="cta-stat">
+              <span class="cta-stat-num" data-target="75" data-suffix="%">75%</span>
+              <span class="cta-stat-label">of AU/NZ universities</span>
+            </div>
+            <div class="cta-stat">
+              <span class="cta-stat-num">15+</span>
+              <span class="cta-stat-label">years experience</span>
+            </div>
+            <div class="cta-stat">
+              <span class="cta-stat-num" data-target="8" data-suffix="">8</span>
+              <span class="cta-stat-label">US universities</span>
+            </div>
+          </div>
+        </div>
+        <div class="cta-form-card reveal reveal-delay-2">
+          <h3>Request a Demo</h3>
+          <p>We'll respond within one business day. No spam, ever.</p>
+          <form>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" placeholder="Jane Smith" required>
+              </div>
+              <div class="form-group">
+                <label>Work Email</label>
+                <input type="email" placeholder="jane@university.edu" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Institution</label>
+                <input type="text" placeholder="University of..." required>
+              </div>
+              <div class="form-group">
+                <label>Title / Role</label>
+                <input type="text" placeholder="Director of Parking">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group full">
+                <label>What's your biggest parking challenge?</label>
+                <textarea rows="3" placeholder="Tell us about your current situation..."></textarea>
+              </div>
+            </div>
+            <button type="submit" class="form-submit">Get Started</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Footer ═══════════════════════════════════ -->
+  <footer class="footer">
+    <!-- Rainbow bar at top of footer -->
+    <div class="rainbow-bar">
+      <div style="background:#15626C"></div>
+      <div style="background:#47BBE8"></div>
+      <div style="background:#429839"></div>
+      <div style="background:#88BF57"></div>
+      <div style="background:#F0AE25"></div>
+      <div style="background:#EB5B25"></div>
+      <div style="background:#D41B24"></div>
+    </div>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="assets/scs-logo.png" alt="Smarter City Solutions">
+          <p>Integrated (for) Life</p>
+          <p class="footer-contact-info">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            +1 (555) 123-4567
+          </p>
+          <p class="footer-contact-info">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            info@smartercity.com
+          </p>
+        </div>
+        <div class="footer-col">
+          <h5>Solutions</h5>
+          <a href="solutions/vpermit.html">vPermit</a>
+          <a href="solutions/vcompliance.html">vCompliance</a>
+          <a href="solutions/vpark.html">vPark</a>
+          <a href="solutions/platform.html">The Platform</a>
+          <a href="solutions/integrations.html">Integrations</a>
+        </div>
+        <div class="footer-col">
+          <h5>Industries</h5>
+          <a href="industries/higher-education.html">Higher Education</a>
+          <a href="industries/municipalities.html">Municipalities</a>
+          <a href="industries/healthcare.html">Healthcare</a>
+          <a href="industries/k12.html">K-12 Schools</a>
+        </div>
+        <div class="footer-col">
+          <h5>Resources</h5>
+          <a href="resources/case-studies.html">Case Studies</a>
+          <a href="resources/blog.html">Blog</a>
+          <a href="resources/webinars.html">Webinars</a>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <a href="about/index.html">About</a>
+          <a href="about/team.html">Team</a>
+          <a href="contact/index.html">Contact</a>
+          <a href="#">Careers</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Smarter City Solutions. All Rights Reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Accessibility Statement</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

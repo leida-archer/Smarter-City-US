@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smarter City Solutions — The Modern Parking Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ========== RESET & BASE ========== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Inter', 'DM Sans', system-ui, -apple-system, sans-serif;
+  background: #0F172A;
+  color: #E2E8F0;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+/* ========== CSS VARIABLES ========== */
+:root {
+  --teal-dark: #15626C;
+  --teal-mid: #2C7480;
+  --teal-blue: #3194B6;
+  --teal-sky: #47BBE8;
+  --green: #4DAE37;
+  --orange: #EB5B25;
+  --amber: #F0AE25;
+  --red: #D41B24;
+  --dark: #0F172A;
+  --dark-lighter: #1E293B;
+  --white: #FFFFFF;
+  --gray-50: #F8FAFC;
+  --gray-100: #F1F5F9;
+  --gray-200: #E2E8F0;
+  --gray-400: #94A3B8;
+  --gray-500: #64748B;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --gray-800: #1E293B;
+  --rainbow: linear-gradient(90deg, #15626C, #47BBE8, #429839, #88BF57, #F0AE25, #EB5B25, #D41B24);
+}
+
+/* ========== RAINBOW BAR ========== */
+.rainbow-bar {
+  height: 6px;
+  background: var(--rainbow);
+  width: 100%;
+}
+.rainbow-bar-thick {
+  height: 10px;
+  background: var(--rainbow);
+  width: 100%;
+}
+
+/* ========== NAVIGATION ========== */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.nav-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-logo { display: flex; align-items: center; gap: 12px; }
+.nav-logo img { height: 44px; }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+.nav-links a {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray-400);
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-cta {
+  background: var(--red) !important;
+  color: var(--white) !important;
+  padding: 10px 24px !important;
+  border-radius: 6px;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.nav-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(212, 27, 36, 0.4);
+}
+.nav-mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--white);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* ========== HERO ========== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--dark);
+  overflow: hidden;
+  padding: 6rem 2rem;
+}
+.hero-geo {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.hero-geo .shape {
+  position: absolute;
+  border-radius: 4px;
+}
+.hero-geo .shape-1 {
+  width: 400px; height: 400px;
+  background: linear-gradient(135deg, rgba(21,98,108,0.15), rgba(71,187,232,0.08));
+  top: -100px; right: -50px;
+  transform: rotate(45deg);
+}
+.hero-geo .shape-2 {
+  width: 300px; height: 300px;
+  background: linear-gradient(135deg, rgba(77,174,55,0.1), rgba(240,174,37,0.06));
+  bottom: -80px; left: -60px;
+  transform: rotate(30deg);
+  border-radius: 50%;
+}
+.hero-geo .shape-3 {
+  width: 200px; height: 600px;
+  background: linear-gradient(180deg, rgba(235,91,37,0.06), transparent);
+  top: 10%; left: 15%;
+  transform: rotate(-15deg);
+}
+.hero-geo .shape-4 {
+  width: 150px; height: 150px;
+  border: 3px solid rgba(71,187,232,0.12);
+  top: 20%; right: 15%;
+  transform: rotate(20deg);
+  border-radius: 50%;
+}
+.hero-geo .shape-5 {
+  width: 80px; height: 80px;
+  background: rgba(212,27,36,0.08);
+  bottom: 25%; right: 10%;
+  transform: rotate(60deg);
+}
+.hero-geo .shape-6 {
+  width: 500px; height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(71,187,232,0.15), transparent);
+  top: 40%; left: 5%;
+  transform: rotate(-8deg);
+}
+.hero-geo .shape-7 {
+  width: 600px; height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(240,174,37,0.12), transparent);
+  bottom: 30%; right: 0;
+  transform: rotate(5deg);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 900px;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(71,187,232,0.1);
+  border: 1px solid rgba(71,187,232,0.2);
+  padding: 8px 20px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--teal-sky);
+  margin-bottom: 2rem;
+}
+.hero-badge::before {
+  content: '';
+  width: 8px; height: 8px;
+  background: var(--teal-sky);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.5); }
+}
+.hero h1 {
+  font-size: clamp(3.5rem, 8vw, 7rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+.hero h1 .gradient-text {
+  background: var(--rainbow);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub {
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  color: var(--gray-400);
+  max-width: 640px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+  font-weight: 400;
+}
+.hero-pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 3rem;
+}
+.hero-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.hero-pill:hover {
+  transform: translateY(-2px);
+}
+.hero-pill.green {
+  background: rgba(77,174,55,0.12);
+  border: 1px solid rgba(77,174,55,0.3);
+  color: #6BCE54;
+}
+.hero-pill.orange {
+  background: rgba(235,91,37,0.12);
+  border: 1px solid rgba(235,91,37,0.3);
+  color: #F07D4A;
+}
+.hero-pill.amber {
+  background: rgba(240,174,37,0.12);
+  border: 1px solid rgba(240,174,37,0.3);
+  color: #F5C24E;
+}
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--red);
+  color: var(--white);
+  padding: 16px 36px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(212,27,36,0.35);
+}
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--white);
+  padding: 16px 36px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border: 2px solid rgba(255,255,255,0.2);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-secondary:hover {
+  border-color: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.05);
+}
+
+/* ========== SECTION UTILITIES ========== */
+.section-dark {
+  background: var(--dark);
+  position: relative;
+}
+.section-white {
+  background: var(--white);
+  color: var(--dark);
+  position: relative;
+}
+.section-gray {
+  background: var(--gray-50);
+  color: var(--dark);
+  position: relative;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+.section-padding {
+  padding: 7rem 0;
+}
+
+/* ========== ANGLED DIVIDERS ========== */
+.angle-top {
+  clip-path: polygon(0 40px, 100% 0, 100% 100%, 0 100%);
+  padding-top: calc(7rem + 40px) !important;
+}
+.angle-bottom {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 40px), 0 100%);
+  padding-bottom: calc(7rem + 40px) !important;
+}
+.angle-both {
+  clip-path: polygon(0 40px, 100% 0, 100% calc(100% - 40px), 0 100%);
+  padding-top: calc(7rem + 40px) !important;
+  padding-bottom: calc(7rem + 40px) !important;
+}
+
+/* ========== SECTION HEADINGS ========== */
+.section-label {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--teal-sky);
+  margin-bottom: 1rem;
+}
+.section-dark .section-label { color: var(--teal-sky); }
+.section-white .section-label, .section-gray .section-label { color: var(--teal-mid); }
+.section-title {
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+.section-subtitle {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  max-width: 600px;
+}
+.section-dark .section-subtitle { color: var(--gray-400); }
+.section-white .section-subtitle, .section-gray .section-subtitle { color: var(--gray-500); }
+
+/* ========== PRODUCT PILLARS ========== */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 4rem;
+}
+.product-card {
+  position: relative;
+  background: var(--white);
+  border-radius: 16px;
+  padding: 2.5rem;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+}
+.product-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+}
+.product-card.green::before { background: var(--green); }
+.product-card.orange::before { background: var(--orange); }
+.product-card.amber::before { background: var(--amber); }
+
+.product-card .product-geo {
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 120px;
+  height: 120px;
+  border-radius: 16px;
+  transform: rotate(45deg);
+  opacity: 0.06;
+}
+.product-card.green .product-geo { background: var(--green); }
+.product-card.orange .product-geo { background: var(--orange); }
+.product-card.amber .product-geo { background: var(--amber); }
+
+.product-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  margin-bottom: 1.5rem;
+}
+.product-card.green .product-icon { background: rgba(77,174,55,0.1); color: var(--green); }
+.product-card.orange .product-icon { background: rgba(235,91,37,0.1); color: var(--orange); }
+.product-card.amber .product-icon { background: rgba(240,174,37,0.1); color: var(--amber); }
+
+.product-name {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.product-card.green .product-name { color: var(--green); }
+.product-card.orange .product-name { color: var(--orange); }
+.product-card.amber .product-name { color: var(--amber); }
+
+.product-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--dark);
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+.product-desc {
+  color: var(--gray-500);
+  line-height: 1.7;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+.product-features {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.product-features li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--gray-600);
+  font-weight: 500;
+}
+.product-features li::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.product-card.green .product-features li::before { background: var(--green); }
+.product-card.orange .product-features li::before { background: var(--orange); }
+.product-card.amber .product-features li::before { background: var(--amber); }
+
+/* ========== INTEGRATION SECTION ========== */
+.integration-visual {
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+.integration-hub {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+}
+.hub-center {
+  text-align: center;
+  padding: 2.5rem;
+  background: var(--dark);
+  border: 2px solid rgba(71,187,232,0.3);
+  border-radius: 20px;
+  position: relative;
+  z-index: 2;
+}
+.hub-center::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 20px;
+  background: var(--rainbow);
+  z-index: -1;
+  opacity: 0.4;
+}
+.hub-center::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  background: var(--dark);
+  z-index: -1;
+}
+.hub-label {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--teal-sky);
+  margin-bottom: 0.5rem;
+}
+.hub-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--white);
+  letter-spacing: -0.02em;
+}
+.hub-spokes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+  width: 100%;
+  max-width: 800px;
+}
+.spoke-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s;
+}
+.spoke-card:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(71,187,232,0.2);
+  transform: translateY(-4px);
+}
+.spoke-icon {
+  font-size: 28px;
+  margin-bottom: 0.75rem;
+}
+.spoke-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.25rem;
+}
+.spoke-desc {
+  font-size: 13px;
+  color: var(--gray-400);
+}
+
+/* ========== CLIENT LOGOS ========== */
+.logos-section {
+  padding: 4rem 0;
+  background: var(--white);
+  border-top: 1px solid rgba(0,0,0,0.06);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.logos-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+}
+.logos-label {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray-400);
+  margin-bottom: 2.5rem;
+}
+.logos-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem 4rem;
+}
+.logo-item {
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--gray-400);
+  text-transform: uppercase;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+  white-space: nowrap;
+}
+.logo-item:hover { opacity: 1; }
+
+/* ========== VALUE PROPS ========== */
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 4rem;
+}
+.value-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 2rem;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.value-card:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(71,187,232,0.15);
+  transform: translateY(-4px);
+}
+.value-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--rainbow);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.value-card:hover::after { opacity: 1; }
+.value-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(71,187,232,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-bottom: 1.25rem;
+}
+.value-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+.value-desc {
+  font-size: 0.9rem;
+  color: var(--gray-400);
+  line-height: 1.6;
+}
+
+/* ========== FEATURED TESTIMONIAL ========== */
+.featured-testimonial {
+  position: relative;
+  overflow: hidden;
+}
+.featured-testimonial .ft-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--teal-dark), var(--teal-mid), var(--teal-blue));
+  opacity: 0.95;
+}
+.featured-testimonial .ft-geo {
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 300px;
+  height: 300px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 50%;
+}
+.featured-testimonial .ft-geo-2 {
+  position: absolute;
+  bottom: -40px;
+  left: -40px;
+  width: 200px;
+  height: 200px;
+  border: 3px solid rgba(255,255,255,0.08);
+  border-radius: 50%;
+}
+.ft-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+.ft-quote-mark {
+  font-size: 5rem;
+  font-weight: 900;
+  color: rgba(255,255,255,0.15);
+  line-height: 1;
+  margin-bottom: -1rem;
+}
+.ft-quote {
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: 500;
+  color: var(--white);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+.ft-author {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--white);
+}
+.ft-role {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.6);
+  margin-top: 0.25rem;
+}
+
+/* ========== SWITCHING SECTION ========== */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  margin-top: 4rem;
+  counter-reset: step;
+}
+.step-card {
+  position: relative;
+  background: var(--white);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  overflow: hidden;
+}
+.step-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.1);
+}
+.step-number {
+  font-size: 4rem;
+  font-weight: 900;
+  background: var(--rainbow);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 1rem;
+  letter-spacing: -0.04em;
+}
+.step-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--dark);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.step-desc {
+  font-size: 0.9rem;
+  color: var(--gray-500);
+  line-height: 1.6;
+}
+
+/* ========== TESTIMONIAL CARDS ========== */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 4rem;
+}
+.testimonial-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 2.5rem;
+  transition: all 0.3s;
+  position: relative;
+}
+.testimonial-card:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(71,187,232,0.15);
+  transform: translateY(-4px);
+}
+.testimonial-card .tc-quote {
+  font-size: 1rem;
+  color: var(--gray-200);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+.testimonial-card .tc-stars {
+  color: var(--amber);
+  font-size: 16px;
+  margin-bottom: 1rem;
+  letter-spacing: 2px;
+}
+.tc-author-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.tc-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--white);
+}
+.tc-avatar.teal { background: var(--teal-mid); }
+.tc-avatar.orange { background: var(--orange); }
+.tc-avatar.amber { background: var(--amber); }
+.tc-author-info .tc-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--white);
+}
+.tc-author-info .tc-role {
+  font-size: 0.8rem;
+  color: var(--gray-400);
+}
+
+/* ========== CTA BLOCK ========== */
+.cta-section {
+  position: relative;
+  overflow: hidden;
+  background: var(--dark);
+}
+.cta-bg-shapes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.cta-bg-shapes .cta-shape-1 {
+  position: absolute;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(212,27,36,0.08), transparent 70%);
+  top: -200px; right: -100px;
+}
+.cta-bg-shapes .cta-shape-2 {
+  position: absolute;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(71,187,232,0.06), transparent 70%);
+  bottom: -150px; left: -100px;
+}
+.cta-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+.cta-content h2 {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 1rem;
+}
+.cta-content p {
+  font-size: 1.1rem;
+  color: var(--gray-400);
+  margin-bottom: 2.5rem;
+  line-height: 1.7;
+}
+.cta-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 480px;
+  margin: 0 auto;
+}
+.cta-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.cta-input {
+  padding: 14px 18px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.04);
+  color: var(--white);
+  font-size: 15px;
+  font-family: 'Inter', sans-serif;
+  transition: border-color 0.2s;
+  outline: none;
+}
+.cta-input::placeholder { color: var(--gray-500); }
+.cta-input:focus {
+  border-color: var(--teal-sky);
+  background: rgba(255,255,255,0.06);
+}
+.cta-submit {
+  padding: 16px 36px;
+  background: var(--red);
+  color: var(--white);
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+.cta-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(212,27,36,0.35);
+}
+
+/* ========== FOOTER ========== */
+.footer {
+  background: #0A0F1E;
+  padding: 4rem 0 0;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem 3rem;
+}
+.footer-brand p {
+  color: var(--gray-500);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin-top: 1rem;
+  max-width: 300px;
+}
+.footer-col h4 {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray-400);
+  margin-bottom: 1.25rem;
+}
+.footer-col a {
+  display: block;
+  color: var(--gray-500);
+  font-size: 0.9rem;
+  padding: 4px 0;
+  transition: color 0.2s;
+}
+.footer-col a:hover { color: var(--white); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 1.5rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-bottom p {
+  font-size: 0.8rem;
+  color: var(--gray-600);
+}
+
+/* ========== SCROLL ANIMATIONS ========== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-scale.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* stagger children */
+.stagger > * { transition-delay: calc(var(--i, 0) * 0.1s); }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1024px) {
+  .products-grid,
+  .values-grid,
+  .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+  .steps-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .hub-spokes { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-mobile-toggle { display: block; }
+  .products-grid,
+  .values-grid,
+  .testimonials-grid,
+  .steps-grid { grid-template-columns: 1fr; }
+  .hero { min-height: auto; padding: 8rem 1.5rem 5rem; }
+  .section-padding { padding: 4rem 0; }
+  .container { padding: 0 1.5rem; }
+  .angle-top { clip-path: polygon(0 20px, 100% 0, 100% 100%, 0 100%); padding-top: calc(4rem + 20px) !important; }
+  .angle-bottom { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), 0 100%); padding-bottom: calc(4rem + 20px) !important; }
+  .angle-both { clip-path: polygon(0 20px, 100% 0, 100% calc(100% - 20px), 0 100%); padding-top: calc(4rem + 20px) !important; padding-bottom: calc(4rem + 20px) !important; }
+  .cta-form-row { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+  .hub-spokes { grid-template-columns: 1fr; }
+  .logos-grid { gap: 2rem; }
+}
+
+/* ========== ANIMATED GRADIENT BORDER UTILITY ========== */
+@keyframes borderGlow {
+  0%, 100% { border-color: rgba(71,187,232,0.2); }
+  33% { border-color: rgba(77,174,55,0.2); }
+  66% { border-color: rgba(240,174,37,0.2); }
+}
+.glow-border {
+  animation: borderGlow 6s ease-in-out infinite;
+}
+
+/* ========== SWITCHING SECTION BG ========== */
+.switching-section {
+  position: relative;
+  overflow: hidden;
+}
+.switching-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg, transparent, rgba(71,187,232,0.03), transparent, rgba(240,174,37,0.03), transparent);
+  animation: rotateBg 30s linear infinite;
+}
+@keyframes rotateBg {
+  100% { transform: rotate(360deg); }
+}
+</style>
+</head>
+<body>
+
+<!-- Compare link -->
+<a href="compare.html" style="position:fixed;top:16px;right:16px;z-index:9999;background:rgba(255,255,255,0.1);color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;text-decoration:none;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.15);">&larr; Compare All</a>
+
+<!-- Rainbow Bar -->
+<div class="rainbow-bar-thick"></div>
+
+<!-- ==================== NAVIGATION ==================== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <img src="assets/scs-logo.png" height="44" style="filter:brightness(0) invert(1);" alt="SCS Logo">
+    </a>
+    <div class="nav-links">
+      <a href="#products">Products</a>
+      <a href="#integration">Platform</a>
+      <a href="#values">Why SCS</a>
+      <a href="#switching">Switching</a>
+      <a href="#cta" class="nav-cta">Get a Demo</a>
+    </div>
+    <button class="nav-mobile-toggle" onclick="document.querySelector('.nav-links').style.display=document.querySelector('.nav-links').style.display==='flex'?'none':'flex'" aria-label="Toggle menu">&#9776;</button>
+  </div>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero">
+  <div class="hero-geo">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+    <div class="shape shape-4"></div>
+    <div class="shape shape-5"></div>
+    <div class="shape shape-6"></div>
+    <div class="shape shape-7"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-badge">Modern Parking Technology</div>
+    <h1>
+      <span class="gradient-text">PARKING</span><br>
+      REIMAGINED
+    </h1>
+    <p class="hero-sub">
+      The unified platform that replaces legacy systems with intelligent permitting, real-time compliance, and frictionless parking &mdash; purpose-built for universities and municipalities.
+    </p>
+    <div class="hero-pills">
+      <span class="hero-pill green">&#9679; vPermit</span>
+      <span class="hero-pill orange">&#9679; vCompliance</span>
+      <span class="hero-pill amber">&#9679; vPark</span>
+    </div>
+    <div class="hero-actions">
+      <a href="#cta" class="btn-primary">Request a Demo &rarr;</a>
+      <a href="#products" class="btn-secondary">Explore Products</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PRODUCTS ==================== -->
+<section id="products" class="section-gray section-padding angle-top">
+  <div class="container">
+    <div style="text-align:center;">
+      <div class="section-label">The Platform</div>
+      <h2 class="section-title">THREE PRODUCTS.<br><span style="background:var(--rainbow);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">ONE ECOSYSTEM.</span></h2>
+      <p class="section-subtitle" style="margin:0 auto;">Every module shares one database, one login, and one policy engine. Deploy any combination &mdash; they just work.</p>
+    </div>
+
+    <div class="products-grid stagger">
+      <div class="product-card green reveal" style="--i:0">
+        <div class="product-geo"></div>
+        <div class="product-icon">&#x1F3AB;</div>
+        <div class="product-name">vPermit</div>
+        <h3 class="product-title">Virtual Permitting</h3>
+        <p class="product-desc">Ditch the decals. Cloud-based permits with automated waitlists, tiered pricing, and instant transfers. Self-service for parkers, zero overhead for staff.</p>
+        <ul class="product-features">
+          <li>Online self-service portal</li>
+          <li>Automated waitlist management</li>
+          <li>Dynamic pricing tiers</li>
+          <li>Instant permit transfers</li>
+        </ul>
+      </div>
+
+      <div class="product-card orange reveal" style="--i:1">
+        <div class="product-geo"></div>
+        <div class="product-icon">&#x1F6E1;</div>
+        <div class="product-name">vCompliance</div>
+        <h3 class="product-title">LPR Enforcement</h3>
+        <p class="product-desc">License-plate recognition enforcement that works in real time. Officers scan entire lots in minutes, not hours. Fair, consistent, and fully auditable.</p>
+        <ul class="product-features">
+          <li>Real-time LPR scanning</li>
+          <li>Automated violation issuance</li>
+          <li>Digital appeals workflow</li>
+          <li>Court-ready audit trail</li>
+        </ul>
+      </div>
+
+      <div class="product-card amber reveal" style="--i:2">
+        <div class="product-geo"></div>
+        <div class="product-icon">&#x1F17F;</div>
+        <div class="product-name">vPark</div>
+        <h3 class="product-title">Transient Parking</h3>
+        <p class="product-desc">Visitor, event, and hourly parking &mdash; no kiosks required. QR scan, pay by phone, or pre-book. Revenue flows straight to your GL codes.</p>
+        <ul class="product-features">
+          <li>QR &amp; pay-by-phone</li>
+          <li>Event pre-booking</li>
+          <li>Dynamic pricing engine</li>
+          <li>Direct GL integration</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== INTEGRATION ==================== -->
+<section id="integration" class="section-dark section-padding">
+  <div class="container">
+    <div style="text-align:center;">
+      <div class="section-label">Integrated (for) Life</div>
+      <h2 class="section-title" style="color:var(--white);">BUILT TO CONNECT,<br>NOT BOLT ON</h2>
+      <p class="section-subtitle" style="margin:0 auto;color:var(--gray-400);">One platform, infinite connections. SCS integrates with your existing campus and municipal systems &mdash; no middleware, no workarounds.</p>
+    </div>
+
+    <div class="integration-visual reveal-scale">
+      <div class="integration-hub">
+        <div class="hub-center">
+          <div class="hub-label">SCS Core</div>
+          <div class="hub-title">Unified Policy Engine</div>
+        </div>
+      </div>
+      <div class="hub-spokes stagger" style="margin-top:2rem;">
+        <div class="spoke-card reveal" style="--i:0">
+          <div class="spoke-icon">&#x1F3E2;</div>
+          <div class="spoke-name">ERP / Finance</div>
+          <div class="spoke-desc">Banner, Workday, PeopleSoft</div>
+        </div>
+        <div class="spoke-card reveal" style="--i:1">
+          <div class="spoke-icon">&#x1F393;</div>
+          <div class="spoke-name">SIS / Identity</div>
+          <div class="spoke-desc">SSO, LDAP, Student Records</div>
+        </div>
+        <div class="spoke-card reveal" style="--i:2">
+          <div class="spoke-icon">&#x1F4F7;</div>
+          <div class="spoke-name">LPR Hardware</div>
+          <div class="spoke-desc">Genetec, Vigilant, T2</div>
+        </div>
+        <div class="spoke-card reveal" style="--i:3">
+          <div class="spoke-icon">&#x1F4B3;</div>
+          <div class="spoke-name">Payments</div>
+          <div class="spoke-desc">TouchNet, CashNet, Stripe</div>
+        </div>
+        <div class="spoke-card reveal" style="--i:4">
+          <div class="spoke-icon">&#x1F4CA;</div>
+          <div class="spoke-name">Analytics</div>
+          <div class="spoke-desc">Power BI, Tableau, API</div>
+        </div>
+        <div class="spoke-card reveal" style="--i:5">
+          <div class="spoke-icon">&#x1F512;</div>
+          <div class="spoke-name">Access Control</div>
+          <div class="spoke-desc">Gates, PARCS, IoT sensors</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CLIENT LOGOS ==================== -->
+<section class="logos-section">
+  <div class="logos-inner">
+    <div class="logos-label">Trusted by Leading Institutions</div>
+    <div class="logos-grid">
+      <div class="logo-item">Harvard</div>
+      <div class="logo-item">Princeton</div>
+      <div class="logo-item">St. Edward's</div>
+      <div class="logo-item">Chapman</div>
+      <div class="logo-item">Seton Hall</div>
+      <div class="logo-item">USD</div>
+      <div class="logo-item">U. Akron</div>
+      <div class="logo-item">U. Toledo</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== VALUE PROPS ==================== -->
+<section id="values" class="section-dark section-padding">
+  <div class="container">
+    <div style="text-align:center;">
+      <div class="section-label">Why SCS</div>
+      <h2 class="section-title" style="color:var(--white);">THE <span style="background:var(--rainbow);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">UNFAIR ADVANTAGES</span></h2>
+      <p class="section-subtitle" style="margin:0 auto;color:var(--gray-400);">Six reasons parking operators choose SCS over legacy incumbents.</p>
+    </div>
+
+    <div class="values-grid stagger">
+      <div class="value-card reveal" style="--i:0">
+        <div class="value-icon">&#x2699;</div>
+        <div class="value-title">Modern Operations</div>
+        <div class="value-desc">Cloud-native SaaS that eliminates servers, manual updates, and IT overhead. Always current, always available.</div>
+      </div>
+      <div class="value-card reveal" style="--i:1">
+        <div class="value-icon">&#x1F310;</div>
+        <div class="value-title">Open Ecosystem</div>
+        <div class="value-desc">REST APIs, webhooks, and pre-built connectors for every major campus system. No vendor lock-in, ever.</div>
+      </div>
+      <div class="value-card reveal" style="--i:2">
+        <div class="value-icon">&#x2728;</div>
+        <div class="value-title">Superior UX</div>
+        <div class="value-desc">Interfaces that parkers and staff actually enjoy using. Mobile-first, accessible, and designed by people who care.</div>
+      </div>
+      <div class="value-card reveal" style="--i:3">
+        <div class="value-icon">&#x1F4C8;</div>
+        <div class="value-title">Data & AI</div>
+        <div class="value-desc">Real-time dashboards, occupancy predictions, and revenue optimization. Turn parking data into institutional intelligence.</div>
+      </div>
+      <div class="value-card reveal" style="--i:4">
+        <div class="value-icon">&#x1F527;</div>
+        <div class="value-title">Configurable</div>
+        <div class="value-desc">Every rule, rate, zone, and workflow is configurable &mdash; not custom coded. Your policies, your way, no dev tickets.</div>
+      </div>
+      <div class="value-card reveal" style="--i:5">
+        <div class="value-icon">&#x1F91D;</div>
+        <div class="value-title">True Partnership</div>
+        <div class="value-desc">Named account managers, 24/7 support, and a product team that listens. We succeed when you succeed.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FEATURED TESTIMONIAL ==================== -->
+<section class="featured-testimonial section-padding angle-both">
+  <div class="ft-bg"></div>
+  <div class="ft-geo"></div>
+  <div class="ft-geo-2"></div>
+  <div class="container">
+    <div class="ft-content reveal-scale">
+      <div class="ft-quote-mark">&ldquo;</div>
+      <p class="ft-quote">SCS replaced a system we&rsquo;d been fighting with for over a decade. Within three months, permit sales were fully online, enforcement was LPR-based, and our customer complaints dropped by 60%. I wish we&rsquo;d switched years ago.</p>
+      <div class="ft-author">Claire Guo</div>
+      <div class="ft-role">Director of Parking &amp; Transportation &bull; University of San Diego</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SWITCHING ==================== -->
+<section id="switching" class="switching-section section-gray section-padding">
+  <div class="container" style="position:relative;z-index:2;">
+    <div style="text-align:center;">
+      <div class="section-label">Make the Switch</div>
+      <h2 class="section-title">REPLACING YOUR<br><span style="background:var(--rainbow);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">LEGACY SYSTEM?</span></h2>
+      <p class="section-subtitle" style="margin:0 auto;">We&rsquo;ve migrated dozens of institutions off T2, AIMS, and homegrown systems. Here&rsquo;s how it works.</p>
+    </div>
+
+    <div class="steps-grid stagger">
+      <div class="step-card reveal" style="--i:0">
+        <div class="step-number">01</div>
+        <div class="step-title">Discover</div>
+        <div class="step-desc">We audit your current setup &mdash; permits, rates, zones, integrations &mdash; and map every data point to SCS.</div>
+      </div>
+      <div class="step-card reveal" style="--i:1">
+        <div class="step-number">02</div>
+        <div class="step-title">Configure</div>
+        <div class="step-desc">Your policies are built in SCS with zero custom code. We match your rules exactly &mdash; then show you what&rsquo;s possible.</div>
+      </div>
+      <div class="step-card reveal" style="--i:2">
+        <div class="step-number">03</div>
+        <div class="step-title">Migrate</div>
+        <div class="step-desc">Permits, plates, history, and financials transfer cleanly. We validate every record before go-live.</div>
+      </div>
+      <div class="step-card reveal" style="--i:3">
+        <div class="step-number">04</div>
+        <div class="step-title">Launch</div>
+        <div class="step-desc">Go live with on-site support. Your staff is trained, your parkers are notified, and we&rsquo;re on call 24/7.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== TESTIMONIAL CARDS ==================== -->
+<section class="section-dark section-padding">
+  <div class="container">
+    <div style="text-align:center;">
+      <div class="section-label">Client Stories</div>
+      <h2 class="section-title" style="color:var(--white);">WHAT OPERATORS SAY</h2>
+    </div>
+
+    <div class="testimonials-grid stagger">
+      <div class="testimonial-card reveal" style="--i:0">
+        <div class="tc-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="tc-quote">&ldquo;The SCS team understood higher ed from day one. Implementation was fast, the product is intuitive, and our enforcement efficiency has doubled.&rdquo;</p>
+        <div class="tc-author-row">
+          <div class="tc-avatar teal">DH</div>
+          <div class="tc-author-info">
+            <div class="tc-name">Don Hoyt</div>
+            <div class="tc-role">Director of Parking &bull; St. Edward&rsquo;s University</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal" style="--i:1">
+        <div class="tc-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="tc-quote">&ldquo;We evaluated every major vendor. SCS was the only one that could handle Princeton&rsquo;s complex permit structures without custom development.&rdquo;</p>
+        <div class="tc-author-row">
+          <div class="tc-avatar orange">SM</div>
+          <div class="tc-author-info">
+            <div class="tc-name">Scott Morrill</div>
+            <div class="tc-role">Transportation Manager &bull; Princeton University</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal" style="--i:2">
+        <div class="tc-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="tc-quote">&ldquo;Our visitors can now find and pay for parking before they even arrive on campus. The event pre-booking feature alone has transformed our game-day operations.&rdquo;</p>
+        <div class="tc-author-row">
+          <div class="tc-avatar amber">SH</div>
+          <div class="tc-author-info">
+            <div class="tc-name">Sheryl Hartley</div>
+            <div class="tc-role">Parking Operations &bull; Chapman University</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CTA ==================== -->
+<section id="cta" class="cta-section section-padding">
+  <div class="cta-bg-shapes">
+    <div class="cta-shape-1"></div>
+    <div class="cta-shape-2"></div>
+  </div>
+  <div class="container">
+    <div class="cta-content reveal-scale">
+      <div class="section-label" style="color:var(--red);">Let&rsquo;s Talk</div>
+      <h2>READY TO<br><span style="background:var(--rainbow);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">MODERNIZE?</span></h2>
+      <p>See the platform in action. Our team will walk you through a personalized demo based on your institution&rsquo;s needs.</p>
+      <form class="cta-form" onsubmit="event.preventDefault();">
+        <div class="cta-form-row">
+          <input type="text" class="cta-input" placeholder="First name">
+          <input type="text" class="cta-input" placeholder="Last name">
+        </div>
+        <input type="email" class="cta-input" placeholder="Work email">
+        <input type="text" class="cta-input" placeholder="Institution / Organization">
+        <button type="submit" class="cta-submit">Request a Demo &rarr;</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<div class="rainbow-bar-thick"></div>
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="assets/scs-logo.png" height="36" style="filter:brightness(0) invert(1);" alt="SCS Logo">
+      <p>Smarter City Solutions builds modern parking technology for universities and municipalities. Headquartered in Austin, TX.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Products</h4>
+      <a href="#">vPermit</a>
+      <a href="#">vCompliance</a>
+      <a href="#">vPark</a>
+      <a href="#">Integrations</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">About</a>
+      <a href="#">Careers</a>
+      <a href="#">News</a>
+      <a href="#">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <a href="#">Case Studies</a>
+      <a href="#">Blog</a>
+      <a href="#">Support</a>
+      <a href="#">API Docs</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 Smarter City Solutions. All rights reserved.</p>
+    <p>Privacy &bull; Terms &bull; Accessibility</p>
+  </div>
+</footer>
+
+<!-- ==================== SCROLL ANIMATIONS ==================== -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -40px 0px'
+  });
+
+  document.querySelectorAll('.reveal, .reveal-scale, .reveal-left, .reveal-right').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Smooth nav scroll
+  document.querySelectorAll('.nav-links a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Close mobile nav
+        if (window.innerWidth <= 768) {
+          document.querySelector('.nav-links').style.display = 'none';
+        }
+      }
+    });
+  });
+
+  // Parallax shapes on mouse move
+  const hero = document.querySelector('.hero');
+  const shapes = document.querySelectorAll('.hero-geo .shape');
+  hero.addEventListener('mousemove', (e) => {
+    const rect = hero.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    shapes.forEach((shape, i) => {
+      const factor = (i + 1) * 8;
+      shape.style.transform = shape.style.transform.replace(/translate\([^)]*\)/, '') +
+        ` translate(${x * factor}px, ${y * factor}px)`;
+    });
+  });
+});
+</script>
+
+</body>
+</html>
