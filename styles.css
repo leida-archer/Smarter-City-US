@@ -1427,7 +1427,7 @@ section { position: relative; }
 .case-studies-section {
   padding: 64px 0 var(--section-pad);
 }
-.case-study-block { max-width: 800px; margin: 0 auto; }
+.case-study-block { max-width: 800px; margin: 0 auto; background: #fff; padding: 40px; border-radius: 16px; border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
 .case-study-header { margin-bottom: 32px; }
 .case-study-uni {
   font-size: 12px; font-weight: 600; color: var(--mid-teal);
@@ -1559,7 +1559,7 @@ section { position: relative; }
   .section-header p { font-size: 16px; }
   .filter-bar { flex-wrap: wrap; gap: 6px; }
   .filter-btn { padding: 8px 16px; font-size: 13px; }
-  .case-study-block { padding: 0; }
+  .case-study-block { padding: 24px; }
   .case-study-header h3 { font-size: 22px; }
   .case-study-quote { padding: 20px 24px; }
   .case-study-quote blockquote { font-size: 15px; }
