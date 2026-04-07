@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Request a Demo | Smarter City Solutions</title>
+  <title>Sign Up | Smarter City Solutions</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -39,99 +39,34 @@
     </div>
   </div>
 
-  <section class="breadcrumb-bar">
-    <div class="container"><a href="../index.html">Home</a> <span>/</span> <a href="../contact/index.html">Contact</a> <span>/</span> <span>Request a Demo</span></div>
-  </section>
-
-  <!-- Two-Column Demo Form -->
-  <section class="demo-section">
-    <div class="container-wide">
-      <div class="demo-grid">
-        <!-- Left: Value Props -->
-        <div class="demo-value-col reveal">
-          <h1>Let's Brainstorm Your Parking Operation</h1>
-          <p>Spend 30 minutes with our team. We'll learn about your campus, share what we've seen work elsewhere, and walk through the platform if it's relevant. No hard sell &mdash; just open dialogue between parking people.</p>
-
-          <div class="demo-benefits">
-            <div class="demo-benefit">
-              <div class="integration-check"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7l3 3 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-              <span>Personalized walkthrough of vPermit, vCompliance, and vPark</span>
-            </div>
-            <div class="demo-benefit">
-              <div class="integration-check"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7l3 3 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-              <span>See how your existing integrations would connect</span>
-            </div>
-            <div class="demo-benefit">
-              <div class="integration-check"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7l3 3 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-              <span>Get a migration timeline specific to your situation</span>
-            </div>
-            <div class="demo-benefit">
-              <div class="integration-check"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7l3 3 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-              <span>No hard sell &mdash; just an honest conversation</span>
-            </div>
+  <section class="auth-page">
+    <div class="container">
+      <div class="auth-card reveal">
+        <h1>Join the SCS Resource Library</h1>
+        <p class="auth-sub">One free account unlocks pricing, tier sheets, the sales deck PDF, full case studies, team bios, and the quarterly newsletter. We don't spam, and you can unsubscribe anytime.</p>
+        <form method="POST" action="/api/submit">
+          <input type="hidden" name="form_name" value="Account Signup">
+          <div class="form-row">
+            <div class="form-group"><label>Full Name</label><input type="text" name="full_name" placeholder="Jane Smith" required></div>
+            <div class="form-group"><label>Work Email</label><input type="email" name="email" placeholder="jane@university.edu" required></div>
           </div>
-
-          <!-- Client Logos -->
-          <div class="demo-logos">
-            <p class="logo-bar-label" style="text-align:left;margin-bottom:16px">Trusted by</p>
-            <div style="display:flex;flex-wrap:wrap;gap:24px">
-              <div class="client-logo"><img src="../assets/logos/university/harvard-university.png" alt="Harvard University"></div>
-              <div class="client-logo"><img src="../assets/logos/university/princeton-university.png" alt="Princeton University"></div>
-              <div class="client-logo"><img src="../assets/logos/university/chapman-university.png" alt="Chapman University"></div>
-              <div class="client-logo"><img src="../assets/logos/university/st-edwards-university.png" alt="St. Edward's University"></div>
-            </div>
+          <div class="form-row">
+            <div class="form-group"><label>Organization</label><input type="text" name="institution" placeholder="University of..." required></div>
+            <div class="form-group"><label>Title / Role</label><input type="text" name="title_role" placeholder="Parking Manager"></div>
           </div>
-
-          <div style="margin-top:40px">
-            <p style="font-size:15px;color:var(--gray)">Or call us directly:</p>
-            <p style="font-size:18px;font-weight:600;color:var(--dark-teal);margin-top:4px">+1 (555) 123-4567</p>
+          <div class="form-row">
+            <div class="form-group full"><label>Password</label><input type="password" name="password" placeholder="Choose a password" required></div>
           </div>
-        </div>
-
-        <!-- Right: Full Form -->
-        <div class="demo-form-col reveal reveal-delay-2">
-          <div class="demo-form-card">
-            <h3>Request a Demo</h3>
-            <p>We'll respond within one business day. No spam, ever.</p>
-            <form method="POST" action="/api/submit">
-              <input type="hidden" name="form_name" value="Demo Request">
-              <div class="form-row">
-                <div class="form-group"><label>First Name</label><input type="text" name="first_name" placeholder="Jane" required></div>
-                <div class="form-group"><label>Last Name</label><input type="text" name="last_name" placeholder="Smith" required></div>
-              </div>
-              <div class="form-row">
-                <div class="form-group"><label>Work Email</label><input type="email" name="email" placeholder="jane@university.edu" required></div>
-                <div class="form-group"><label>Phone</label><input type="tel" name="phone" placeholder="+1 (555) 000-0000"></div>
-              </div>
-              <div class="form-row">
-                <div class="form-group"><label>Institution Name</label><input type="text" name="institution" placeholder="University of..." required></div>
-                <div class="form-group"><label>Role / Title</label><input type="text" name="title_role" placeholder="Director of Parking"></div>
-              </div>
-              <div class="form-row">
-                <div class="form-group full">
-                  <label>How did you hear about us?</label>
-                  <select name="referral_source">
-                    <option value="">Select one...</option>
-                    <option>IPMI Conference</option>
-                    <option>Colleague / Referral</option>
-                    <option>Web Search</option>
-                    <option>Industry Publication</option>
-                    <option>Social Media</option>
-                    <option>Other</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group full">
-                  <label>What's your biggest parking challenge? <span style="font-weight:400;color:var(--gray);font-size:12px">(optional)</span></label>
-                  <textarea name="challenge" rows="6" placeholder="Tell us about your current situation, systems, and pain points. The more detail you share, the more useful our conversation will be."></textarea>
-                  <p style="font-size:12px;color:var(--gray);margin-top:6px;font-style:italic">No character limit &mdash; share as much detail as you'd like.</p>
-                </div>
-              </div>
-              <button type="submit" class="form-submit" style="background:var(--red)">Submit</button>
-              <p class="form-note">By submitting, you agree to receive communications from SCS. We respect your privacy.</p>
-            </form>
+          <div class="notif-prefs">
+            <strong style="color:var(--dark-teal);font-size:13px">Notification preferences</strong>
+            <label><input type="checkbox" name="notify_newsletter" checked> Quarterly newsletter</label>
+            <label><input type="checkbox" name="notify_pricing" checked> When pricing or tiers are updated</label>
+            <label><input type="checkbox" name="notify_case_studies"> When new case studies are published</label>
           </div>
+          <button type="submit" class="form-submit" style="margin-top:18px">Create Account &amp; Unlock Library</button>
+        </form>
+        <div class="auth-toggle">
+          Already have an account? <a href="#">Log in</a>
         </div>
       </div>
     </div>
@@ -144,7 +79,7 @@
         <div class="footer-brand"><img src="../assets/scs-logo.png" alt="Smarter City Solutions"><p>Integrated (for) Life</p><p class="footer-contact-info">+1 (555) 123-4567</p><p class="footer-contact-info">info@smartercity.com</p></div>
         <div class="footer-col"><h5>Solutions</h5><a href="../solutions/vpermit.html">vPermit</a><a href="../solutions/vcompliance.html">vCompliance</a><a href="../solutions/vpark.html">vPark</a><a href="../solutions/platform.html">The Platform</a><a href="../solutions/integrations.html">Integrations</a></div>
         <div class="footer-col"><h5>Industries</h5><a href="../industries/higher-education.html">Higher Education</a><a href="../industries/municipalities.html">Municipalities</a><a href="../industries/healthcare.html">Healthcare</a><a href="../industries/k12.html">K-12 Schools</a><a href="../industries/corporate-campus.html">Corporate Campus</a></div>
-        <div class="footer-col"><h5>Resources</h5><a href="../resources/case-studies.html">Problem Solved</a><a href="../resources/blog.html">Blog</a><a href="../resources/webinars.html">Webinars</a></div>
+        <div class="footer-col"><h5>Resources</h5><a href="../resources/library.html">Library</a><a href="../resources/case-studies.html">Problem Solved</a><a href="../resources/blog.html">Blog</a><a href="../resources/webinars.html">Webinars</a></div>
         <div class="footer-col"><h5>Company</h5><a href="../about/index.html">About</a><a href="../about/team.html">Team</a><a href="../contact/index.html">Contact</a><a href="#">Careers</a></div>
       </div>
       <div class="footer-bottom"><p>&copy; 2026 Smarter City Solutions. All Rights Reserved.</p><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Accessibility Statement</a><a href="#">Terms of Service</a></div></div>

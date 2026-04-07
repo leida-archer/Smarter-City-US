@@ -37,6 +37,7 @@
             <a href="industries/municipalities.html">Municipalities</a>
             <a href="industries/healthcare.html">Healthcare</a>
             <a href="industries/k12.html">K-12 Schools</a>
+            <a href="industries/corporate-campus.html">Corporate Campus</a>
           </div>
         </div>
         <!-- About dropdown -->
@@ -49,11 +50,17 @@
           </div>
         </div>
         <!-- Resources -->
-        <div class="nav-item">
-          <a href="resources/case-studies.html">Resources</a>
+        <div class="nav-item has-dropdown">
+          <a href="resources/case-studies.html">Resources <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></a>
+          <div class="dropdown">
+            <a href="resources/case-studies.html">Problem Solved</a>
+            <a href="resources/pricing.html">Pricing &amp; Tiers<svg width="10" height="11" viewBox="0 0 10 11" style="margin-left:6px;vertical-align:-1px;opacity:0.6"><path d="M2 5V3.5a3 3 0 016 0V5m-7 0h8v5H1V5z" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg></a>
+            <a href="resources/sales-deck.html">Sales Deck<svg width="10" height="11" viewBox="0 0 10 11" style="margin-left:6px;vertical-align:-1px;opacity:0.6"><path d="M2 5V3.5a3 3 0 016 0V5m-7 0h8v5H1V5z" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg></a>
+            <a href="resources/newsletter.html">Newsletter<svg width="10" height="11" viewBox="0 0 10 11" style="margin-left:6px;vertical-align:-1px;opacity:0.6"><path d="M2 5V3.5a3 3 0 016 0V5m-7 0h8v5H1V5z" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg></a>
+          </div>
         </div>
       </div>
-      <a href="contact/request-demo.html" class="nav-cta">Request a Demo</a>
+      <a href="account/signup.html" class="nav-cta">Login / Join</a>
       <button class="hamburger" id="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
@@ -69,9 +76,12 @@
       <a href="solutions/platform.html">The Platform</a>
       <a href="industries/higher-education.html">Higher Education</a>
       <a href="industries/municipalities.html">Municipalities</a>
+      <a href="industries/healthcare.html">Healthcare</a>
+      <a href="industries/k12.html">K-12 Schools</a>
+      <a href="industries/corporate-campus.html">Corporate Campus</a>
       <a href="about/index.html">About</a>
       <a href="resources/case-studies.html">Resources</a>
-      <a href="contact/request-demo.html" class="mobile-cta">Request a Demo</a>
+      <a href="contact/request-demo.html" class="mobile-cta">Contact Us</a>
     </div>
   </div>
 
@@ -80,12 +90,12 @@
     <div class="container-wide">
       <div class="hero-grid">
         <div class="hero-content reveal">
-          <div class="hero-eyebrow">Trusted by cities and universities worldwide</div>
+          <div class="hero-eyebrow">Built with universities, trusted across the United States</div>
           <h1>The Modern Parking Platform for <span>Cities and Universities</span></h1>
           <p>Cloud-native permits, enforcement, and payments &mdash; integrated from day one. Built from 15+ years of real-world parking expertise.</p>
           <div class="hero-actions">
             <a href="contact/request-demo.html" class="btn-primary">
-              Request a Demo
+              Contact Us
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
             <a href="#solutions" class="btn-text">
@@ -98,17 +108,9 @@
           <div class="hero-image-placeholder">
             <img src="assets/scs_landing_v13a.png" alt="Campus Parking Dashboard">
           </div>
-          <div class="hero-float-card card-1">
-            <div class="float-stat">75%</div>
-            <div class="float-label">AU/NZ universities</div>
-          </div>
           <div class="hero-float-card card-2">
             <div class="float-stat">15+</div>
             <div class="float-label">Years experience</div>
-          </div>
-          <div class="hero-float-card card-3">
-            <div class="float-stat">8</div>
-            <div class="float-label">US universities</div>
           </div>
         </div>
       </div>
@@ -138,10 +140,7 @@
         <!-- vPermit -->
         <div class="product-card vpermit reveal reveal-delay-1">
           <div class="product-accent"></div>
-          <div class="product-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><rect x="3" y="3" width="18" height="18" rx="3"/></svg>
-          </div>
-          <div class="product-subtitle">vPermit</div>
+          <div class="product-logo-slot"><img src="assets/logos/products/vpermit.png" alt="vPermit" class="product-logo-mark"></div>
           <h3>Virtual Permit Management</h3>
           <p>Virtual permits with unlimited rules, SSO, and self-service for every parker &mdash; students, staff, visitors, and contractors.</p>
           <ul class="product-features">
@@ -158,10 +157,7 @@
         <!-- vCompliance -->
         <div class="product-card vcompliance reveal reveal-delay-2">
           <div class="product-accent"></div>
-          <div class="product-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <div class="product-subtitle">vCompliance</div>
+          <div class="product-logo-slot"><img src="assets/logos/products/vcompliance.png" alt="vCompliance" class="product-logo-mark"></div>
           <h3>Enforcement &amp; Citations</h3>
           <p>LPR-powered enforcement with real-time validation, automated workflows, and a customer portal for payments and appeals.</p>
           <ul class="product-features">
@@ -178,10 +174,7 @@
         <!-- vPark -->
         <div class="product-card vpark reveal reveal-delay-3">
           <div class="product-accent"></div>
-          <div class="product-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-          </div>
-          <div class="product-subtitle">vPark</div>
+          <div class="product-logo-slot"><img src="assets/logos/products/vpark.png" alt="vPark" class="product-logo-mark"></div>
           <h3>Mobile Payments &amp; Sessions</h3>
           <p>Pay by the minute via QR, app, or voice. Differential rates, zone alerts, and real-time availability &mdash; no ticket machines needed.</p>
           <ul class="product-features">
@@ -211,7 +204,7 @@
           <ul class="integration-list">
             <li>
               <span class="integration-check"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7l3 3 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              <span><strong>Student Information Systems</strong> &mdash; Banner, PeopleSoft, Workday</span>
+              <span><strong>Student &amp; Employee Information Systems</strong> &mdash; Banner, PeopleSoft, Workday</span>
             </li>
             <li>
               <span class="integration-check"><svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7l3 3 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
@@ -464,15 +457,15 @@
       </div>
       <div class="partners-grid">
         <div class="partner-category">
-          <h4>SSO / Identity</h4>
+          <h4>Payments</h4>
           <div class="partner-logos">
-            <img src="assets/logos/b2b/okta.png" alt="Okta"><img src="assets/logos/b2b/azure-ad.png" alt="Azure AD"><img src="assets/logos/b2b/shibboleth.png" alt="Shibboleth">
+            <img src="assets/logos/b2b/parkmobile.png" alt="ParkMobile"><img src="assets/logos/b2b/flowbird.svg" alt="Flowbird"><img src="assets/logos/b2b/paypal.png" alt="PayPal"><img src="assets/logos/b2b/apple-pay.png" alt="Apple Pay"><img src="assets/logos/b2b/google-pay.png" alt="Google Pay"><img src="assets/logos/b2b/advam.png" alt="ADVAM">
           </div>
         </div>
         <div class="partner-category">
           <h4>Cameras &amp; LPR</h4>
           <div class="partner-logos">
-            <img src="assets/logos/b2b/genetec.png" alt="Genetec"><img src="assets/logos/b2b/openalpr.png" alt="OpenALPR"><img src="assets/logos/b2b/sensen-ai.png" alt="Sensen.ai">
+            <img src="assets/logos/b2b/genetec.png" alt="Genetec"><img src="assets/logos/b2b/survision.png" alt="Survision"><img src="assets/logos/b2b/openalpr.png" alt="OpenALPR"><img src="assets/logos/b2b/sensen-ai.png" alt="Sensen.ai"><img src="assets/logos/b2b/sensor-dynamics.png" alt="Sensor Dynamics">
           </div>
         </div>
         <div class="partner-category">
@@ -482,21 +475,21 @@
           </div>
         </div>
         <div class="partner-category">
-          <h4>Payments</h4>
+          <h4>Parking Equipment &amp; PARCS</h4>
           <div class="partner-logos">
-            <img src="assets/logos/b2b/paypal.png" alt="PayPal"><img src="assets/logos/b2b/apple-pay.png" alt="Apple Pay"><img src="assets/logos/b2b/google-pay.png" alt="Google Pay">
+            <img src="assets/logos/b2b/skidata.png" alt="SKIDATA"><img src="assets/logos/b2b/liftango.png" alt="Liftango">
+          </div>
+        </div>
+        <div class="partner-category">
+          <h4>Identity &amp; Cloud</h4>
+          <div class="partner-logos">
+            <img src="assets/logos/b2b/okta.png" alt="Okta"><img src="assets/logos/b2b/azure-ad.png" alt="Azure AD"><img src="assets/logos/b2b/shibboleth.png" alt="Shibboleth"><img src="assets/logos/b2b/aws.png" alt="AWS"><img src="assets/logos/b2b/azure.png" alt="Azure"><img src="assets/logos/b2b/google-cloud.png" alt="Google Cloud">
           </div>
         </div>
         <div class="partner-category">
           <h4>BI / Analytics</h4>
           <div class="partner-logos">
             <img src="assets/logos/b2b/power-bi.png" alt="Power BI"><img src="assets/logos/b2b/tableau.png" alt="Tableau"><img src="assets/logos/b2b/qlik.png" alt="Qlik">
-          </div>
-        </div>
-        <div class="partner-category">
-          <h4>Cloud &amp; PARCS</h4>
-          <div class="partner-logos">
-            <img src="assets/logos/b2b/aws.png" alt="AWS"><img src="assets/logos/b2b/azure.png" alt="Azure"><img src="assets/logos/b2b/skidata.png" alt="SKIDATA"><img src="assets/logos/b2b/liftango.png" alt="Liftango">
           </div>
         </div>
       </div>
@@ -508,25 +501,11 @@
     <div class="container-wide">
       <div class="cta-grid">
         <div class="cta-content reveal">
-          <h2>Ready to modernize your campus parking?</h2>
-          <p>Whether you're replacing a legacy system or starting fresh, our team is ready to show you a better way. No hard sell &mdash; just a walk-through with our experts.</p>
-          <div class="cta-stats">
-            <div class="cta-stat">
-              <span class="cta-stat-num" data-target="75" data-suffix="%">75%</span>
-              <span class="cta-stat-label">of AU/NZ universities</span>
-            </div>
-            <div class="cta-stat">
-              <span class="cta-stat-num">15+</span>
-              <span class="cta-stat-label">years experience</span>
-            </div>
-            <div class="cta-stat">
-              <span class="cta-stat-num" data-target="8" data-suffix="">8</span>
-              <span class="cta-stat-label">US universities</span>
-            </div>
-          </div>
+          <h2>Let's brainstorm your parking operation</h2>
+          <p>Spend 30 minutes with our team. We'll learn about your campus, share what we've seen work elsewhere, and walk through the platform if it's relevant. No hard sell &mdash; just open dialogue between parking people.</p>
         </div>
         <div class="cta-form-card reveal reveal-delay-2">
-          <h3>Request a Demo</h3>
+          <h3>Contact Us</h3>
           <p>We'll respond within one business day. No spam, ever.</p>
           <form method="POST" action="/api/submit">
             <input type="hidden" name="form_name" value="Demo Request">
@@ -603,10 +582,11 @@
           <a href="industries/municipalities.html">Municipalities</a>
           <a href="industries/healthcare.html">Healthcare</a>
           <a href="industries/k12.html">K-12 Schools</a>
+          <a href="industries/corporate-campus.html">Corporate Campus</a>
         </div>
         <div class="footer-col">
           <h5>Resources</h5>
-          <a href="resources/case-studies.html">Case Studies</a>
+          <a href="resources/case-studies.html">Problem Solved</a>
           <a href="resources/blog.html">Blog</a>
           <a href="resources/webinars.html">Webinars</a>
         </div>
