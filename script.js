@@ -153,4 +153,15 @@
     setTimeout(() => { if (banner.parentElement) banner.remove(); }, 8000);
   }
 
+  // ── Auth-aware nav: hide lock icons when logged in ──
+  if (localStorage.getItem('scs_authed') === 'true') {
+    // Hide lock SVGs in nav dropdown links
+    document.querySelectorAll('.dropdown a svg').forEach(function(svg) {
+      // Lock icons have the padlock path with "M2 5V3.5a3 3 0 016 0V5"
+      if (svg.innerHTML.indexOf('3 3 0 016 0') !== -1) {
+        svg.style.display = 'none';
+      }
+    });
+  }
+
 })();
