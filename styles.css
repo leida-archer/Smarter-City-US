@@ -933,10 +933,10 @@ section { position: relative; }
   position: relative;
 }
 .gated-content {
-  filter: blur(4px) grayscale(0.2);
+  filter: blur(6px) grayscale(0.3);
   pointer-events: none;
   user-select: none;
-  opacity: 0.8;
+  opacity: 0.75;
   padding: 60px 0;
 }
 .gated-overlay {
