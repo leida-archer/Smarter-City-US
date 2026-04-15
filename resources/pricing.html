@@ -921,8 +921,8 @@
 </div><!-- /gatedWrapper -->
 
 <!-- Overlay (sibling to wrapper, not affected by blur) -->
-<div id="gatedOverlay" style="display:none;position:absolute;top:0;left:0;right:0;bottom:0;z-index:100;align-items:flex-start;justify-content:center;padding-top:120px">
-  <div style="position:sticky;top:calc(50vh - 200px);background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:20px;padding:48px 56px;max-width:520px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,0.12)">
+<div id="gatedOverlay" style="display:none;position:absolute;top:0;left:0;right:0;z-index:100;pointer-events:none">
+  <div id="gatedCard" style="pointer-events:all;margin:0 auto;background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:20px;padding:48px 56px;max-width:520px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,0.12)">
     <div style="width:72px;height:72px;border-radius:50%;background:rgba(44,116,128,0.1);color:#2C7480;display:flex;align-items:center;justify-content:center;margin:0 auto 24px">
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
     </div>
@@ -967,7 +967,31 @@
       wrapper.style.userSelect = 'none';
       wrapper.style.opacity = '0.75';
     }
-    if (overlay) overlay.style.display = 'flex';
+    if (overlay) overlay.style.display = 'block';
+
+    // Position card: centered in viewport, stops when viewport hits footer
+    var card = document.getElementById('gatedCard');
+    var footer = document.querySelector('.footer');
+    function positionCard() {
+      if (!card || !footer) return;
+      var scrollTop = window.scrollY;
+      var viewportH = window.innerHeight;
+      var cardH = card.offsetHeight;
+      var footerTop = footer.getBoundingClientRect().top + scrollTop;
+      // Ideal: center card in viewport
+      var idealTop = scrollTop + (viewportH - cardH) / 2;
+      // Max: card bottom must not go past footer top
+      var maxTop = footerTop - cardH - 40;
+      var finalTop = Math.min(idealTop, maxTop);
+      // Min: don't go above the content area
+      var areaTop = document.getElementById('gatedArea').offsetTop;
+      finalTop = Math.max(finalTop, areaTop + 80);
+      card.style.position = 'relative';
+      card.style.top = (finalTop - areaTop) + 'px';
+    }
+    positionCard();
+    window.addEventListener('scroll', positionCard, { passive: true });
+    window.addEventListener('resize', positionCard, { passive: true });
   } else {
     // Hide overlay, content stays normal
     if (overlay) overlay.style.display = 'none';
