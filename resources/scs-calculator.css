@@ -1153,10 +1153,17 @@
 /* ── Gated Blur Overlay ──────────────────────── */
 .gated-lock-overlay {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  inset: 0;
   z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.gated-lock-overlay .gated-overlay {
+  position: static;
+  transform: none;
+  pointer-events: all;
 }
 /* Logged-in nav button */
 .nav-user-btn {
