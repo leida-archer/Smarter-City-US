@@ -96,12 +96,23 @@
     printer: { label: 'Zebra Printer', price: 750 },
   };
 
-  // MLPR Survision pricing
-  const MLPR = {
-    capex_full: { hardware: 16000, software: 8000, commissioning: 2500 },
-    haas_full: { monthly: 1290, annual: 15480 },
-    haas_mini: { monthly: 1100, annual: 13200 },
+  // MLPR Survision pricing — tiered
+  const MLPR_TIERS = {
+    scs: {
+      label: 'SCS',
+      capex_full: { hardware: 15120, software: 7560, commissioning: 2362.50 },
+      haas_full: { monthly: 1219.05, annual: 14628.60 },
+      haas_mini: { monthly: 1039.50, annual: 12474 },
+    },
+    partner: {
+      label: 'SCS Partner',
+      capex_full: { hardware: 14400, software: 7200, commissioning: 2250 },
+      haas_full: { monthly: 1161, annual: 13932 },
+      haas_mini: { monthly: 990, annual: 11880 },
+    },
   };
+  // Active MLPR pricing (defaults to SCS)
+  var MLPR = MLPR_TIERS.scs;
 
   // ── State ────────────────────────────────────────
   const state = {
@@ -136,6 +147,7 @@
     kit: 'full',
     model: 'capex',
     mlprDiscount: 0,
+    mlprTier: 'scs',  // 'scs' | 'partner'
   };
 
   // ── DOM Helpers ──────────────────────────────────
@@ -344,6 +356,9 @@
   // ── Hardware Calculation ─────────────────────────
   function calculateHardware() {
     const result = { lines: [], total: 0, mlprYear1: 0, mlprRecurring: 0, mlprTco: {} };
+
+    // Set active MLPR pricing tier
+    MLPR = MLPR_TIERS[state.mlprTier] || MLPR_TIERS.msrp;
 
     // Enforcement devices
     if (state.hwTablet > 0) {
@@ -711,6 +726,9 @@
     const mlprCard = $('#mlprCard');
     if (mlprCard) mlprCard.classList.toggle('active', state.mlprEnabled);
 
+    // MLPR tier toggle sync
+    $$('.mlpr-tier-control .segmented-btn').forEach(b => b.classList.toggle('active', b.dataset.tier === state.mlprTier));
+
     // MLPR constraints
     if (state.mlprEnabled) {
       // Vehicle stepper
@@ -992,6 +1010,15 @@
       mlprExpand.addEventListener('click', (e) => { e.stopPropagation(); });
     }
 
+    // MLPR pricing tier toggle
+    $$('.mlpr-tier-control .segmented-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.mlprTier = btn.dataset.tier;
+        $$('.mlpr-tier-control .segmented-btn').forEach(b => b.classList.toggle('active', b.dataset.tier === state.mlprTier));
+        render();
+      });
+    });
+
     // MLPR vehicle stepper
     bindStepper('vehBtnMinus', 'vehBtnPlus', 'vehicleCount', 'vehicles', 1, 50, true);
 
@@ -1201,7 +1228,7 @@
   }
 
   // Expose for PDF generator
-  window.SCSCalc = { state, calculateSoftware, calculateHardware, fmt, CAMPUS_TIERS, MUNICIPAL, HARDWARE, MLPR };
+  window.SCSCalc = { state, calculateSoftware, calculateHardware, fmt, CAMPUS_TIERS, MUNICIPAL, HARDWARE, get MLPR() { return MLPR; }, MLPR_TIERS };
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);

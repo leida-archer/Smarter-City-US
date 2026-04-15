@@ -507,6 +507,14 @@
 .kit-card .toggle-card-icon {
   margin-bottom: 0;
 }
+/* MLPR tier segmented control */
+.mlpr-tier-control {
+  max-width: 100%;
+}
+.mlpr-tier-control .segmented-btn {
+  font-size: 13px;
+  padding: 8px 16px;
+}
 
 /* ── Tier + Integrations Row ─────────────────── */
 .tier-integrations-row {
@@ -1150,7 +1158,68 @@
   }
 }
 
-/* ── Gated Blur Overlay — styles are inline ──── */
+/* ── Gated Overlay ───────────────────────────── */
+.gated-overlay-fullpage {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(250,250,248,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gated-overlay-card {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 20px;
+  padding: 48px 56px;
+  max-width: 480px;
+  text-align: center;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.12);
+}
+.lock-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(44,116,128,0.1);
+  color: var(--mid-teal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+}
+.gated-overlay-card h2 {
+  font-size: 28px;
+  font-family: var(--font-heading);
+  font-weight: 400;
+  margin: 0 0 12px 0;
+  color: var(--dark-teal);
+  letter-spacing: -1px;
+}
+.gated-overlay-card p {
+  font-size: 16px;
+  color: var(--gray);
+  margin: 0 0 28px 0;
+  line-height: 1.6;
+}
+.gated-overlay-card .btn-primary {
+  display: inline-flex;
+}
+.gated-login-link {
+  display: block;
+  margin-top: 18px;
+  font-size: 13px;
+  color: var(--gray);
+}
+.gated-login-link a {
+  color: var(--mid-teal);
+  font-weight: 600;
+}
+.gated-login-link a:hover {
+  color: var(--dark-teal);
+}
 /* Logged-in nav button */
 .nav-user-btn {
   font-size: 13px;
