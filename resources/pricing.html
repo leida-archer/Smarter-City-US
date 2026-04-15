@@ -3,13 +3,229 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pricing & Tiers | Smarter City Solutions</title>
+  <title>Pricing &amp; Tiers | Smarter City Solutions</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../styles.css">
+
+  <!-- SCS shared foundation styles (inline for standalone use) -->
+  <style>
+    /* ── SCS Foundation ──────────────────────────── */
+    :root {
+      --dark-teal: #15626C;
+      --mid-teal: #2C7480;
+      --blue-teal: #3194B6;
+      --sky: #47BBE8;
+      --green: #4DAE37;
+      --green-light: #88BF57;
+      --orange: #EB5B25;
+      --amber: #F0AE25;
+      --red: #D41B24;
+      --red-dark: #AE1F2F;
+      --dark: #0F172A;
+      --slate: #475569;
+      --gray: #64748B;
+      --light: #F8FAFC;
+      --bg: #FAFAF8;
+      --border: rgba(0,0,0,0.06);
+      --font-heading: 'DM Sans', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --section-pad: 120px;
+      --container-max: 1200px;
+      --container-wide: 1400px;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 100px; -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--font-body); background: var(--bg); color: #1a1a1a; line-height: 1.6; font-weight: 400; font-size: 16px; overflow-x: hidden; }
+    img { max-width: 100%; height: auto; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    h1, h2, h3, h4, h5 { font-family: var(--font-heading); line-height: 1.08; }
+    h1 { font-size: clamp(42px, 5.5vw, 72px); font-weight: 300; letter-spacing: -2.5px; color: var(--dark); }
+    h2 { font-size: clamp(36px, 4vw, 60px); font-weight: 300; letter-spacing: -2px; color: var(--dark); }
+    h3 { font-size: clamp(22px, 2.2vw, 28px); font-weight: 500; letter-spacing: -0.5px; color: var(--dark-teal); }
+    p { font-family: var(--font-body); color: var(--slate); font-size: 17px; line-height: 1.7; }
+    .container { max-width: var(--container-max); margin: 0 auto; padding: 0 32px; }
+    .container-wide { max-width: var(--container-wide); margin: 0 auto; padding: 0 48px; }
+    section { position: relative; }
+
+    /* ── Reveal Animations ────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* ── Rainbow Bar ─────────────────────────────── */
+    .rainbow-bar { display: flex; height: 4px; position: relative; z-index: 2; }
+    .rainbow-bar > div { flex: 1; }
+
+    /* ── Navigation ──────────────────────────────── */
+    .navbar { position: sticky; top: 0; z-index: 1000; background: rgba(255,255,255,0.92); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid rgba(0,0,0,0.04); transition: box-shadow 0.3s; }
+    .navbar.scrolled { box-shadow: 0 1px 8px rgba(0,0,0,0.04); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+    .nav-logo img { height: 51px; display: block; }
+    .nav-links { display: flex; align-items: center; gap: 8px; }
+    .nav-item { position: relative; }
+    .nav-item > a { display: flex; align-items: center; gap: 4px; padding: 8px 16px; font-size: 14px; font-weight: 500; color: var(--slate); border-radius: 6px; transition: all 0.2s; letter-spacing: 0.2px; }
+    .nav-item > a:hover { color: var(--dark-teal); background: rgba(21,98,108,0.05); }
+    .nav-item > a svg { opacity: 0.5; }
+    .has-dropdown { position: relative; }
+    .dropdown { position: absolute; top: calc(100% + 4px); left: 0; min-width: 220px; background: #fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; padding: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.12); opacity: 0; visibility: hidden; transform: translateY(8px); transition: all 0.2s; }
+    .has-dropdown:hover .dropdown, .has-dropdown.open .dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+    .dropdown a { display: flex; align-items: center; gap: 10px; padding: 10px 14px; font-size: 14px; color: var(--slate); border-radius: 8px; transition: all 0.15s; }
+    .dropdown a:hover { background: rgba(21,98,108,0.05); color: var(--dark-teal); }
+    .dropdown-divider { height: 1px; background: rgba(0,0,0,0.06); margin: 6px 0; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+    .dot.green { background: var(--green); }
+    .dot.orange { background: var(--orange); }
+    .dot.amber { background: var(--amber); }
+    .nav-cta { background: transparent; color: var(--mid-teal) !important; padding: 9px 22px !important; border-radius: 8px; border: 1.5px solid var(--mid-teal); font-weight: 600 !important; font-size: 14px !important; transition: background 0.2s, color 0.2s, transform 0.15s; margin-left: 8px; }
+    .nav-cta:hover { background: var(--mid-teal); color: #fff !important; transform: translateY(-1px); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; }
+    .hamburger span { width: 22px; height: 2px; background: #334155; border-radius: 2px; transition: all 0.3s; display: block; }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+    .mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #fff; z-index: 999; padding: 100px 32px 32px; overflow-y: auto; }
+    .mobile-menu.active { display: block; }
+    .mobile-menu-inner { display: flex; flex-direction: column; gap: 8px; }
+    .mobile-menu-inner a { font-size: 20px; font-weight: 500; color: var(--dark); padding: 14px 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
+    .mobile-menu-inner .mobile-cta { margin-top: 24px; text-align: center; background: var(--red); color: #fff; padding: 16px 36px; border-radius: 10px; font-weight: 600; font-size: 16px; border-bottom: none; }
+
+    /* ── Buttons ──────────────────────────────────── */
+    .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--red); color: #fff; padding: 16px 36px; border-radius: 10px; font-size: 15px; font-weight: 600; text-decoration: none; border: none; cursor: pointer; font-family: var(--font-heading); transition: background 0.2s, transform 0.15s, box-shadow 0.2s; box-shadow: 0 1px 3px rgba(212,27,36,0.2); }
+    .btn-primary:hover { background: #b81620; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212,27,36,0.25); }
+    .btn-text { font-size: 15px; font-weight: 500; color: var(--mid-teal); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: color 0.2s, gap 0.2s; cursor: pointer; background: none; border: none; font-family: var(--font-body); }
+    .btn-text:hover { color: var(--dark-teal); gap: 10px; }
+    .btn-text svg { width: 16px; height: 16px; transition: transform 0.2s; }
+    .btn-text:hover svg { transform: translateX(3px); }
+    .btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--mid-teal); padding: 14px 28px; border-radius: 10px; font-size: 15px; font-weight: 600; border: 2px solid var(--mid-teal); cursor: pointer; font-family: var(--font-heading); transition: all 0.2s; text-decoration: none; }
+    .btn-secondary:hover { background: var(--mid-teal); color: #fff; }
+
+    /* ── Breadcrumb ───────────────────────────────── */
+    .breadcrumb-bar { padding: 16px 0; background: #fff; border-bottom: 1px solid rgba(0,0,0,0.04); font-size: 13px; color: #94a3b8; }
+    .breadcrumb-bar a { color: var(--mid-teal); transition: color 0.2s; }
+    .breadcrumb-bar a:hover { color: var(--dark-teal); }
+    .breadcrumb-bar span { margin: 0 6px; }
+
+    /* ── Page Hero ────────────────────────────────── */
+    .page-hero { padding: 80px 0 64px; background: var(--bg); }
+    .page-hero-inner { max-width: 680px; }
+    .page-hero-inner .product-subtitle { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; }
+    .page-hero-inner h1 { margin-bottom: 20px; font-weight: 400; color: var(--dark); }
+    .page-hero-inner > p { font-size: 19px; color: var(--slate); line-height: 1.8; margin-bottom: 32px; max-width: 560px; }
+    .hero-stats-row { display: flex; gap: 40px; margin-top: 32px; }
+    .hero-stat { text-align: center; }
+    .hero-stat-num { display: block; font-family: var(--font-heading); font-size: 32px; font-weight: 700; color: var(--dark-teal); letter-spacing: -1px; }
+    .hero-stat-label { font-size: 12px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
+
+    /* ── Section Header ──────────────────────────── */
+    .section-header { text-align: center; max-width: 640px; margin: 0 auto 48px; }
+    .section-header h2 { margin-bottom: 16px; }
+    .section-header p { font-size: 18px; }
+
+    /* ── Form Inputs ─────────────────────────────── */
+    .form-group { display: flex; flex-direction: column; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-group label { font-size: 13px; font-weight: 500; color: var(--slate); margin-bottom: 6px; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; box-sizing: border-box; padding: 12px 16px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 15px; font-family: var(--font-body); color: #334155; background: var(--bg); transition: border-color 0.2s, box-shadow 0.2s; outline: none; -webkit-appearance: none; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--mid-teal); box-shadow: 0 0 0 3px rgba(44,116,128,0.1); }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: #cbd5e1; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .form-submit { width: 100%; padding: 14px 32px; background: var(--red); color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; font-family: var(--font-heading); cursor: pointer; transition: background 0.2s, transform 0.15s; margin-top: 8px; }
+    .form-submit:hover { background: #b81620; transform: translateY(-1px); }
+    .form-note { font-size: 12px; color: #94a3b8; text-align: center; margin-top: 12px; }
+
+    /* ── CTA Section ─────────────────────────────── */
+    .cta-section { padding: var(--section-pad) 0; background: linear-gradient(135deg, var(--dark-teal) 0%, var(--mid-teal) 50%, var(--blue-teal) 100%); position: relative; overflow: hidden; }
+    .cta-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 50%, rgba(255,255,255,0.05) 0%, transparent 60%); }
+    .cta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; position: relative; z-index: 1; }
+    .cta-content h2 { color: #fff; margin-bottom: 28px; font-size: clamp(36px, 4.2vw, 56px); line-height: 1.1; }
+    .cta-content p { color: rgba(255,255,255,0.78); font-size: 20px; line-height: 1.65; max-width: 480px; margin-bottom: 0; }
+    .cta-stats { display: flex; gap: 32px; margin-top: 32px; }
+    .cta-stat { text-align: center; }
+    .cta-stat-num { display: block; font-family: var(--font-heading); font-size: 36px; font-weight: 700; color: var(--sky); }
+    .cta-stat-label { font-size: 12px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; }
+    .cta-form-card { background: #fff; border-radius: 20px; padding: 48px 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+    .cta-form-card h3 { font-size: 22px; color: var(--dark); font-weight: 600; margin-bottom: 8px; }
+    .cta-form-card > p { font-size: 14px; color: #94a3b8; margin-bottom: 28px; }
+
+    /* ── Footer ───────────────────────────────────── */
+    .footer { padding: 80px 0 0; background: #fff; border-top: 1px solid rgba(0,0,0,0.04); }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr; gap: 48px; margin-top: 48px; margin-bottom: 64px; }
+    .footer-brand img { height: 68px; margin-bottom: 20px; }
+    .footer-brand > p { font-size: 14px; color: #94a3b8; max-width: 280px; line-height: 1.7; }
+    .footer-contact-info { display: flex; align-items: center; gap: 8px; font-size: 13px; margin-top: 8px; color: #94a3b8; }
+    .footer-col h5 { font-size: 13px; font-weight: 600; color: var(--dark); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 20px; }
+    .footer-col a { display: block; font-size: 14px; color: var(--gray); text-decoration: none; padding: 5px 0; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--dark-teal); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-top: 1px solid rgba(0,0,0,0.05); }
+    .footer-bottom p { font-size: 13px; color: #94a3b8; }
+    .footer-bottom-links { display: flex; gap: 24px; }
+    .footer-bottom-links a { font-size: 13px; color: #94a3b8; text-decoration: none; transition: color 0.2s; }
+    .footer-bottom-links a:hover { color: var(--slate); }
+
+    /* ── Responsive (shared) ─────────────────────── */
+    @media (max-width: 1024px) {
+      .cta-grid { grid-template-columns: 1fr; gap: 48px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .hero-stats-row { gap: 24px; }
+    }
+    @media (max-width: 767px) {
+      :root { --section-pad: 60px; }
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .navbar { height: auto; padding: 12px 0; }
+      .nav-inner { height: auto; min-height: 56px; }
+      .nav-logo img { height: 40px; }
+      .container, .container-wide { padding: 0 20px; }
+      section { overflow: hidden; }
+      h1 { font-size: 32px; letter-spacing: -1.5px; }
+      h2 { font-size: 28px; letter-spacing: -1px; }
+      .page-hero { padding: 48px 0 36px; }
+      .page-hero-inner h1 { font-size: 28px; }
+      .page-hero-inner > p { font-size: 16px; max-width: 100%; }
+      .hero-stats-row { flex-wrap: wrap; gap: 16px; }
+      .cta-section { padding: 48px 0; }
+      .cta-form-card { padding: 28px 20px; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer { padding: 48px 0 0; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .footer-brand { grid-column: 1 / -1; }
+      .footer-brand img { height: 56px; }
+      .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+      .footer-bottom-links { flex-wrap: wrap; justify-content: center; }
+      .rainbow-bar { height: 3px; }
+    }
+    @media (max-width: 480px) {
+      .container, .container-wide { padding: 0 16px; }
+      h1 { font-size: 28px; letter-spacing: -1px; }
+      h2 { font-size: 24px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+      .cta-stats { flex-direction: column; gap: 12px; }
+    }
+  </style>
+
+  <!-- Calculator-specific styles -->
+  <link rel="stylesheet" href="scs-calculator.css">
 </head>
 <body>
+
+<!-- ═══ Gated Overlay (shown when not logged in) ══ -->
+<div class="gated-overlay-fullpage" id="gatedOverlay" style="display:none">
+  <div class="gated-overlay-card">
+    <div class="lock-circle">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+    </div>
+    <h2>Pricing &amp; Tiers</h2>
+    <p>Sign up for a free account to access the pricing calculator, tier sheets, and sales resources.</p>
+    <a href="../account/signup.html" class="btn-primary">Sign Up to View <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <div class="gated-login-link">Already have an account? <a href="../account/signup.html">Log in</a></div>
+  </div>
+</div>
+
+<!-- ═══ Sticky Navigation ════════════════════════ -->
 <nav class="navbar" id="navbar">
     <div class="container nav-inner">
       <a href="../index.html" class="nav-logo"><img src="../assets/scs-icon.png" alt="Smarter City Solutions"></a>
@@ -21,13 +237,13 @@
           <a href="../resources/case-studies.html">Resources <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></a>
           <div class="dropdown">
             <a href="../resources/case-studies.html">Problem Solved</a>
-            <a href="../resources/pricing.html">Pricing &amp; Tiers<svg width="10" height="11" viewBox="0 0 10 11" style="margin-left:6px;vertical-align:-1px;opacity:0.6"><path d="M2 5V3.5a3 3 0 016 0V5m-7 0h8v5H1V5z" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg></a>
-            <a href="../resources/sales-deck.html">Sales Deck<svg width="10" height="11" viewBox="0 0 10 11" style="margin-left:6px;vertical-align:-1px;opacity:0.6"><path d="M2 5V3.5a3 3 0 016 0V5m-7 0h8v5H1V5z" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg></a>
-            <a href="../resources/newsletter.html">Newsletter<svg width="10" height="11" viewBox="0 0 10 11" style="margin-left:6px;vertical-align:-1px;opacity:0.6"><path d="M2 5V3.5a3 3 0 016 0V5m-7 0h8v5H1V5z" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg></a>
+            <a href="../resources/pricing.html" style="font-weight:600;color:var(--dark-teal)">Pricing &amp; Tiers</a>
+            <a href="../resources/sales-deck.html">Sales Deck</a>
+            <a href="../resources/newsletter.html">Newsletter</a>
           </div>
         </div>
       </div>
-      <a href="../account/signup.html" class="nav-cta">Login / Join</a>
+      <a href="../account/signup.html" class="nav-cta" id="navAuthBtn">Login / Join</a>
       <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
@@ -39,42 +255,677 @@
     </div>
   </div>
 
-  <section class="breadcrumb-bar">
-    <div class="container"><a href="../index.html">Home</a> <span>/</span> <a href="../resources/library.html">Resource Library</a> <span>/</span> <span>Pricing</span></div>
-  </section>
+<!-- ═══ Breadcrumb ═══════════════════════════════ -->
+<section class="breadcrumb-bar">
+  <div class="container">
+    <a href="../index.html">Home</a> <span>/</span> <a href="../resources/library.html">Resource Library</a> <span>/</span> <span>Pricing &amp; Tiers</span>
+  </div>
+</section>
 
-  <section class="page-hero" style="border-top: 4px solid #15626C">
-    <div class="container">
-      <div class="page-hero-inner reveal">
-        <h1>SCS Pricing &amp; Tiers</h1>
-        <p>Annual SaaS pricing across Basic, Silver, Gold, Platinum, and Platinum Plus &mdash; with Sourcewell discount details for qualifying institutions.</p>
-      </div>
+<!-- ═══ Page Hero ════════════════════════════════ -->
+<section class="page-hero" style="border-top: 4px solid var(--dark-teal)">
+  <div class="container">
+    <div class="page-hero-inner reveal">
+      <div class="product-subtitle" style="color:var(--dark-teal)">Complete Platform Pricing</div>
+      <h1>Pricing &amp; Tiers</h1>
+      <p>Build your complete SCS deployment &mdash; software platform, enforcement hardware, and mobile LPR cameras &mdash; with instant cost estimates.</p>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="features-section gated-page">
-    <div class="container">
-      <div class="gated-content">
-        <div class="features-grid" style="grid-template-columns: repeat(5, 1fr); gap: 16px">
-          <div class="feature-card"><h4>Basic</h4><p style="font-size:24px;color:var(--dark-teal);font-weight:600">$XX,XXX/yr</p><p>Single product, single campus, up to N permits</p></div>
-          <div class="feature-card"><h4>Silver</h4><p style="font-size:24px;color:var(--dark-teal);font-weight:600">$XX,XXX/yr</p><p>Two products, single campus</p></div>
-          <div class="feature-card"><h4>Gold</h4><p style="font-size:24px;color:var(--dark-teal);font-weight:600">$XX,XXX/yr</p><p>Full platform, single campus</p></div>
-          <div class="feature-card"><h4>Platinum</h4><p style="font-size:24px;color:var(--dark-teal);font-weight:600">$XX,XXX/yr</p><p>Full platform, multi-campus, premium support</p></div>
-          <div class="feature-card"><h4>Platinum Plus</h4><p style="font-size:24px;color:var(--dark-teal);font-weight:600">$XX,XXX/yr</p><p>Enterprise tier with dedicated engineering</p></div>
+<!-- ═══ SECTION 1: Software Platform ═════════════ -->
+<section class="calc-section" id="software">
+  <div class="container">
+    <div class="section-header reveal">
+      <h2>Software Platform</h2>
+      <p>Select your entity type and configure your SCS software subscription</p>
+    </div>
+
+    <div class="calc-grid">
+      <!-- LEFT: Software Configuration Inputs -->
+      <div class="calc-inputs">
+
+        <!-- Entity Type Selection -->
+        <div class="input-block">
+          <label class="input-block-label">Organization Type</label>
+          <div class="toggle-cards">
+            <div class="toggle-card entity-card selected-teal" data-entity="campus">
+              <div class="entity-card-top">
+                <div class="toggle-card-icon" style="background:rgba(21,98,108,0.1);color:var(--dark-teal)">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 22h20"/><path d="M6 18V8l6-4 6 4v10"/><path d="M10 22v-4h4v4"/><path d="M10 12h4"/></svg>
+                </div>
+                <div class="toggle-card-title">Campus</div>
+              </div>
+              <div class="toggle-card-desc">Bundled SaaS tiers by student population</div>
+            </div>
+            <div class="toggle-card entity-card" data-entity="municipal">
+              <div class="entity-card-top">
+                <div class="toggle-card-icon" style="background:rgba(21,98,108,0.1);color:var(--dark-teal)">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M16 6h.01M8 10h.01M16 10h.01M8 14h.01M16 14h.01"/></svg>
+                </div>
+                <div class="toggle-card-title">Municipality</div>
+              </div>
+              <div class="toggle-card-desc">Software modules with per-unit overage pricing</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- === CAMPUS-SPECIFIC OPTIONS === -->
+        <div id="campusOptions">
+          <!-- Campus Tier + Extra Integrations (same row) -->
+          <div class="input-block">
+            <div class="tier-integrations-row">
+              <div class="tier-col">
+                <label class="input-block-label">Institution Size (Included Integrations)</label>
+                <div class="form-group">
+                  <select id="campusTier">
+                    <option value="x_small">X-Small &mdash; Up to 3</option>
+                    <option value="small">Small &mdash; Up to 4</option>
+                    <option value="medium" selected>Medium &mdash; Up to 6</option>
+                    <option value="large">Large &mdash; Up to 8</option>
+                    <option value="xl">X-Large &mdash; Up to 10</option>
+                    <option value="xxl">XX-Large &mdash; 15+ (incl. custom dev)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="extra-int-col">
+                <label class="input-block-label">Additional Integrations</label>
+                <div class="stepper">
+                  <button class="stepper-btn" id="intBtnMinus" type="button">&minus;</button>
+                  <input type="number" id="extraIntegrations" value="0" min="0">
+                  <button class="stepper-btn" id="intBtnPlus" type="button">+</button>
+                </div>
+              </div>
+            </div>
+            <div class="input-helper" id="integrationsNote">6 integrations included with your tier. Additional integrations at $3,750/yr each.</div>
+          </div>
+
+          <!-- Sourcewell Discount -->
+          <div class="input-block">
+            <label class="input-block-label">Sourcewell Discount</label>
+            <div class="toggle-cards">
+              <div class="toggle-card sourcewell-card selected-teal" data-sourcewell="yes" id="sourcewellYes">
+                <div class="toggle-card-title">Apply 10% Discount</div>
+                <div class="toggle-card-desc">Available for Small tier and above via Sourcewell contract</div>
+              </div>
+              <div class="toggle-card sourcewell-card" data-sourcewell="no" id="sourcewellNo">
+                <div class="toggle-card-title">Standard Pricing</div>
+                <div class="toggle-card-desc">No cooperative purchasing discount applied</div>
+              </div>
+            </div>
+            <div class="input-helper" id="sourcewellNote">Sourcewell 10% discount is available for Small tier and above</div>
+          </div>
+
+          <!-- Go-Live Month (for proration) -->
+          <div class="input-block">
+            <label class="input-block-label">Projected Go-Live Month</label>
+            <div class="form-group">
+              <select id="goLiveMonth">
+                <option value="7">July (Fiscal Year Start)</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+              </select>
+            </div>
+            <div class="input-helper">Year 1 SaaS is prorated based on fiscal year (July&ndash;June). Best to go live during a large permit sale.</div>
+          </div>
+
+        </div>
+
+        <!-- === MUNICIPAL-SPECIFIC OPTIONS === -->
+        <div id="municipalOptions" style="display:none">
+          <!-- Module Selection -->
+          <div class="input-block">
+            <label class="input-block-label">Software Modules</label>
+            <div class="checkbox-cards">
+              <div class="checkbox-card checked" data-module="vpermit">
+                <input type="checkbox" checked>
+                <div class="checkbox-card-inner">
+                  <div class="checkbox-card-header">
+                    <span class="dot green"></span>
+                    <span class="checkbox-card-title">vPermit</span>
+                    <span class="checkbox-card-price">$42,000/yr</span>
+                  </div>
+                  <div class="checkbox-card-desc">Virtual permit management &mdash; first 1,000 permits included</div>
+                </div>
+                <div class="checkbox-card-expand">
+                  <div class="expand-labels-row">
+                    <label class="expand-label expand-label-grow">Estimated Monthly Permits</label>
+                    <label class="expand-label expand-label-int">Integrations</label>
+                  </div>
+                  <div class="expand-inputs-row">
+                    <div class="form-group expand-input-grow">
+                      <input type="number" id="monthlyPermits" value="1000" min="0" max="100000" step="100" placeholder="1000">
+                    </div>
+                    <div class="stepper stepper-sm expand-input-int">
+                      <button class="stepper-btn int-btn-minus" type="button" data-mod="vpermit">&minus;</button>
+                      <input type="number" class="mod-integrations" data-mod="vpermit" value="0" min="0">
+                      <button class="stepper-btn int-btn-plus" type="button" data-mod="vpermit">+</button>
+                    </div>
+                  </div>
+                  <div class="expand-hints-row">
+                    <div class="expand-hint expand-hint-grow">First 1,000 included. Overages at $0.99/permit (tiered down to $0.59)</div>
+                    <div class="expand-hint expand-hint-int">$3,750/yr each</div>
+                  </div>
+                </div>
+              </div>
+              <div class="checkbox-card checked" data-module="vcompliance">
+                <input type="checkbox" checked>
+                <div class="checkbox-card-inner">
+                  <div class="checkbox-card-header">
+                    <span class="dot orange"></span>
+                    <span class="checkbox-card-title">vCompliance</span>
+                    <span class="checkbox-card-price">$35,000/yr</span>
+                  </div>
+                  <div class="checkbox-card-desc">Enforcement &amp; citation management &mdash; tiered per-citation pricing</div>
+                </div>
+                <div class="checkbox-card-expand">
+                  <div class="expand-labels-row">
+                    <label class="expand-label expand-label-grow">Estimated Monthly Citations</label>
+                    <label class="expand-label expand-label-int">Integrations</label>
+                  </div>
+                  <div class="expand-inputs-row">
+                    <div class="form-group expand-input-grow">
+                      <input type="number" id="monthlyCitations" value="500" min="0" max="100000" step="100" placeholder="500">
+                    </div>
+                    <div class="stepper stepper-sm expand-input-int">
+                      <button class="stepper-btn int-btn-minus" type="button" data-mod="vcompliance">&minus;</button>
+                      <input type="number" class="mod-integrations" data-mod="vcompliance" value="0" min="0">
+                      <button class="stepper-btn int-btn-plus" type="button" data-mod="vcompliance">+</button>
+                    </div>
+                  </div>
+                  <div class="expand-hints-row">
+                    <div class="expand-hint expand-hint-grow">$0.75/citation for first 1,000/month, tiered discounts per additional 1,000 (floor: $0.35)</div>
+                    <div class="expand-hint expand-hint-int">$3,750/yr each</div>
+                  </div>
+                </div>
+              </div>
+              <div class="checkbox-card" data-module="vpark">
+                <input type="checkbox">
+                <div class="checkbox-card-inner">
+                  <div class="checkbox-card-header">
+                    <span class="dot amber"></span>
+                    <span class="checkbox-card-title">vPark</span>
+                    <span class="checkbox-card-price">Transaction-based</span>
+                  </div>
+                  <div class="checkbox-card-desc">Mobile payment app &mdash; 5% of transaction or $0.25 (whichever is greater)</div>
+                </div>
+                <div class="checkbox-card-expand">
+                  <div class="expand-labels-row">
+                    <label class="expand-label expand-label-grow">Estimated Monthly Transactions</label>
+                    <label class="expand-label expand-label-int">Integrations</label>
+                  </div>
+                  <div class="expand-inputs-row">
+                    <div class="form-group expand-input-grow">
+                      <input type="number" id="monthlyTransactions" value="5000" min="0" max="1000000" step="500" placeholder="5000">
+                    </div>
+                    <div class="stepper stepper-sm expand-input-int">
+                      <button class="stepper-btn int-btn-minus" type="button" data-mod="vpark">&minus;</button>
+                      <input type="number" class="mod-integrations" data-mod="vpark" value="0" min="0">
+                      <button class="stepper-btn int-btn-plus" type="button" data-mod="vpark">+</button>
+                    </div>
+                  </div>
+                  <div class="expand-hints-row">
+                    <div class="expand-hint expand-hint-grow">5% of transaction or $0.25, whichever is greater</div>
+                    <div class="expand-hint expand-hint-int">$3,750/yr each</div>
+                  </div>
+                  <div class="expand-field" style="margin-top:12px">
+                    <label class="expand-label">Average Transaction Value</label>
+                    <div class="form-group input-with-prefix">
+                      <span class="input-prefix">$</span>
+                      <input type="number" id="avgTransactionValue" value="5" min="1" max="100" step="0.50" placeholder="5.00">
+                    </div>
+                    <div class="expand-hint">Average parking payment amount for fee calculation</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Professional Services (shared) -->
+        <div class="input-block pro-services-note">
+          <label class="input-block-label">Professional Services</label>
+          <div class="info-card">
+            <div class="info-card-row">
+              <span>Hourly rate</span>
+              <strong>$215/hr</strong>
+            </div>
+            <div class="info-card-desc">Custom development and ancillary support billed via Statement of Work (SOW). Contact us for scoping.</div>
+          </div>
         </div>
       </div>
-      <div class="gated-overlay">
-        <div class="lock-circle">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+
+      <!-- RIGHT: Live Software Summary -->
+      <div>
+        <div class="summary-card" id="softwareSummary">
+          <h3>Software Estimate</h3>
+          <div class="summary-sub">Updates as you configure</div>
+
+          <div class="summary-body" id="softwareSummaryBody">
+            <div class="summary-config" id="softwareConfigEcho">Campus &middot; Medium Tier</div>
+
+            <div class="summary-lines" id="softwareSummaryLines">
+              <!-- JS populates -->
+            </div>
+
+            <div class="summary-divider"></div>
+
+            <div class="summary-total-row">
+              <span class="summary-total-label" id="softwareTotalLabel">Year 1 Total (Prorated)</span>
+              <span class="summary-total-amount" id="softwareTotalAmount">$0</span>
+            </div>
+            <div class="summary-recurring" id="softwareRecurringLine">Annual recurring (Year 2+): $0/yr</div>
+
+            <div class="summary-projection">
+              <div class="summary-projection-label">Total Cost of Ownership</div>
+              <div class="projection-grid">
+                <div>
+                  <div class="projection-cell-num sw-proj" data-yr="1">$0</div>
+                  <div class="projection-cell-label">1 Year</div>
+                </div>
+                <div>
+                  <div class="projection-cell-num sw-proj active" data-yr="3">$0</div>
+                  <div class="projection-cell-label">3 Years</div>
+                </div>
+                <div>
+                  <div class="projection-cell-num sw-proj" data-yr="5">$0</div>
+                  <div class="projection-cell-label">5 Years</div>
+                </div>
+              </div>
+              <div class="summary-monthly" id="softwareMonthlyLine">Effective monthly cost: <strong>$0/mo</strong></div>
+            </div>
+
+            <div class="breakeven-callout" id="prorateCallout" style="display:flex">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2C7480" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              <p id="prorateText">Year 1 is prorated based on go-live month. Full annual pricing applies from Year 2.</p>
+            </div>
+          </div>
         </div>
-        <h2>Sign up to view this content</h2>
-        <p>This resource is part of the SCS Resource Library &mdash; free to access with a quick sign-up. Pricing, tier sheets, sales decks, and full case studies all live behind one account.</p>
-        <a href="../account/signup.html" class="btn-primary">Create your free account &rarr;</a>
-        <div class="login-link">Already have an account? <a href="#">Log in</a></div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
+<!-- ═══ Section Divider ═════════════════════════ -->
+<div class="section-divider-bar">
+  <div class="container">
+    <div class="section-divider-inner">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+      <span>Continue building your deployment</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 2: Hardware ═══════════════════════ -->
+<section class="calc-section hardware-section" id="hardware">
+  <div class="container">
+    <div class="section-header reveal">
+      <h2>Hardware &amp; Devices</h2>
+      <p>Add enforcement devices and mobile LPR cameras to your deployment</p>
+    </div>
+
+    <div class="calc-grid">
+      <!-- LEFT: Hardware Configuration -->
+      <div class="calc-inputs">
+
+        <!-- Enforcement Devices -->
+        <div class="input-block">
+          <label class="input-block-label">Enforcement Devices</label>
+          <div class="hardware-items">
+
+            <div class="hw-item">
+              <div class="hw-item-info">
+                <div class="hw-item-name">Rugged Handheld Enforcement Tablet</div>
+                <div class="hw-item-detail">with Warranty &middot; $4,500 each</div>
+              </div>
+              <div class="stepper stepper-sm">
+                <button class="stepper-btn" type="button" data-hw="tablet" data-dir="-">&minus;</button>
+                <input type="number" id="hwTablet" value="0" min="0" max="50">
+                <button class="stepper-btn" type="button" data-hw="tablet" data-dir="+">+</button>
+              </div>
+            </div>
+
+            <div class="hw-item">
+              <div class="hw-item-info">
+                <div class="hw-item-name">Handheld LPR Citation Device</div>
+                <div class="hw-item-detail">Android, with Warranty &middot; $2,400 each</div>
+              </div>
+              <div class="stepper stepper-sm">
+                <button class="stepper-btn" type="button" data-hw="lprHandheld" data-dir="-">&minus;</button>
+                <input type="number" id="hwLprHandheld" value="0" min="0" max="50">
+                <button class="stepper-btn" type="button" data-hw="lprHandheld" data-dir="+">+</button>
+              </div>
+            </div>
+
+            <div class="hw-item">
+              <div class="hw-item-info">
+                <div class="hw-item-name">Zebra Printer</div>
+                <div class="hw-item-detail">Citation printing &middot; $750 each</div>
+              </div>
+              <div class="stepper stepper-sm">
+                <button class="stepper-btn" type="button" data-hw="printer" data-dir="-">&minus;</button>
+                <input type="number" id="hwPrinter" value="0" min="0" max="50">
+                <button class="stepper-btn" type="button" data-hw="printer" data-dir="+">+</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Survision Mobile LPR — expandable card -->
+        <div class="input-block">
+          <label class="input-block-label">Mobile LPR &mdash; Survision PlatEnforce</label>
+          <div class="mlpr-card" id="mlprCard">
+            <div class="mlpr-card-header" id="mlprToggle">
+              <div class="entity-card-top">
+                <div class="toggle-card-icon orange">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                </div>
+                <div class="toggle-card-title">Add MLPR Vehicles</div>
+              </div>
+              <div class="toggle-card-desc">Survision PlatEnforce mobile LPR cameras</div>
+            </div>
+            <div class="mlpr-card-expand" id="mlprOptions">
+              <!-- Fleet Size -->
+              <div class="expand-field">
+                <label class="expand-label">Number of MLPR Vehicles</label>
+                <div class="stepper stepper-sm">
+                  <button class="stepper-btn" id="vehBtnMinus" type="button">&minus;</button>
+                  <input type="number" id="vehicleCount" value="1" min="1" max="50">
+                  <button class="stepper-btn" id="vehBtnPlus" type="button">+</button>
+                </div>
+                <div class="expand-hint">Each vehicle gets its own complete MLPR kit</div>
+              </div>
+
+              <!-- Kit Type -->
+              <div class="expand-field">
+                <label class="expand-label">Kit Configuration</label>
+                <div class="toggle-cards">
+                  <div class="toggle-card kit-card selected" data-kit="full">
+                    <div class="entity-card-top">
+                      <div class="toggle-card-icon orange">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                      </div>
+                      <div class="toggle-card-title">Full Kit</div>
+                    </div>
+                    <div class="toggle-card-desc">360&deg; coverage, both sides of the vehicle</div>
+                  </div>
+                  <div class="toggle-card kit-card" data-kit="mini">
+                    <div class="entity-card-top">
+                      <div class="toggle-card-icon orange">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                      </div>
+                      <div class="toggle-card-title">Mini Kit</div>
+                    </div>
+                    <div class="toggle-card-desc">Single-side coverage for smaller operations</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Payment Model -->
+              <div class="expand-field">
+                <label class="expand-label">Payment Model</label>
+                <div class="toggle-cards">
+                  <div class="toggle-card selected-teal" data-model="capex">
+                    <div class="toggle-card-title">CapEx (Purchase)</div>
+                    <span class="toggle-pill teal" style="margin-top:6px">Preferred</span>
+                    <div class="toggle-card-desc">One-time hardware + annual software fee</div>
+                  </div>
+                  <div class="toggle-card" data-model="haas">
+                    <div class="toggle-card-title">HaaS (Lease)</div>
+                    <span class="toggle-pill outline" style="margin-top:6px">Lower</span>
+                    <div class="toggle-card-desc">All-inclusive monthly, 36-month commitment</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Volume Discount -->
+              <div class="expand-field">
+                <label class="expand-label">MLPR Volume Discount</label>
+                <div class="form-group">
+                  <select id="mlprDiscount">
+                    <option value="0">None (0%)</option>
+                    <option value="5">5+ vehicles (5%)</option>
+                    <option value="10">10+ vehicles (10%)</option>
+                  </select>
+                </div>
+                <div class="expand-hint">Volume discounts are subject to negotiation with Survision</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: Live Hardware Summary -->
+      <div>
+        <div class="summary-card" id="hardwareSummary">
+          <h3>Hardware Estimate</h3>
+          <div class="summary-sub">Updates as you configure</div>
+
+          <div class="summary-body" id="hardwareSummaryBody">
+            <div class="summary-config" id="hardwareConfigEcho">No hardware selected</div>
+
+            <div class="summary-lines" id="hardwareSummaryLines">
+              <!-- JS populates -->
+            </div>
+
+            <div class="summary-divider"></div>
+
+            <div class="summary-total-row">
+              <span class="summary-total-label" id="hardwareTotalLabel">Hardware Total</span>
+              <span class="summary-total-amount" id="hardwareTotalAmount">$0</span>
+            </div>
+            <div class="summary-recurring" id="hardwareRecurringLine" style="display:none">MLPR recurring: $0/yr</div>
+
+          <!-- MLPR Projection (shows when MLPR enabled) -->
+          <div class="summary-projection" id="mlprProjection" style="display:none">
+            <div class="summary-projection-label">MLPR Total Cost of Ownership</div>
+            <div class="projection-grid">
+              <div>
+                <div class="projection-cell-num mlpr-proj" data-yr="1">$0</div>
+                <div class="projection-cell-label">1 Year</div>
+              </div>
+              <div>
+                <div class="projection-cell-num mlpr-proj active" data-yr="3">$0</div>
+                <div class="projection-cell-label">3 Years</div>
+              </div>
+              <div>
+                <div class="projection-cell-num mlpr-proj" data-yr="5">$0</div>
+                <div class="projection-cell-label">5 Years</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Break-even (shows for full kit) -->
+          <div class="breakeven-callout" id="mlprBreakevenBlock" style="display:none">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2C7480" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <p id="mlprBreakevenText"></p>
+          </div>
+          </div><!-- /summary-body -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Grand Total Section ═════════════════════ -->
+<section class="grand-total-section" id="grandTotal">
+  <div class="container">
+    <div class="grand-total-card reveal">
+      <div class="grand-total-header">
+        <h2>Complete Deployment Estimate</h2>
+        <p>Software platform + hardware + MLPR combined</p>
+      </div>
+
+      <div class="grand-total-grid">
+        <!-- Software Column -->
+        <div class="grand-total-col">
+          <div class="grand-col-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--dark-teal)" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            Software Platform
+          </div>
+          <div class="grand-col-yr1" id="grandSoftwareYr1">$0</div>
+          <div class="grand-col-sub">Year 1</div>
+          <div class="grand-col-recurring" id="grandSoftwareRecurring">$0/yr recurring</div>
+        </div>
+
+        <!-- Hardware Column -->
+        <div class="grand-total-col">
+          <div class="grand-col-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 13h6M9 17h2"/></svg>
+            Hardware &amp; Devices
+          </div>
+          <div class="grand-col-yr1" id="grandHardwareYr1">$0</div>
+          <div class="grand-col-sub">One-time</div>
+          <div class="grand-col-recurring" id="grandHardwareRecurring">&nbsp;</div>
+        </div>
+
+        <!-- MLPR Column -->
+        <div class="grand-total-col" id="grandMlprCol" style="display:none">
+          <div class="grand-col-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            Survision MLPR
+          </div>
+          <div class="grand-col-yr1" id="grandMlprYr1">$0</div>
+          <div class="grand-col-sub">Year 1</div>
+          <div class="grand-col-recurring" id="grandMlprRecurring">$0/yr recurring</div>
+        </div>
+      </div>
+
+      <div class="grand-total-divider"></div>
+
+      <div class="grand-total-row">
+        <div class="grand-total-left">
+          <div class="grand-total-label">Total Year 1 Investment</div>
+          <div class="grand-total-amount" id="grandTotalYear1">$0</div>
+        </div>
+        <div class="grand-total-right">
+          <div class="grand-recurring-label">Annual Recurring (Year 2+)</div>
+          <div class="grand-recurring-amount" id="grandTotalRecurring">$0/yr</div>
+        </div>
+      </div>
+
+      <!-- TCO Projection -->
+      <div class="grand-tco-strip">
+        <div class="grand-tco-label">Total Cost of Ownership</div>
+        <div class="grand-tco-grid">
+          <div class="grand-tco-cell">
+            <div class="grand-tco-num" id="grandTco1">$0</div>
+            <div class="grand-tco-yr">1 Year</div>
+          </div>
+          <div class="grand-tco-cell active">
+            <div class="grand-tco-num" id="grandTco3">$0</div>
+            <div class="grand-tco-yr">3 Years</div>
+          </div>
+          <div class="grand-tco-cell">
+            <div class="grand-tco-num" id="grandTco5">$0</div>
+            <div class="grand-tco-yr">5 Years</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTAs -->
+      <div class="grand-cta">
+        <a href="#cta" class="btn-primary">
+          Request a Quote
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <button class="btn-text" id="downloadPdfBtn">
+          Download as PDF
+          <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA Section ══════════════════════════════ -->
+<section class="cta-section" id="cta">
+  <div class="container">
+    <div class="cta-grid">
+      <div class="cta-content">
+        <h2>Ready to Transform Your Parking&nbsp;Operations?</h2>
+        <p>Get a personalized quote from our team. We'll help you select the right modules, size your hardware, and plan your deployment timeline.</p>
+        <div class="cta-stats">
+          <div class="cta-stat">
+            <span class="cta-stat-num">99.99%</span>
+            <span class="cta-stat-label">Uptime SLA</span>
+          </div>
+          <div class="cta-stat">
+            <span class="cta-stat-num">50+</span>
+            <span class="cta-stat-label">Deployments</span>
+          </div>
+          <div class="cta-stat">
+            <span class="cta-stat-num">PCI L1</span>
+            <span class="cta-stat-label">Compliance</span>
+          </div>
+        </div>
+      </div>
+      <div class="cta-form-card">
+        <h3>Request a Quote</h3>
+        <p>We'll respond within one business day.</p>
+        <form>
+          <div class="form-row">
+            <div class="form-group">
+              <label>First Name</label>
+              <input type="text" placeholder="Jane" required>
+            </div>
+            <div class="form-group">
+              <label>Last Name</label>
+              <input type="text" placeholder="Smith" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" placeholder="name@organization.edu" required>
+            </div>
+            <div class="form-group">
+              <label>Organization</label>
+              <input type="text" placeholder="University of...">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Organization Type</label>
+              <select>
+                <option>University / Campus</option>
+                <option>Municipality</option>
+                <option>Healthcare</option>
+                <option>Corporate Campus</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Interested In</label>
+              <select>
+                <option>Full Tech Stack</option>
+                <option>Software Only</option>
+                <option>Hardware Only</option>
+                <option>MLPR Only</option>
+                <option>Not sure yet</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="form-submit">Request a Quote &rarr;</button>
+          <div class="form-note">No commitment. No spam. Just an honest conversation.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Footer ═══════════════════════════════════ -->
   <footer class="footer">
     <div class="rainbow-bar"><div style="background:#15626C"></div><div style="background:#47BBE8"></div><div style="background:#429839"></div><div style="background:#88BF57"></div><div style="background:#F0AE25"></div><div style="background:#EB5B25"></div><div style="background:#D41B24"></div></div>
     <div class="container">
@@ -88,6 +939,83 @@
       <div class="footer-bottom"><p>&copy; 2026 Smarter City Solutions. All Rights Reserved.</p><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Accessibility Statement</a><a href="#">Terms of Service</a></div></div>
     </div>
   </footer>
-  <script src="../script.js"></script>
+
+<!-- ═══ Auth Gate Check ══════════════════════════ -->
+<script>
+(function() {
+  var overlay = document.getElementById('gatedOverlay');
+  var navBtn = document.getElementById('navAuthBtn');
+  var isAuthed = localStorage.getItem('scs_authed') === 'true';
+  var userEmail = localStorage.getItem('scs_user') || '';
+
+  if (!isAuthed) {
+    // Show gate overlay
+    if (overlay) overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  } else {
+    // Hide overlay
+    if (overlay) overlay.style.display = 'none';
+
+    // Replace Login/Join button with user + logout
+    if (navBtn) {
+      navBtn.outerHTML = '<button class="nav-user-btn" id="navLogout">' +
+        userEmail.split('@')[0] +
+        ' <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>' +
+        '</button>';
+      document.getElementById('navLogout').addEventListener('click', function() {
+        localStorage.removeItem('scs_authed');
+        localStorage.removeItem('scs_user');
+        window.location.reload();
+      });
+    }
+  }
+})();
+</script>
+
+<!-- ═══ Scripts ══════════════════════════════════ -->
+<script>
+  // Shared SCS scripts (nav, reveal, hamburger)
+  (function() {
+    'use strict';
+    const navbar = document.getElementById('navbar');
+    if (navbar) {
+      window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 10);
+      }, { passive: true });
+    }
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (hamburger && mobileMenu) {
+      hamburger.addEventListener('click', () => {
+        mobileMenu.classList.toggle('active');
+        hamburger.classList.toggle('active');
+        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+      });
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('active');
+          hamburger.classList.remove('active');
+          document.body.style.overflow = '';
+        });
+      });
+    }
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href === '#') return;
+        const target = document.querySelector(href);
+        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      });
+    });
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+  })();
+</script>
+<script src="scs-calculator.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="scs-calculator-pdf.js"></script>
+
 </body>
 </html>
