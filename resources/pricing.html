@@ -977,8 +977,7 @@
       var scrollTop = window.scrollY;
       var viewportH = window.innerHeight;
       var cardH = card.offsetHeight;
-      var rainbowBar = footer.querySelector('.rainbow-bar');
-      var footerTop = (rainbowBar || footer).getBoundingClientRect().top + scrollTop;
+      var footerTop = footer.getBoundingClientRect().top + scrollTop;
       // Ideal: center card in viewport
       var idealTop = scrollTop + (viewportH - cardH) / 2;
       // Max: card bottom must not go past footer top

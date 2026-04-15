@@ -52,10 +52,9 @@
     </div>
   </section>
 
-  <div id="gatedArea" style="position:relative">
-  <div id="gatedWrapper">
-  <section class="features-section">
+  <section class="features-section gated-page">
     <div class="container">
+      <div class="gated-content">
         <div style="text-align:center; padding: 60px 0">
           <div style="display:inline-block; background:#fff; border:1px solid rgba(0,0,0,0.1); border-radius:12px; padding:48px 96px; box-shadow:0 12px 32px rgba(0,0,0,0.06)">
             <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#2C7480" stroke-width="1.5" style="margin-bottom:24px"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
@@ -63,19 +62,18 @@
             <p style="color:var(--gray); margin:0">42 pages &middot; 8.4 MB</p>
           </div>
         </div>
+      </div>
+      <div class="gated-overlay">
+        <div class="lock-circle">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        </div>
+        <h2>Sign up to view this content</h2>
+        <p>This resource is part of the SCS Resource Library &mdash; free to access with a quick sign-up. Pricing, tier sheets, sales decks, and full case studies all live behind one account.</p>
+        <a href="../account/signup.html" class="btn-primary">Create your free account &rarr;</a>
+        <div class="login-link">Already have an account? <a href="#">Log in</a></div>
+      </div>
     </div>
   </section>
-  </div>
-  <div id="gatedOverlay" style="display:none;position:absolute;top:0;left:0;right:0;z-index:100;pointer-events:none">
-    <div id="gatedCard" style="pointer-events:all;margin:0 auto;background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:20px;padding:48px 56px;max-width:520px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,0.12)">
-      <div style="width:72px;height:72px;border-radius:50%;background:rgba(44,116,128,0.1);color:#2C7480;display:flex;align-items:center;justify-content:center;margin:0 auto 24px"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
-      <h2 style="font-size:28px;margin:0 0 12px 0;color:#15626C;font-family:'DM Sans',sans-serif;font-weight:400;letter-spacing:-1px">Sign up to view this content</h2>
-      <p style="font-size:16px;color:#64748B;margin:0 0 28px 0;line-height:1.6;font-family:'Inter',sans-serif">This resource is part of the SCS Resource Library &mdash; free to access with a quick sign-up. Pricing, tier sheets, sales decks, and full case studies all live behind one account.</p>
-      <a href="../account/signup.html" class="btn-primary">Create your free account &rarr;</a>
-      <div style="display:block;margin-top:18px;font-size:13px;color:#64748B;font-family:'Inter',sans-serif">Already have an account? <a href="../account/signup.html" style="color:#2C7480;font-weight:600">Log in</a></div>
-    </div>
-  </div>
-  </div>
 
   <footer class="footer">
     <div class="rainbow-bar"><div style="background:#15626C"></div><div style="background:#47BBE8"></div><div style="background:#429839"></div><div style="background:#88BF57"></div><div style="background:#F0AE25"></div><div style="background:#EB5B25"></div><div style="background:#D41B24"></div></div>
@@ -91,20 +89,5 @@
     </div>
   </footer>
   <script src="../script.js"></script>
-  <script>
-  (function(){
-    var overlay=document.getElementById('gatedOverlay'),wrapper=document.getElementById('gatedWrapper'),navBtn=document.querySelector('.nav-cta'),isAuthed=localStorage.getItem('scs_authed')==='true',userEmail=localStorage.getItem('scs_user')||'';
-    if(!isAuthed){
-      if(wrapper){wrapper.style.filter='blur(6px) grayscale(0.3)';wrapper.style.pointerEvents='none';wrapper.style.userSelect='none';wrapper.style.opacity='0.75';}
-      if(overlay)overlay.style.display='block';
-      var card=document.getElementById('gatedCard'),footer=document.querySelector('.footer');
-      function pos(){if(!card||!footer)return;var st=window.scrollY,vh=window.innerHeight,ch=card.offsetHeight,rb=footer.querySelector('.rainbow-bar'),ft=(rb||footer).getBoundingClientRect().top+st,area=document.getElementById('gatedArea'),at=area.offsetTop,ideal=st+(vh-ch)/2,max=ft-ch-40,fin=Math.max(Math.min(ideal,max),at+80);card.style.position='relative';card.style.top=(fin-at)+'px';}
-      pos();window.addEventListener('scroll',pos,{passive:true});window.addEventListener('resize',pos,{passive:true});
-    }else{
-      if(overlay)overlay.style.display='none';
-      if(navBtn){navBtn.outerHTML='<button class="nav-user-btn" id="navLogout">'+userEmail.split('@')[0]+' <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg></button>';document.getElementById('navLogout').addEventListener('click',function(){localStorage.removeItem('scs_authed');localStorage.removeItem('scs_user');window.location.reload();});}
-    }
-  })();
-  </script>
 </body>
 </html>
