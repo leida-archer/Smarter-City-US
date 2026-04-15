@@ -967,31 +967,54 @@
       wrapper.style.userSelect = 'none';
       wrapper.style.opacity = '0.75';
     }
-    if (overlay) overlay.style.display = 'block';
+    // Remove the absolute overlay container — we'll position the card as fixed
+    if (overlay) overlay.style.display = 'none';
 
-    // Position card: centered in viewport, stops when viewport hits footer
     var card = document.getElementById('gatedCard');
-    var footer = document.querySelector('.footer');
-    function positionCard() {
-      if (!card || !footer) return;
-      var scrollTop = window.scrollY;
-      var viewportH = window.innerHeight;
-      var cardH = card.offsetHeight;
-      var footerTop = footer.getBoundingClientRect().top + scrollTop;
-      // Ideal: center card in viewport
-      var idealTop = scrollTop + (viewportH - cardH) / 2;
-      // Max: card bottom must not go past footer top
-      var maxTop = footerTop - cardH - 40;
-      var finalTop = Math.min(idealTop, maxTop);
-      // Min: don't go above the content area
-      var areaTop = document.getElementById('gatedArea').offsetTop;
-      finalTop = Math.max(finalTop, areaTop + 80);
-      card.style.position = 'relative';
-      card.style.top = (finalTop - areaTop) + 'px';
+    var rainbowBar = document.querySelector('.footer .rainbow-bar');
+    var area = document.getElementById('gatedArea');
+
+    if (card) {
+      // Move card out of the overlay container and append to body as fixed
+      document.body.appendChild(card);
+      card.style.position = 'fixed';
+      card.style.left = '50%';
+      card.style.transform = 'translateX(-50%)';
+      card.style.zIndex = '9999';
+      card.style.willChange = 'top';
+
+      var ticking = false;
+      function positionCard() {
+        var vh = window.innerHeight;
+        var ch = card.offsetHeight;
+        var centerY = (vh - ch) / 2;
+
+        if (rainbowBar) {
+          var rbRect = rainbowBar.getBoundingClientRect();
+          // If rainbow bar is visible in viewport, cap the card above it
+          var maxY = rbRect.top - ch - 40;
+          if (maxY < centerY) {
+            card.style.top = Math.max(80, maxY) + 'px';
+          } else {
+            card.style.top = centerY + 'px';
+          }
+        } else {
+          card.style.top = centerY + 'px';
+        }
+        ticking = false;
+      }
+
+      function onScroll() {
+        if (!ticking) {
+          requestAnimationFrame(positionCard);
+          ticking = true;
+        }
+      }
+
+      positionCard();
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
     }
-    positionCard();
-    window.addEventListener('scroll', positionCard, { passive: true });
-    window.addEventListener('resize', positionCard, { passive: true });
   } else {
     // Hide overlay, content stays normal
     if (overlay) overlay.style.display = 'none';
