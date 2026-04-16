@@ -230,7 +230,7 @@
           </div>
         </div>
       </div>
-      <a href="../account/signup.html" class="nav-cta" id="navAuthBtn">Login / Join</a>
+      <a href="../account/sourcewell-login.html" class="nav-cta" id="navAuthBtn" style="padding:0px 8px;height:38px;display:inline-flex;align-items:center"><img src="../assets/sourcewell-logo.png" alt="Sourcewell Members" style="height:20px;width:auto;display:block"></a>
       <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
@@ -309,15 +309,15 @@
           <div class="input-block">
             <div class="tier-integrations-row">
               <div class="tier-col">
-                <label class="input-block-label">Institution Size (Included Integrations)</label>
+                <label class="input-block-label">Institution Size</label>
                 <div class="form-group">
                   <select id="campusTier">
-                    <option value="x_small">X-Small &mdash; Up to 3</option>
-                    <option value="small">Small &mdash; Up to 4</option>
-                    <option value="medium" selected>Medium &mdash; Up to 6</option>
-                    <option value="large">Large &mdash; Up to 8</option>
-                    <option value="xl">X-Large &mdash; Up to 10</option>
-                    <option value="xxl">XX-Large &mdash; 15+ (incl. custom dev)</option>
+                    <option value="x_small">X-Small &mdash; Under 2,500</option>
+                    <option value="small">Small &mdash; 2,500 – 10,000</option>
+                    <option value="medium" selected>Medium &mdash; 10,000 – 20,000</option>
+                    <option value="large">Large &mdash; 20,000 – 30,000</option>
+                    <option value="xl">X-Large &mdash; 30,000 – 40,000</option>
+                    <option value="xxl">XX-Large &mdash; 40,000+</option>
                   </select>
                 </div>
               </div>
@@ -337,16 +337,16 @@
           <div class="input-block">
             <label class="input-block-label">Sourcewell Discount</label>
             <div class="toggle-cards">
-              <div class="toggle-card sourcewell-card selected-teal" data-sourcewell="yes" id="sourcewellYes">
-                <div class="toggle-card-title">Apply 10% Discount</div>
-                <div class="toggle-card-desc">Available for Small tier and above via Sourcewell contract</div>
+              <div class="toggle-card sourcewell-card selected-teal" data-sourcewell="yes" id="sourcewellYes" style="text-align:center">
+                <div class="toggle-card-title" style="justify-content:center">Apply 10% Discount</div>
+                <div class="toggle-card-desc"><img src="../assets/sourcewell-logo.png" alt="Sourcewell" style="height:20px;width:auto;opacity:0.85"></div>
               </div>
-              <div class="toggle-card sourcewell-card" data-sourcewell="no" id="sourcewellNo">
-                <div class="toggle-card-title">Standard Pricing</div>
+              <div class="toggle-card sourcewell-card" data-sourcewell="no" id="sourcewellNo" style="text-align:center">
+                <div class="toggle-card-title" style="justify-content:center">Standard Pricing</div>
                 <div class="toggle-card-desc">No cooperative purchasing discount applied</div>
               </div>
             </div>
-            <div class="input-helper" id="sourcewellNote">Sourcewell 10% discount is available for Small tier and above</div>
+            <div class="input-helper" id="sourcewellNote">Available for Small tier and above via Sourcewell contract</div>
           </div>
 
           <!-- Go-Live Month (for proration) -->
@@ -537,9 +537,16 @@
               <div class="summary-monthly" id="softwareMonthlyLine">Effective monthly cost: <strong>$0/mo</strong></div>
             </div>
 
-            <div class="breakeven-callout" id="prorateCallout" style="display:flex">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2C7480" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><circle cx="12" cy="8" r="0.5" fill="#2C7480"/></svg>
-              <p id="prorateText">Year 1 is prorated based on go-live month. Full annual pricing applies from Year 2.</p>
+            <div class="int-categories">
+              <div class="int-categories-label">Supported Integrations</div>
+              <div class="int-chips">
+                <span class="int-chip"><span class="int-dot" style="background:var(--dark-teal)"></span>Payments</span>
+                <span class="int-chip"><span class="int-dot" style="background:var(--sky)"></span>Cloud</span>
+                <span class="int-chip"><span class="int-dot" style="background:var(--blue-teal)"></span>Cameras &amp; LPR</span>
+                <span class="int-chip"><span class="int-dot" style="background:var(--amber)"></span>BI / Analytics</span>
+                <span class="int-chip"><span class="int-dot" style="background:var(--orange)"></span>Parking Equipment</span>
+                <span class="int-chip"><span class="int-dot" style="background:var(--green)"></span>HR / Student Systems</span>
+              </div>
             </div>
           </div>
         </div>
@@ -932,14 +939,18 @@
 
 <!-- Overlay (sibling to wrapper, not affected by blur) -->
 <div id="gatedOverlay" style="display:none;position:absolute;top:0;left:0;right:0;z-index:100;pointer-events:none">
-  <div id="gatedCard" style="pointer-events:all;margin:0 auto;background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:20px;padding:48px 56px;max-width:520px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,0.12)">
+  <div id="gatedCard" style="pointer-events:all;margin:0 auto;background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:20px;padding:48px 56px;max-width:520px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,0.12);transition:opacity 0.5s ease,transform 0.5s ease">
     <div style="width:72px;height:72px;border-radius:50%;background:rgba(44,116,128,0.1);color:#2C7480;display:flex;align-items:center;justify-content:center;margin:0 auto 24px">
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
     </div>
-    <h2 style="font-size:28px;margin:0 0 12px 0;color:#15626C;font-family:'DM Sans',sans-serif;font-weight:400;letter-spacing:-1px">Sign up to view this content</h2>
-    <p style="font-size:16px;color:#64748B;margin:0 0 28px 0;line-height:1.6;font-family:'Inter',sans-serif">This resource is part of the SCS Resource Library &mdash; free to access with a quick sign-up. Pricing, tier sheets, sales decks, and full case studies all live behind one account.</p>
-    <a href="../account/signup.html" class="btn-primary">Create your free account &rarr;</a>
-    <div style="display:block;margin-top:18px;font-size:13px;color:#64748B;font-family:'Inter',sans-serif">Already have an account? <a href="../account/signup.html" style="color:#2C7480;font-weight:600">Log in</a></div>
+    <h2 style="font-size:28px;margin:0 0 12px 0;color:#15626C;font-family:'DM Sans',sans-serif;font-weight:400;letter-spacing:-1px">Sourcewell Member Access</h2>
+    <p style="font-size:16px;color:#64748B;margin:0 0 28px 0;line-height:1.6;font-family:'Inter',sans-serif">Log in with your Sourcewell credentials to view this content.</p>
+    <div id="gatedAuthError" style="background:rgba(212,27,36,0.06);border:1px solid rgba(212,27,36,0.15);border-radius:8px;padding:10px 14px;font-size:13px;color:#D41B24;margin-bottom:16px;display:none"></div>
+    <form id="gatedLoginForm" style="text-align:left">
+      <div style="margin-bottom:14px"><label style="display:block;font-size:13px;font-weight:600;color:#15626C;margin-bottom:6px;font-family:'DM Sans',sans-serif">Sourcewell Email</label><input type="text" id="gatedSwEmail" placeholder="Enter your Sourcewell email" required style="width:100%;padding:12px 16px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:15px;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s;box-sizing:border-box"></div>
+      <div style="margin-bottom:18px"><label style="display:block;font-size:13px;font-weight:600;color:#15626C;margin-bottom:6px;font-family:'DM Sans',sans-serif">Sourcewell Account Number</label><input type="text" id="gatedSwAccount" placeholder="Enter your account number" required style="width:100%;padding:12px 16px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:15px;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s;box-sizing:border-box"></div>
+      <button type="submit" style="width:100%;padding:14px 24px;background:#D41B24;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background 0.2s,transform 0.15s">Log In</button>
+    </form>
   </div>
 </div>
 
@@ -963,6 +974,7 @@
 <!-- ═══ Auth Gate Check ══════════════════════════ -->
 <script>
 (function() {
+  var SW_ACCOUNTS = { 'demo': '0000' };
   var overlay = document.getElementById('gatedOverlay');
   var wrapper = document.getElementById('gatedWrapper');
   var navBtn = document.getElementById('navAuthBtn');
@@ -970,22 +982,19 @@
   var userEmail = localStorage.getItem('scs_user') || '';
 
   if (!isAuthed) {
-    // Blur the content wrapper and show overlay
     if (wrapper) {
       wrapper.style.filter = 'blur(6px) grayscale(0.3)';
       wrapper.style.pointerEvents = 'none';
       wrapper.style.userSelect = 'none';
       wrapper.style.opacity = '0.75';
+      wrapper.style.transition = 'filter 0.5s ease, opacity 0.5s ease';
     }
-    // Remove the absolute overlay container — we'll position the card as fixed
     if (overlay) overlay.style.display = 'none';
 
     var card = document.getElementById('gatedCard');
     var rainbowBar = document.querySelector('.footer .rainbow-bar');
-    var area = document.getElementById('gatedArea');
 
     if (card) {
-      // Move card out of the overlay container and append to body as fixed
       document.body.appendChild(card);
       card.style.position = 'fixed';
       card.style.left = '50%';
@@ -998,43 +1007,71 @@
         var vh = window.innerHeight;
         var ch = card.offsetHeight;
         var centerY = (vh - ch) / 2;
-
         if (rainbowBar) {
           var rbRect = rainbowBar.getBoundingClientRect();
-          // If rainbow bar is visible in viewport, cap the card above it
           var maxY = rbRect.top - ch - 40;
-          if (maxY < centerY) {
-            card.style.top = Math.max(80, maxY) + 'px';
-          } else {
-            card.style.top = centerY + 'px';
-          }
+          card.style.top = (maxY < centerY ? Math.max(80, maxY) : centerY) + 'px';
         } else {
           card.style.top = centerY + 'px';
         }
         ticking = false;
       }
-
-      function onScroll() {
-        if (!ticking) {
-          requestAnimationFrame(positionCard);
-          ticking = true;
-        }
-      }
-
+      function onScroll() { if (!ticking) { requestAnimationFrame(positionCard); ticking = true; } }
       positionCard();
       window.addEventListener('scroll', onScroll, { passive: true });
       window.addEventListener('resize', onScroll, { passive: true });
+
+      // Inline Sourcewell login
+      var form = document.getElementById('gatedLoginForm');
+      var errorEl = document.getElementById('gatedAuthError');
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          var email = document.getElementById('gatedSwEmail').value.trim().toLowerCase();
+          var account = document.getElementById('gatedSwAccount').value.trim();
+          if (SW_ACCOUNTS[email] && SW_ACCOUNTS[email] === account) {
+            localStorage.setItem('scs_authed', 'true');
+            localStorage.setItem('scs_user', email);
+            // Fade out card
+            card.style.opacity = '0';
+            card.style.transform = 'translateX(-50%) translateY(12px)';
+            // Unblur content
+            if (wrapper) {
+              wrapper.style.filter = 'none';
+              wrapper.style.pointerEvents = '';
+              wrapper.style.userSelect = '';
+              wrapper.style.opacity = '1';
+            }
+            // Remove card after transition
+            setTimeout(function() { card.remove(); }, 500);
+            // Update nav button
+            if (navBtn) {
+              navBtn.outerHTML = '<button class="nav-user-btn" id="navLogout">' +
+                email.split('@')[0] +
+                ' <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg></button>';
+              document.getElementById('navLogout').addEventListener('click', function() {
+                localStorage.removeItem('scs_authed');
+                localStorage.removeItem('scs_user');
+                window.location.reload();
+              });
+            }
+            // Hide lock icons in nav
+            document.querySelectorAll('.dropdown a svg').forEach(function(svg) {
+              if (svg.innerHTML.indexOf('3 3 0 016 0') !== -1) svg.style.display = 'none';
+            });
+          } else {
+            errorEl.textContent = 'Invalid Sourcewell credentials. Please check your email and account number.';
+            errorEl.style.display = 'block';
+          }
+        });
+      }
     }
   } else {
-    // Hide overlay, content stays normal
     if (overlay) overlay.style.display = 'none';
-
-    // Replace Login/Join button with user + logout
     if (navBtn) {
       navBtn.outerHTML = '<button class="nav-user-btn" id="navLogout">' +
         userEmail.split('@')[0] +
-        ' <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>' +
-        '</button>';
+        ' <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg></button>';
       document.getElementById('navLogout').addEventListener('click', function() {
         localStorage.removeItem('scs_authed');
         localStorage.removeItem('scs_user');

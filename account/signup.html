@@ -71,7 +71,7 @@
           </div>
         </div>
       </div>
-      <a href="../account/signup.html" class="nav-cta">Login / Join</a>
+      <a href="../account/sourcewell-login.html" class="nav-cta" style="padding:0px 8px;height:38px;display:inline-flex;align-items:center"><img src="../assets/sourcewell-logo.png" alt="Sourcewell Members" style="height:20px;width:auto;display:block"></a>
       <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
@@ -155,18 +155,9 @@
   (function() {
     'use strict';
 
-    // Seed default account
-    var accounts = JSON.parse(localStorage.getItem('scs_accounts') || '{}');
-    if (!accounts['jim.leida@smartercitysolutions.com']) {
-      accounts['jim.leida@smartercitysolutions.com'] = { password: 'Website@2026!', name: 'Jim Leida' };
-      localStorage.setItem('scs_accounts', JSON.stringify(accounts));
-    }
-
-    // If already logged in, redirect to pricing
-    if (localStorage.getItem('scs_authed') === 'true') {
-      window.location.href = '../resources/pricing.html';
-      return;
-    }
+    // Redirect to Sourcewell login in demo mode
+    window.location.href = 'sourcewell-login.html';
+    return;
 
     // Tab switching
     document.querySelectorAll('.auth-mode-tab').forEach(function(tab) {

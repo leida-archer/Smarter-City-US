@@ -3,11 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog — Insights & Resources | Smarter City Solutions</title>
+  <title>Sourcewell Member Login | Smarter City Solutions</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
+  <style>
+    .auth-error {
+      background: rgba(212,27,36,0.06);
+      border: 1px solid rgba(212,27,36,0.15);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #D41B24;
+      margin-bottom: 16px;
+      display: none;
+    }
+  </style>
 </head>
 <body>
 <nav class="navbar" id="navbar">
@@ -21,9 +33,9 @@
           <a href="../resources/case-studies.html">Resources <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></a>
           <div class="dropdown">
             <a href="../resources/case-studies.html">Problem Solved</a>
-            <a href="../resources/pricing.html">Pricing &amp; Tiers<svg width="10" height="11" viewBox="0 0 10 11" style="margin-left:6px;vertical-align:-1px;opacity:0.6"><path d="M2 5V3.5a3 3 0 016 0V5m-7 0h8v5H1V5z" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg></a>
-            <a href="../resources/sales-deck.html">Sales Deck<svg width="10" height="11" viewBox="0 0 10 11" style="margin-left:6px;vertical-align:-1px;opacity:0.6"><path d="M2 5V3.5a3 3 0 016 0V5m-7 0h8v5H1V5z" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg></a>
-            <a href="../resources/newsletter.html">Newsletter<svg width="10" height="11" viewBox="0 0 10 11" style="margin-left:6px;vertical-align:-1px;opacity:0.6"><path d="M2 5V3.5a3 3 0 016 0V5m-7 0h8v5H1V5z" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg></a>
+            <a href="../resources/pricing.html">Pricing &amp; Tiers</a>
+            <a href="../resources/sales-deck.html">Sales Deck</a>
+            <a href="../resources/newsletter.html">Newsletter</a>
           </div>
         </div>
       </div>
@@ -39,70 +51,26 @@
     </div>
   </div>
 
-  <section class="breadcrumb-bar">
-    <div class="container"><a href="../index.html">Home</a> <span>/</span> <span>Resources</span> <span>/</span> <span>Blog</span></div>
-  </section>
-
-  <section class="page-hero" style="border-top: 4px solid #2C7480">
+  <section class="auth-page">
     <div class="container">
-      <div class="page-hero-inner reveal">
-        <h1>Insights &amp; Resources</h1>
-        <p>Expert perspectives on parking technology, campus operations, and the future of smart cities.</p>
-      </div>
-    </div>
-  </section>
+      <div class="auth-card reveal visible">
+        <div style="width:72px;height:72px;border-radius:50%;background:rgba(44,116,128,0.1);color:#2C7480;display:flex;align-items:center;justify-content:center;margin:0 auto 24px">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        </div>
+        <h1>Sourcewell Member Access</h1>
+        <p class="auth-sub">Log in with your Sourcewell credentials to access pricing, tier sheets, sales materials, and full case studies.</p>
 
-  <!-- Coming Soon Placeholder Posts -->
-  <section class="features-section">
-    <div class="container">
-      <div class="coming-soon-banner reveal">
-        <p>Blog launching soon. Subscribe below to get notified.</p>
-      </div>
-      <div class="blog-placeholder-grid">
-        <div class="blog-placeholder-card reveal">
-          <div class="blog-placeholder-image">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-          </div>
-          <div class="blog-placeholder-tag">Coming Soon</div>
-          <h4>The Parkumentary</h4>
-          <p>A deep dive into how parking technology is reshaping campus life across American universities.</p>
-        </div>
-        <div class="blog-placeholder-card reveal">
-          <div class="blog-placeholder-image">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          </div>
-          <div class="blog-placeholder-tag">Coming Soon</div>
-          <h4>Emerging Markets in Smart Parking</h4>
-          <p>Where the parking industry is headed and why higher education is leading the charge.</p>
-        </div>
-        <div class="blog-placeholder-card reveal">
-          <div class="blog-placeholder-image">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
-          </div>
-          <div class="blog-placeholder-tag">Coming Soon</div>
-          <h4>From Legacy to Cloud: A Migration Guide</h4>
-          <p>What to expect when migrating from T2, NuPark, or iParq to a modern cloud platform.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+        <div class="auth-error" id="authError"></div>
 
-  <!-- Newsletter Signup -->
-  <section class="cta-section">
-    <div class="container-wide">
-      <div class="cta-grid">
-        <div class="cta-content reveal">
-          <h2>Stay in the loop</h2>
-          <p>Get notified when we publish new insights, case studies, and parking industry analysis.</p>
-        </div>
-        <div class="cta-form-card reveal reveal-delay-2">
-          <h3>Subscribe to Updates</h3><p>No spam. Unsubscribe anytime.</p>
-          <form method="POST" action="/api/submit">
-            <input type="hidden" name="form_name" value="Newsletter Signup">
-            <div class="form-row"><div class="form-group"><label>Full Name</label><input type="text" name="full_name" placeholder="Jane Smith" required></div><div class="form-group"><label>Work Email</label><input type="email" name="email" placeholder="jane@university.edu" required></div></div>
-            <button type="submit" class="form-submit">Submit</button>
-          </form>
-        </div>
+        <form id="sourcewellLoginForm">
+          <div class="form-row">
+            <div class="form-group full"><label>Sourcewell Email</label><input type="text" name="sw_email" id="swEmail" placeholder="Enter your Sourcewell email" required></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group full"><label>Sourcewell Account Number</label><input type="text" name="sw_account" id="swAccount" placeholder="Enter your account number" required></div>
+          </div>
+          <button type="submit" class="form-submit" style="margin-top:18px">Log In</button>
+        </form>
       </div>
     </div>
   </section>
@@ -114,12 +82,47 @@
         <div class="footer-brand"><img src="../assets/scs-logo.png" alt="Smarter City Solutions"><p>Integrated (for) Life</p><p class="footer-contact-info">+1 (555) 123-4567</p><p class="footer-contact-info">info@smartercity.com</p></div>
         <div class="footer-col"><h5>Solutions</h5><a href="../solutions/vpermit.html">vPermit</a><a href="../solutions/vcompliance.html">vCompliance</a><a href="../solutions/vpark.html">vPark</a><a href="../solutions/platform.html">The Platform</a><a href="../solutions/integrations.html">Integrations</a></div>
         <div class="footer-col"><h5>Industries</h5><a href="../industries/higher-education.html">Higher Education</a><a href="../industries/municipalities.html">Municipalities</a><a href="../industries/healthcare.html">Healthcare</a><a href="../industries/k12.html">K-12 Schools</a><a href="../industries/corporate-campus.html">Corporate Campus</a></div>
-        <div class="footer-col"><h5>Resources</h5><a href="../resources/case-studies.html">Problem Solved</a><a href="../resources/blog.html">Blog</a><a href="../resources/webinars.html">Webinars</a></div>
+        <div class="footer-col"><h5>Resources</h5><a href="../resources/library.html">Library</a><a href="../resources/case-studies.html">Problem Solved</a><a href="../resources/blog.html">Blog</a><a href="../resources/webinars.html">Webinars</a></div>
         <div class="footer-col"><h5>Company</h5><a href="../about/index.html">About</a><a href="../about/team.html">Team</a><a href="../contact/index.html">Contact</a><a href="#">Careers</a></div>
       </div>
       <div class="footer-bottom"><p>&copy; 2026 Smarter City Solutions. All Rights Reserved.</p><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Accessibility Statement</a><a href="#">Terms of Service</a></div></div>
     </div>
   </footer>
   <script src="../script.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    // Sourcewell member accounts — add more entries here in the future
+    var SW_ACCOUNTS = {
+      'demo': '0000'
+    };
+
+    // If already logged in, redirect to homepage
+    if (localStorage.getItem('scs_authed') === 'true') {
+      window.location.href = '../index.html';
+      return;
+    }
+
+    var errorEl = document.getElementById('authError');
+
+    document.getElementById('sourcewellLoginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var email = document.getElementById('swEmail').value.trim().toLowerCase();
+      var account = document.getElementById('swAccount').value.trim();
+
+      if (!email || !account) return;
+
+      if (SW_ACCOUNTS[email] && SW_ACCOUNTS[email] === account) {
+        localStorage.setItem('scs_authed', 'true');
+        localStorage.setItem('scs_user', email);
+        window.location.href = '../index.html';
+      } else {
+        errorEl.textContent = 'Invalid Sourcewell credentials. Please check your email and account number.';
+        errorEl.style.display = 'block';
+      }
+    });
+  })();
+  </script>
 </body>
 </html>
