@@ -27,9 +27,9 @@
         <a href="../resources/case-studies.html">Resources <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></a>
         <div class="dropdown">
           <a href="../resources/case-studies.html">Problem Solved</a>
-          <a href="../resources/pricing.html" style="font-weight:600;color:var(--dark-teal)">Pricing Calculator</a>
-          <a href="../resources/sales-deck.html">Sales Deck</a>
-          <a href="../resources/newsletter.html">Newsletter</a>
+          <a href="../resources/pricing.html" style="font-weight:600;color:var(--dark-teal)">Pricing Calculator<svg width="10" height="11" viewBox="0 0 10 11" style="margin-left:6px;vertical-align:-1px;opacity:0.6"><path d="M2 5V3.5a3 3 0 016 0V5m-7 0h8v5H1V5z" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg></a>
+          <a href="../resources/sales-deck.html">Sales Deck<svg width="10" height="11" viewBox="0 0 10 11" style="margin-left:6px;vertical-align:-1px;opacity:0.6"><path d="M2 5V3.5a3 3 0 016 0V5m-7 0h8v5H1V5z" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg></a>
+          <a href="../resources/newsletter.html">Newsletter<svg width="10" height="11" viewBox="0 0 10 11" style="margin-left:6px;vertical-align:-1px;opacity:0.6"><path d="M2 5V3.5a3 3 0 016 0V5m-7 0h8v5H1V5z" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg></a>
         </div>
       </div>
     </div>
@@ -272,7 +272,7 @@
           </div>
 
           <!-- RIGHT -->
-          <div>
+          <div class="calc-right">
             <div class="summary-card" id="softwareSummary">
               <h3>Software Estimate</h3>
               <div class="summary-sub">Updates as you configure</div>
@@ -308,17 +308,96 @@
           <!-- LEFT -->
           <div class="calc-inputs">
 
+            <!-- NEW: Mobile LPR Options (vehicle-mounted, legacy scheme — Sourcewell pricing with MSRP comparison) -->
             <div class="input-block">
               <label class="input-block-label">Mobile LPR Options</label>
-              <div class="mlpr-card" id="mlprCardV2">
-                <div class="mlpr-card-header" id="mlprToggleV2">
+              <div class="mlpr-card" id="mlprCard">
+                <div class="mlpr-card-header" id="mlprToggle">
                   <div class="entity-card-top">
                     <div class="toggle-card-icon orange">
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
                     </div>
-                    <div class="toggle-card-title" style="display:inline-flex;align-items:center;gap:6px;margin-bottom:0;transform:translateY(-1px)"><span>Add</span><img src="../assets/survision-logo-2025.png" alt="Survision" style="height:14px;width:auto"><span>Mobile LPR</span></div></div>
+                    <div class="toggle-card-title" style="display:inline-flex;align-items:center;gap:6px;margin-bottom:0;transform:translateY(-1px)"><span>Add</span><img src="../assets/survision-logo-2025.png" alt="Survision" style="height:14px;width:auto"><span>Mobile LPR</span></div>
+                  </div>
                 </div>
-                <div class="mlpr-card-expand" id="mlprExpandV2">
+                <div class="mlpr-card-expand" id="mlprExpand">
+                  <!-- Sourcewell pricing badge with MSRP comparison -->
+                  <div class="expand-field">
+                    <div class="mlpr-pricing-badge" style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:10px 14px;background:rgba(21,98,108,0.04);border:1px solid rgba(21,98,108,0.1);border-radius:10px">
+                      <span style="font-size:12px;font-weight:600;color:var(--dark-teal);text-transform:uppercase;letter-spacing:0.5px;display:inline-flex;align-items:center;gap:6px"><img src="../assets/sourcewell-logo.png" alt="Sourcewell" style="height:14px;width:auto">pricing &middot; 5.5% off MSRP</span>
+                      <span style="font-size:11px;color:var(--gray)" id="mlprMsrpComparison">MSRP comparison shown below</span>
+                    </div>
+                  </div>
+
+                  <!-- Number of MLPR Vehicles -->
+                  <div class="expand-field">
+                    <label class="expand-label">Number of MLPR Vehicles</label>
+                    <div class="stepper stepper-sm">
+                      <button class="stepper-btn" type="button" data-mlpr-veh-dir="-">&minus;</button>
+                      <input type="number" id="mlprVehicles" value="1" min="1" max="50">
+                      <button class="stepper-btn" type="button" data-mlpr-veh-dir="+">+</button>
+                    </div>
+                    <div class="expand-hint">Each vehicle gets its own complete MLPR kit.</div>
+                  </div>
+
+                  <!-- Kit Configuration -->
+                  <div class="expand-field">
+                    <label class="expand-label">Kit Configuration</label>
+                    <div class="toggle-cards">
+                      <div class="toggle-card kit-card selected" data-mlpr-kit="full">
+                        <div class="entity-card-top">
+                          <div class="toggle-card-icon orange">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                          </div>
+                          <div class="toggle-card-title">Full Kit</div>
+                        </div>
+                        <div class="toggle-card-desc">360&deg; coverage, both sides of the vehicle</div>
+                      </div>
+                      <div class="toggle-card kit-card" data-mlpr-kit="mini">
+                        <div class="entity-card-top">
+                          <div class="toggle-card-icon orange">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                          </div>
+                          <div class="toggle-card-title">Mini Kit</div>
+                        </div>
+                        <div class="toggle-card-desc">Single-side coverage for smaller operations</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Payment Model -->
+                  <div class="expand-field">
+                    <label class="expand-label">Payment Model</label>
+                    <div class="toggle-cards">
+                      <div class="toggle-card selected-teal" data-mlpr-model="capex" style="position:relative;padding-bottom:40px">
+                        <div class="toggle-card-title">CapEx (Purchase)</div>
+                        <div class="toggle-card-desc" style="margin-top:4px">One-time hardware + annual software fee</div>
+                        <span class="toggle-pill teal" style="position:absolute;bottom:12px;right:12px">Preferred</span>
+                      </div>
+                      <div class="toggle-card" data-mlpr-model="haas" style="position:relative;padding-bottom:40px">
+                        <div class="toggle-card-title">HaaS (Lease)</div>
+                        <div class="toggle-card-desc" style="margin-top:4px">All-inclusive monthly, 36-month commitment</div>
+                        <span class="toggle-pill outline" style="position:absolute;bottom:12px;right:12px">Lower</span>
+                      </div>
+                    </div>
+                    <div class="input-helper" style="margin-top:10px">Volume discounts are subject to negotiation with Survision. Mini Kit only available with HaaS.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Fixed FLPR Options (camera-based, Bronze/Silver/Gold) -->
+            <div class="input-block">
+              <label class="input-block-label">Fixed FLPR Options</label>
+              <div class="mlpr-card" id="flprCard">
+                <div class="mlpr-card-header" id="flprToggle">
+                  <div class="entity-card-top">
+                    <div class="toggle-card-icon orange">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                    </div>
+                    <div class="toggle-card-title" style="display:inline-flex;align-items:center;gap:6px;margin-bottom:0;transform:translateY(-1px)"><span>Add</span><img src="../assets/survision-logo-2025.png" alt="Survision" style="height:14px;width:auto"><span>Fixed FLPR</span></div></div>
+                </div>
+                <div class="mlpr-card-expand" id="flprExpand">
                   <div class="expand-field">
                     <label class="expand-label">Subscription Tier</label>
                     <div class="mlpr-tier-grid">
@@ -335,7 +414,7 @@
                           <li>Unlimited support</li>
                         </ul>
                         <div class="mlpr-tier-select">
-                          <input type="radio" name="mlprTier" value="bronze" aria-label="Select Bronze">
+                          <input type="radio" name="flprTier" value="bronze" aria-label="Select Bronze">
                         </div>
                       </label>
                       <label class="mlpr-tier-card" data-tier="silver">
@@ -351,7 +430,7 @@
                           <li>Express replacement</li>
                         </ul>
                         <div class="mlpr-tier-select">
-                          <input type="radio" name="mlprTier" value="silver" aria-label="Select Silver">
+                          <input type="radio" name="flprTier" value="silver" aria-label="Select Silver">
                         </div>
                       </label>
                       <label class="mlpr-tier-card" data-tier="gold">
@@ -367,7 +446,7 @@
                           <li>Full feature set</li>
                         </ul>
                         <div class="mlpr-tier-select">
-                          <input type="radio" name="mlprTier" value="gold" aria-label="Select Gold">
+                          <input type="radio" name="flprTier" value="gold" aria-label="Select Gold">
                         </div>
                       </label>
                     </div>
@@ -378,12 +457,12 @@
             </div>
 
             <div class="input-block conditional-section" id="cameraSection" style="display:none">
-              <label class="input-block-label">Mobile LPR Cameras</label>
+              <label class="input-block-label">Fixed FLPR Cameras</label>
               <div class="hw-card-with-addons">
                 <div class="hw-item">
                   <div class="hw-item-info">
                     <div class="hw-item-name">Number of Cameras</div>
-                    <div class="hw-item-detail" id="camCardDesc">Camera hardware is $1,500 per unit.</div>
+                    <div class="hw-item-detail" id="camCardDesc">Camera hardware is $1,575 per unit ($1,950 MSRP).</div>
                   </div>
                   <div class="stepper stepper-sm">
                     <button class="stepper-btn" type="button" data-cam-dir="-">&minus;</button>
@@ -452,7 +531,7 @@
           </div>
 
           <!-- RIGHT -->
-          <div>
+          <div class="calc-right">
             <div class="summary-card" id="hardwareSummaryV2">
               <h3>Hardware Estimate</h3>
               <div class="summary-sub">Updates as you configure</div>
@@ -502,16 +581,25 @@
               </div>
               <div class="grand-col-yr1" id="reviewHwYr1">$0</div>
               <div class="grand-col-sub">One-time purchase</div>
-              <div class="grand-col-recurring">&nbsp;</div>
+              <div class="grand-col-recurring" id="reviewHwDevices">&nbsp;</div>
             </div>
             <div class="grand-total-col" id="reviewMlprCol" style="display:none">
               <div class="grand-col-label">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
-                Survision MLPR
+                Mobile LPR
               </div>
               <div class="grand-col-yr1" id="reviewMlprYr1">$0</div>
-              <div class="grand-col-sub">Year 1</div>
+              <div class="grand-col-sub" id="reviewMlprSub">Year 1</div>
               <div class="grand-col-recurring" id="reviewMlprRecurring">$0/yr recurring</div>
+            </div>
+            <div class="grand-total-col" id="reviewFlprCol" style="display:none">
+              <div class="grand-col-label">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M12 9v6M9 12h6"/></svg>
+                Fixed FLPR
+              </div>
+              <div class="grand-col-yr1" id="reviewFlprYr1">$0</div>
+              <div class="grand-col-sub">Year 1</div>
+              <div class="grand-col-recurring" id="reviewFlprRecurring">$0/yr recurring</div>
             </div>
           </div>
 
@@ -612,7 +700,7 @@
 <div id="gatedOverlay" style="display:none;position:absolute;top:0;left:0;right:0;z-index:100;pointer-events:none;padding-top:48px">
   <div id="gatedCard" style="pointer-events:all;margin:0 auto;background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:20px;padding:48px 56px;max-width:520px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,0.12)">
     <img src="../assets/sourcewell-logo.png" alt="Sourcewell" style="height:32px;width:auto;margin-bottom:16px">
-    <h3 style="margin-bottom:8px;font-family:'DM Sans',sans-serif;font-size:22px;font-weight:600;color:var(--dark)">Sourcewell Members Only</h3>
+    <h3 style="margin-bottom:8px;font-family:'DM Sans',sans-serif;font-size:22px;font-weight:600;color:var(--dark)">Member Sign-In</h3>
     <p style="font-size:14px;color:var(--gray);margin-bottom:24px;line-height:1.6">Log in with your Sourcewell credentials to access the pricing calculator.</p>
     <div id="gatedAuthError" style="background:rgba(212,27,36,0.06);border:1px solid rgba(212,27,36,0.15);border-radius:8px;padding:10px 14px;font-size:13px;color:#D41B24;margin-bottom:16px;display:none"></div>
     <form id="gatedLoginForm" style="text-align:left">

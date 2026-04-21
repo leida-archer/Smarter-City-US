@@ -81,16 +81,39 @@
     printer:     { label: 'Wireless Printer',              price:  675 },
   };
 
-  // MLPR v2 pricing from PDF — Bronze/Silver/Gold × volume band
-  const MLPR_V2 = {
-    camera: { base: 1500, overview: 500, embedded4G: 200 },
+  // Mobile LPR (vehicle-mounted) — true MSRP as the comparison baseline;
+  // customer pays the "Cost + 5%" tier (Partner Price × 1.05 per Survision PDF).
+  // Savings % = (MSRP − Customer) / MSRP ≈ 5.5% across all packages.
+  const MLPR_PRICING = {
+    msrp: {  // list price — reference/comparison only
+      capex_full: { hardware: 16000, software: 8000, commissioning: 2500 },
+      haas_full:  { monthly: 1290, annual: 15480 },
+      haas_mini:  { monthly: 1100, annual: 13200 },
+    },
+    sourcewell: {  // what customer actually pays (Cost + 5%)
+      capex_full: { hardware: 15120, software: 7560, commissioning: 2362.50 },
+      haas_full:  { monthly: 1219.05, annual: 14628.60 },
+      haas_mini:  { monthly: 1039.50, annual: 12474 },
+    },
+  };
+
+  // Fixed FLPR (camera-based) — customer pays Cost+5% ($1,575/camera), MSRP $1,950/camera
+  // for comparison. Add-ons priced at their listed amounts (no MSRP comparison on add-ons).
+  // Savings % = (MSRP − Customer) / MSRP ≈ 19.2% on the base hardware.
+  const FLPR_PRICING = {
+    camera: {
+      base: 1575,          // customer price per camera (Cost + 5%)
+      msrp: 1950,          // list price per camera — comparison baseline
+      overview: 500,
+      embedded4G: 200,
+    },
     monthlyPerCamera: {
       bronze: { standard: 29, bulk50: 26, bulk100: 24 },
       silver: { standard: 45, bulk50: 39, bulk100: 35 },
       gold:   { standard: 63, bulk50: 55, bulk100: 50 },
     },
   };
-  const MLPR_TIER_LABELS = { bronze: 'Bronze', silver: 'Silver', gold: 'Gold' };
+  const FLPR_TIER_LABELS = { bronze: 'Bronze', silver: 'Silver', gold: 'Gold' };
 
   const MONTH_NAMES = ['', 'January','February','March','April','May','June','July','August','September','October','November','December'];
 
@@ -138,12 +161,15 @@
     // Hardware
     hw: { tablet: 0, lprHandheld: 0, printer: 0 },
 
-    // MLPR
-    mlprEnabled: false,
-    mlprTier: null,               // 'bronze'|'silver'|'gold'
-    mlprOverview: false,
-    mlpr4G: false,
-    cameraCount: 1,
+    // Mobile LPR (vehicle-mounted, legacy)
+    mlpr: { enabled: false, vehicles: 1, kit: 'full', model: 'capex' },
+
+    // Fixed FLPR (camera-based, Bronze/Silver/Gold)
+    flprEnabled: false,
+    flprTier: null,               // 'bronze'|'silver'|'gold'
+    flprOverview: false,
+    flpr4G: false,
+    flprCameras: 1,
   };
 
   // ── Utilities ────────────────────────────────────
@@ -303,7 +329,7 @@
     };
   }
 
-  function mlprVolumeBand(cameraCount) {
+  function flprVolumeBand(cameraCount) {
     if (cameraCount >= 100) return 'bulk100';
     if (cameraCount >= 50)  return 'bulk50';
     return 'standard';
@@ -318,57 +344,125 @@
     });
     const devicesTotal = devices.reduce((a, b) => a + b.subtotal, 0);
 
-    // MLPR
-    let mlpr = null;
-    if (state.mlprEnabled && state.mlprTier) {
-      const cameras = Math.max(1, state.cameraCount | 0);
-      const band = mlprVolumeBand(cameras);
-      const monthlyRate = MLPR_V2.monthlyPerCamera[state.mlprTier][band];
-      const hwPerCam = MLPR_V2.camera.base
-        + (state.mlprOverview ? MLPR_V2.camera.overview : 0)
-        + (state.mlpr4G ? MLPR_V2.camera.embedded4G : 0);
-      const hwTotal = hwPerCam * cameras;
+    // Fixed FLPR (camera-based, Bronze/Silver/Gold)
+    let flpr = null;
+    if (state.flprEnabled && state.flprTier) {
+      const cameras = Math.max(1, state.flprCameras | 0);
+      const band = flprVolumeBand(cameras);
+      const monthlyRate = FLPR_PRICING.monthlyPerCamera[state.flprTier][band];
+      const addonPerCam = (state.flprOverview ? FLPR_PRICING.camera.overview : 0)
+                        + (state.flpr4G ? FLPR_PRICING.camera.embedded4G : 0);
 
-      // Annual subscription, prorated to remaining months in fiscal year (both entities)
+      // Hardware — customer pays Cost+5% ($1,575/cam); MSRP ($1,950/cam) is comparison-only.
+      const hwPerCam = FLPR_PRICING.camera.base + addonPerCam;            // customer price
+      const hwMsrpPerCam = FLPR_PRICING.camera.msrp + addonPerCam;        // list (add-ons at list too)
+      const hwTotal = hwPerCam * cameras;
+      const hwMsrpTotal = hwMsrpPerCam * cameras;
+      const hwSavings = (FLPR_PRICING.camera.msrp - FLPR_PRICING.camera.base) * cameras;
+      const hwSavingsPct = (FLPR_PRICING.camera.msrp - FLPR_PRICING.camera.base)
+                           / FLPR_PRICING.camera.msrp * 100;
+
+      // Subscription — prorated to remaining months in fiscal year
       const monthsForYr1 = monthsRemainingInFiscal(state.goLiveMonth);
-      const subYr1 = monthlyRate * cameras * monthsForYr1;
+      const subYr1Gross = monthlyRate * cameras * monthsForYr1;
       const subAnnualGross = monthlyRate * cameras * 12;
 
-      // Sourcewell 10% applies to MLPR when the SaaS tier is eligible (Small+)
+      // Sourcewell 10% applies to the SUBSCRIPTION when the SaaS tier is eligible (Small+).
+      // Hardware already carries its own MSRP-vs-Customer discount (~19.2%).
       const sourcewellApplies = !!(softwareCalc && softwareCalc.sourcewellApplies);
-      const year1Gross = hwTotal + subYr1;
-      const discount = sourcewellApplies ? year1Gross * SOURCEWELL_DISCOUNT : 0;
-      const year1Total = year1Gross - discount;
+      const subDiscount = sourcewellApplies ? subYr1Gross * SOURCEWELL_DISCOUNT : 0;
+      const subYr1 = subYr1Gross - subDiscount;
       const subAnnualRecurring = sourcewellApplies
         ? subAnnualGross * (1 - SOURCEWELL_DISCOUNT)
         : subAnnualGross;
 
-      mlpr = {
-        tier: state.mlprTier,
+      const year1Total = hwTotal + subYr1;
+      const msrpYear1 = hwMsrpTotal + subYr1Gross;  // list-baseline comparison
+
+      flpr = {
+        tier: state.flprTier,
         cameras,
         band,
         monthlyRate,
         hwPerCam,
+        hwMsrpPerCam,
         hwTotal,
-        overviewOn: state.mlprOverview,
-        fourGOn: state.mlpr4G,
+        hwMsrpTotal,
+        hwSavings,
+        hwSavingsPct,
+        overviewOn: state.flprOverview,
+        fourGOn: state.flpr4G,
         monthsForYr1,
         subYr1,
+        subYr1Gross,
         subAnnualGross,
         subAnnualRecurring,
         sourcewellApplies,
-        discount,
-        year1Gross,
+        subDiscount,
+        msrpYear1,
         year1Total,
       };
     }
+
+    // Mobile LPR (vehicle-mounted, legacy — Sourcewell price active, MSRP shown as comparison)
+    const mlpr = mlprCalc();
 
     return {
       devices,
       devicesTotal,
       mlpr,
-      year1Total: devicesTotal + (mlpr ? mlpr.year1Total : 0),
-      recurring: mlpr ? mlpr.subAnnualRecurring : 0,
+      flpr,
+      year1Total: devicesTotal
+                  + (flpr ? flpr.year1Total : 0)
+                  + (mlpr ? mlpr.year1 : 0),
+      recurring: (flpr ? flpr.subAnnualRecurring : 0)
+                 + (mlpr ? mlpr.recurring : 0),
+    };
+  }
+
+  function mlprCalc() {
+    if (!state.mlpr.enabled) return null;
+    const v = Math.max(1, state.mlpr.vehicles | 0);
+    let kit = state.mlpr.kit;       // 'full' | 'mini'
+    const model = state.mlpr.model; // 'capex' | 'haas'
+    // Mini Kit is only defined under HaaS — fall back to Full on CapEx
+    if (model === 'capex') kit = 'full';
+
+    const sw = MLPR_PRICING.sourcewell;
+    const msrp = MLPR_PRICING.msrp;
+    let hardware = 0, software = 0, commissioning = 0, monthly = 0, year1 = 0, recurring = 0;
+    let msrpYear1 = 0, msrpRecurring = 0;
+
+    if (model === 'capex') {
+      const p = sw.capex_full, m = msrp.capex_full;
+      hardware = p.hardware * v;
+      software = p.software * v;
+      commissioning = p.commissioning * v;
+      year1 = hardware + software + commissioning;
+      recurring = software;          // annual SaaS portion (CapEx)
+      msrpYear1 = (m.hardware + m.software + m.commissioning) * v;
+      msrpRecurring = m.software * v;
+    } else {
+      // HaaS — no proration per spec; charge full annual in Year 1
+      const p = kit === 'mini' ? sw.haas_mini : sw.haas_full;
+      const m = kit === 'mini' ? msrp.haas_mini : msrp.haas_full;
+      monthly = p.monthly;
+      year1 = p.annual * v;
+      recurring = p.annual * v;
+      msrpYear1 = m.annual * v;
+      msrpRecurring = m.annual * v;
+    }
+
+    const savings = msrpYear1 - year1;
+    const savingsPct = msrpYear1 > 0 ? (savings / msrpYear1) * 100 : 0;
+
+    return {
+      enabled: true,
+      vehicles: v,
+      kit, model,
+      hardware, software, commissioning, monthly,
+      year1, recurring,
+      msrpYear1, msrpRecurring, savings, savingsPct,
     };
   }
 
@@ -381,13 +475,12 @@
       el.classList.toggle('active', Number(el.dataset.step) === step);
     });
 
-    if (step > 1) {
-      snapToDivider(true);  // smooth auto-snap on slide change beyond entity
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
+    // Populate the new slide's contents before snapping so the document's
+    // final height is known (matters on slide 4, which is much taller once
+    // the review columns are hydrated).
     render();
+
+    snapToDivider(true);  // every slide lands at the top of the cream section
   }
 
   // ── Magnetic snap (JS-driven; reliable across browsers) ──
@@ -475,13 +568,13 @@
     // 3b. Update integration per-unit prices based on entity (and size for HE)
     updateIntegrationPrices();
 
-    // 4. Update MLPR tier-card annual subscription (live with bulk band)
-    updateMlprTierCards();
+    // 4. Update Fixed FLPR tier-card annual subscription (live with bulk band)
+    updateFlprTierCards();
 
     // 5. Update camera-count card description (dynamic with tier+bulk)
     updateCamCardDesc();
 
-    // 5b. Show / hide camera count + add-ons (only if MLPR enabled + tier selected)
+    // 5b. Show / hide camera count + add-ons (only if FLPR enabled + tier selected)
     updateConditionalSections();
 
     // 6. Size eligibility constraint note (K-12 / X-Small don't get Sourcewell discount)
@@ -499,12 +592,26 @@
 
     // 9. Review slide
     renderReview();
+
+    // 10. Re-measure sticky summary-card offset so the card stays vertically
+    //     centered regardless of how many line items it currently holds.
+    updateSummaryCardCentering();
   }
 
-  function updateMlprTierCards() {
-    const band = mlprVolumeBand(state.cameraCount);
-    Object.keys(MLPR_V2.monthlyPerCamera).forEach(tier => {
-      const monthly = MLPR_V2.monthlyPerCamera[tier][band];
+  function updateSummaryCardCentering() {
+    // Defer to next frame so the card's post-render layout is committed.
+    requestAnimationFrame(() => {
+      $$('.calc-right .summary-card').forEach(card => {
+        const h = card.offsetHeight;
+        if (h > 0) card.style.setProperty('--card-half-h', (h / 2) + 'px');
+      });
+    });
+  }
+
+  function updateFlprTierCards() {
+    const band = flprVolumeBand(state.flprCameras);
+    Object.keys(FLPR_PRICING.monthlyPerCamera).forEach(tier => {
+      const monthly = FLPR_PRICING.monthlyPerCamera[tier][band];
       const annual = monthly * 12;
       const annEl = document.querySelector(`[data-tier-annual="${tier}"]`);
       if (annEl) annEl.textContent = fmtUSD(annual);
@@ -512,7 +619,7 @@
   }
 
   function updateConditionalSections() {
-    const visible = !!(state.mlprEnabled && state.mlprTier);
+    const visible = !!(state.flprEnabled && state.flprTier);
     const cam = $('#cameraSection');
     if (cam) cam.style.display = visible ? 'block' : 'none';
   }
@@ -643,9 +750,10 @@
 
     const lines = [];
     const hasDevices = hw.devices.some(d => d.count > 0);
+    const hasFLPR = !!hw.flpr;
     const hasMLPR = !!hw.mlpr;
 
-    if (!hasDevices && !hasMLPR) {
+    if (!hasDevices && !hasFLPR && !hasMLPR) {
       configEl.textContent = 'No hardware selected';
       linesEl.innerHTML = '';
       totalEl.textContent = '$0';
@@ -671,8 +779,37 @@
     }
 
     if (hasMLPR) {
-      const m = hw.mlpr;
-      lines.push('<div class="summary-group-label">Mobile LPR (Survision)</div>');
+      const mv = hw.mlpr;
+      const tierHeader = mv.model === 'capex'
+        ? 'CapEx · Full Kit'
+        : `HaaS · ${mv.kit === 'mini' ? 'Mini Kit' : 'Full Kit'}`;
+      lines.push(`<div class="summary-group-label">Mobile LPR (Survision) &middot; ${tierHeader}</div>`);
+      if (mv.model === 'capex') {
+        lines.push(
+          `<div class="summary-line"><span class="summary-line-label">Vehicle hardware &times; ${mv.vehicles} <span class="summary-line-sub">(one-time)</span></span><span class="summary-line-value">${fmtUSD(mv.hardware)}</span></div>`
+        );
+        lines.push(
+          `<div class="summary-line"><span class="summary-line-label">Software subscription &times; ${mv.vehicles} <span class="summary-line-sub">(annual)</span></span><span class="summary-line-value">${fmtUSD(mv.software)}</span></div>`
+        );
+        lines.push(
+          `<div class="summary-line"><span class="summary-line-label">Commissioning &times; ${mv.vehicles} <span class="summary-line-sub">(one-time)</span></span><span class="summary-line-value">${fmtUSD(mv.commissioning)}</span></div>`
+        );
+      } else {
+        lines.push(
+          `<div class="summary-line"><span class="summary-line-label">HaaS &times; ${mv.vehicles} @ ${fmtUSD(mv.monthly)}/mo <span class="summary-line-sub">(annual · all-inclusive)</span></span><span class="summary-line-value">${fmtUSD(mv.year1)}</span></div>`
+        );
+      }
+      lines.push(
+        `<div class="summary-line muted"><span class="summary-line-label">MSRP comparison <span class="summary-line-sub">(list · not applied)</span></span><span class="summary-line-value">${fmtUSD(mv.msrpYear1)}</span></div>`
+      );
+      lines.push(
+        `<div class="summary-line"><span class="summary-line-label">Sourcewell savings <span class="summary-line-sub">(${mv.savingsPct.toFixed(1)}% off MSRP)</span></span><span class="summary-line-value">&minus;${fmtUSD(mv.savings)}</span></div>`
+      );
+    }
+
+    if (hasFLPR) {
+      const m = hw.flpr;
+      lines.push('<div class="summary-group-label">Fixed FLPR (Survision)</div>');
       lines.push(
         `<div class="summary-line"><span class="summary-line-label">Camera hardware &times; ${m.cameras} <span class="summary-line-sub">(one-time)</span></span><span class="summary-line-value">${fmtUSD(m.hwTotal)}</span></div>`
       );
@@ -687,21 +824,34 @@
         );
       }
       const subNote = m.monthsForYr1 < 12 ? `(${m.monthsForYr1} mo prorated)` : '(annual)';
+      // Show subscription at its GROSS rate (pre-discount); the 10% is itemised below if eligible
       lines.push(
-        `<div class="summary-line"><span class="summary-line-label">${MLPR_TIER_LABELS[m.tier]} subscription <span class="summary-line-sub">${subNote}</span></span><span class="summary-line-value">${fmtUSD(m.subYr1)}</span></div>`
+        `<div class="summary-line"><span class="summary-line-label">${FLPR_TIER_LABELS[m.tier]} subscription <span class="summary-line-sub">${subNote}</span></span><span class="summary-line-value">${fmtUSD(m.subYr1Gross)}</span></div>`
       );
+      // MSRP comparison (hardware list baseline)
+      lines.push(
+        `<div class="summary-line muted"><span class="summary-line-label">MSRP comparison <span class="summary-line-sub">(hardware list · not applied)</span></span><span class="summary-line-value">${fmtUSD(m.hwMsrpTotal)}</span></div>`
+      );
+      // Hardware MSRP → Sourcewell savings (always applies; baked into customer price)
+      lines.push(
+        `<div class="summary-line"><span class="summary-line-label">Sourcewell hardware savings <span class="summary-line-sub">(${m.hwSavingsPct.toFixed(1)}% off MSRP)</span></span><span class="summary-line-value">&minus;${fmtUSD(m.hwSavings)}</span></div>`
+      );
+      // Subscription 10% discount (only when SaaS tier is eligible)
       if (m.sourcewellApplies) {
         lines.push(
-          `<div class="summary-line muted"><span class="summary-line-label">Sourcewell discount <span class="summary-line-sub">(10% off MLPR)</span></span><span class="summary-line-value">&minus;${fmtUSD(m.discount)}</span></div>`
+          `<div class="summary-line"><span class="summary-line-label">Sourcewell subscription discount <span class="summary-line-sub">(10% off)</span></span><span class="summary-line-value">&minus;${fmtUSD(m.subDiscount)}</span></div>`
         );
       }
     }
 
     linesEl.innerHTML = lines.join('');
     totalEl.textContent = fmtUSD(hw.year1Total);
-    if (hasMLPR) {
+    const recurringParts = [];
+    if (hasFLPR) recurringParts.push(`Fixed FLPR: ${fmtUSD(hw.flpr.subAnnualRecurring)}/yr`);
+    if (hasMLPR) recurringParts.push(`Mobile LPR: ${fmtUSD(hw.mlpr.recurring)}/yr`);
+    if (recurringParts.length) {
       recurringEl.style.display = 'block';
-      recurringEl.textContent = `MLPR annual recurring (Year 2+): ${fmtUSD(hw.mlpr.subAnnualRecurring)}/yr`;
+      recurringEl.textContent = 'Annual recurring (Year 2+): ' + recurringParts.join('  ·  ');
     } else {
       recurringEl.style.display = 'none';
     }
@@ -710,7 +860,8 @@
   function buildHardwareConfigEcho(hw) {
     const parts = [];
     if (hw.devices.some(d => d.count > 0)) parts.push('Enforcement devices');
-    if (hw.mlpr) parts.push(`Mobile LPR (${MLPR_TIER_LABELS[hw.mlpr.tier]})`);
+    if (hw.mlpr) parts.push(`Mobile LPR (${hw.mlpr.model === 'capex' ? 'CapEx' : 'HaaS'})`);
+    if (hw.flpr) parts.push(`Fixed FLPR (${FLPR_TIER_LABELS[hw.flpr.tier]})`);
     return parts.join(' · ') || 'No hardware selected';
   }
 
@@ -736,16 +887,39 @@
     if (hasDevices) {
       const hwYr1El = $('#reviewHwYr1');
       if (hwYr1El) hwYr1El.textContent = fmtUSD(hw.devicesTotal);
+      const hwDevicesEl = $('#reviewHwDevices');
+      if (hwDevicesEl) {
+        const n = hw.devices.reduce((sum, d) => sum + d.count, 0);
+        hwDevicesEl.textContent = `${n} ${n === 1 ? 'device' : 'devices'}`;
+      }
     }
 
-    // MLPR column
+    // Mobile LPR column (legacy, vehicle-mounted)
     const mlprCol = $('#reviewMlprCol');
     if (mlprCol) mlprCol.style.display = hw.mlpr ? '' : 'none';
     if (hw.mlpr) {
+      const mv = hw.mlpr;
       const mlprYr1El = $('#reviewMlprYr1');
       const mlprRecEl = $('#reviewMlprRecurring');
-      if (mlprYr1El) mlprYr1El.textContent = fmtUSD(hw.mlpr.year1Total);
-      if (mlprRecEl) mlprRecEl.textContent = fmtUSD(hw.mlpr.subAnnualRecurring) + '/yr recurring';
+      const mlprSubEl = $('#reviewMlprSub');
+      if (mlprYr1El) mlprYr1El.textContent = fmtUSD(mv.year1);
+      if (mlprRecEl) mlprRecEl.textContent = fmtUSD(mv.recurring) + '/yr recurring';
+      if (mlprSubEl) {
+        const tag = mv.model === 'capex'
+          ? `Year 1 · CapEx · ${mv.vehicles} ${mv.vehicles === 1 ? 'vehicle' : 'vehicles'}`
+          : `Year 1 · HaaS · ${mv.kit === 'mini' ? 'Mini' : 'Full'} · ${mv.vehicles} ${mv.vehicles === 1 ? 'vehicle' : 'vehicles'}`;
+        mlprSubEl.textContent = tag;
+      }
+    }
+
+    // Fixed FLPR column (camera-based)
+    const flprCol = $('#reviewFlprCol');
+    if (flprCol) flprCol.style.display = hw.flpr ? '' : 'none';
+    if (hw.flpr) {
+      const flprYr1El = $('#reviewFlprYr1');
+      const flprRecEl = $('#reviewFlprRecurring');
+      if (flprYr1El) flprYr1El.textContent = fmtUSD(hw.flpr.year1Total);
+      if (flprRecEl) flprRecEl.textContent = fmtUSD(hw.flpr.subAnnualRecurring) + '/yr recurring';
     }
 
     // Subtitle
@@ -753,7 +927,8 @@
       const cats = [];
       if (sw) cats.push('Software');
       if (hasDevices) cats.push('Hardware');
-      if (hw.mlpr) cats.push('MLPR');
+      if (hw.mlpr) cats.push('Mobile LPR');
+      if (hw.flpr) cats.push('Fixed FLPR');
       subtitleEl.textContent = cats.length ? cats.join(' · ') : 'Configure your deployment to see totals';
     }
 
@@ -787,16 +962,32 @@
       hardware: {
         devices: hw.devices.filter(d => d.count > 0).map(d => ({ label: d.label, count: d.count, subtotal: d.subtotal })),
         mlpr: hw.mlpr ? {
-          tier: hw.mlpr.tier,
-          cameras: hw.mlpr.cameras,
-          band: hw.mlpr.band,
-          overview: hw.mlpr.overviewOn,
-          embedded4G: hw.mlpr.fourGOn,
-          hardware_total: hw.mlpr.hwTotal,
-          subscription_year1: Math.round(hw.mlpr.subYr1),
-          sourcewell_discount: Math.round(hw.mlpr.discount),
-          year1_total: Math.round(hw.mlpr.year1Total),
-          annual_recurring: Math.round(hw.mlpr.subAnnualRecurring),
+          vehicles: hw.mlpr.vehicles,
+          kit: hw.mlpr.kit,
+          model: hw.mlpr.model,
+          hardware: Math.round(hw.mlpr.hardware || 0),
+          software: Math.round(hw.mlpr.software || 0),
+          commissioning: Math.round(hw.mlpr.commissioning || 0),
+          monthly: hw.mlpr.monthly || 0,
+          year1: Math.round(hw.mlpr.year1),
+          recurring: Math.round(hw.mlpr.recurring),
+          msrp_year1: Math.round(hw.mlpr.msrpYear1),
+          sourcewell_savings: Math.round(hw.mlpr.savings),
+        } : null,
+        flpr: hw.flpr ? {
+          tier: hw.flpr.tier,
+          cameras: hw.flpr.cameras,
+          band: hw.flpr.band,
+          overview: hw.flpr.overviewOn,
+          embedded4G: hw.flpr.fourGOn,
+          hardware_total: Math.round(hw.flpr.hwTotal),
+          hardware_msrp_total: Math.round(hw.flpr.hwMsrpTotal),
+          hardware_savings: Math.round(hw.flpr.hwSavings),
+          subscription_year1_gross: Math.round(hw.flpr.subYr1Gross),
+          subscription_year1_net: Math.round(hw.flpr.subYr1),
+          sourcewell_subscription_discount: Math.round(hw.flpr.subDiscount),
+          year1_total: Math.round(hw.flpr.year1Total),
+          annual_recurring: Math.round(hw.flpr.subAnnualRecurring),
         } : null,
       },
     };
@@ -864,7 +1055,7 @@
     doc.setLineWidth(0.5);
     doc.line(M, 118, pageW - M, 118);
 
-    let y = 146;
+    let y = 130;
 
     // Section: Software
     if (sw) {
@@ -876,7 +1067,7 @@
       doc.setDrawColor.apply(doc, PDF_COLORS.darkTeal);
       doc.setLineWidth(0.5);
       doc.line(M, y + 4, pageW - M, y + 4);
-      y += 18;
+      y += 14;
 
       doc.setFont('helvetica','normal');
       doc.setFontSize(10);
@@ -909,7 +1100,7 @@
       // ── Integrations (only if any selected) ──
       const hasIntegrations = sw.integrationCosts.some(ic => ic.count > 0);
       if (hasIntegrations) {
-        y += 6;
+        y += 4;
         y = pdfSubheader(doc, M, y, 'Integrations');
         sw.integrationCosts.forEach(ic => {
           if (ic.count > 0) {
@@ -919,7 +1110,7 @@
       }
 
       // ── Adjustments (un-indented, no subheader) ──
-      y += 4;
+      y += 2;
       if (sw.sourcewellApplies) {
         y = pdfLine(doc, pageW, M, y, 'Sourcewell discount', '-' + fmtUSD(sw.integrationLift * SOURCEWELL_DISCOUNT), '(10% off lift)');
       }
@@ -929,7 +1120,7 @@
       }
       y = pdfLine(doc, pageW, M, y, 'Installation', fmtUSD(sw.installation), '(one-time)');
       y = pdfSubtotal(doc, pageW, M, y, 'Software Year 1', fmtUSD(sw.year1Total));
-      y += 14;
+      y += 8;
     }
 
     // Section: Devices
@@ -942,7 +1133,7 @@
       doc.setDrawColor.apply(doc, PDF_COLORS.orange);
       doc.setLineWidth(0.5);
       doc.line(M, y + 4, pageW - M, y + 4);
-      y += 18;
+      y += 14;
 
       doc.setFont('helvetica','normal');
       doc.setFontSize(10);
@@ -954,20 +1145,52 @@
         }
       });
       y = pdfSubtotal(doc, pageW, M, y, 'Devices Total', fmtUSD(hw.devicesTotal));
-      y += 14;
+      y += 8;
     }
 
-    // Section: MLPR
+    // Section: Mobile LPR (legacy, vehicle-mounted)
     if (hw.mlpr) {
-      const m = hw.mlpr;
+      const mv = hw.mlpr;
+      const configTag = mv.model === 'capex'
+        ? `CAPEX · FULL KIT · ${mv.vehicles} ${mv.vehicles === 1 ? 'VEHICLE' : 'VEHICLES'}`
+        : `HAAS · ${mv.kit === 'mini' ? 'MINI KIT' : 'FULL KIT'} · ${mv.vehicles} ${mv.vehicles === 1 ? 'VEHICLE' : 'VEHICLES'}`;
       doc.setFontSize(11);
       doc.setTextColor.apply(doc, PDF_COLORS.darkTeal);
       doc.setFont('helvetica','bold');
-      doc.text(`MOBILE LPR — ${MLPR_TIER_LABELS[m.tier].toUpperCase()}`, M, y);
+      doc.text(`MOBILE LPR — ${configTag}`, M, y);
       doc.setDrawColor.apply(doc, PDF_COLORS.orange);
       doc.setLineWidth(0.5);
       doc.line(M, y + 4, pageW - M, y + 4);
-      y += 18;
+      y += 14;
+
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(10);
+      doc.setTextColor(30, 41, 59);
+
+      if (mv.model === 'capex') {
+        y = pdfLine(doc, pageW, M, y, `Vehicle hardware × ${mv.vehicles}`, fmtUSD(mv.hardware), '(one-time)');
+        y = pdfLine(doc, pageW, M, y, `Software subscription × ${mv.vehicles}`, fmtUSD(mv.software), '(annual)');
+        y = pdfLine(doc, pageW, M, y, `Commissioning × ${mv.vehicles}`, fmtUSD(mv.commissioning), '(one-time)');
+      } else {
+        y = pdfLine(doc, pageW, M, y, `HaaS × ${mv.vehicles} @ ${fmtUSD(mv.monthly)}/mo`, fmtUSD(mv.year1), '(annual · all-inclusive)');
+      }
+      y = pdfLine(doc, pageW, M, y, 'MSRP comparison', fmtUSD(mv.msrpYear1), '(list · not applied)');
+      y = pdfLine(doc, pageW, M, y, 'Sourcewell savings', '-' + fmtUSD(mv.savings), `(${mv.savingsPct.toFixed(1)}% off MSRP)`);
+      y = pdfSubtotal(doc, pageW, M, y, 'Mobile LPR Year 1', fmtUSD(mv.year1));
+      y += 8;
+    }
+
+    // Section: Fixed FLPR
+    if (hw.flpr) {
+      const m = hw.flpr;
+      doc.setFontSize(11);
+      doc.setTextColor.apply(doc, PDF_COLORS.darkTeal);
+      doc.setFont('helvetica','bold');
+      doc.text(`FIXED FLPR — ${FLPR_TIER_LABELS[m.tier].toUpperCase()}`, M, y);
+      doc.setDrawColor.apply(doc, PDF_COLORS.orange);
+      doc.setLineWidth(0.5);
+      doc.line(M, y + 4, pageW - M, y + 4);
+      y += 14;
 
       doc.setFont('helvetica','normal');
       doc.setFontSize(10);
@@ -977,12 +1200,14 @@
       if (m.overviewOn) y = pdfLine(doc, pageW, M, y, '  - Overview included', '', '(per camera)');
       if (m.fourGOn)    y = pdfLine(doc, pageW, M, y, '  - Embedded 4G included', '', '(per camera)');
       const subNote = m.monthsForYr1 < 12 ? `(${m.monthsForYr1} mo prorated)` : '(annual)';
-      y = pdfLine(doc, pageW, M, y, `${MLPR_TIER_LABELS[m.tier]} subscription`, fmtUSD(m.subYr1), subNote);
+      y = pdfLine(doc, pageW, M, y, `${FLPR_TIER_LABELS[m.tier]} subscription`, fmtUSD(m.subYr1Gross), subNote);
+      y = pdfLine(doc, pageW, M, y, 'MSRP comparison', fmtUSD(m.hwMsrpTotal), '(hardware list · not applied)');
+      y = pdfLine(doc, pageW, M, y, 'Sourcewell hardware savings', '-' + fmtUSD(m.hwSavings), `(${m.hwSavingsPct.toFixed(1)}% off MSRP)`);
       if (m.sourcewellApplies) {
-        y = pdfLine(doc, pageW, M, y, 'Sourcewell discount', '-' + fmtUSD(m.discount), '(10% off MLPR)');
+        y = pdfLine(doc, pageW, M, y, 'Sourcewell subscription discount', '-' + fmtUSD(m.subDiscount), '(10% off)');
       }
-      y = pdfSubtotal(doc, pageW, M, y, 'MLPR Year 1', fmtUSD(m.year1Total));
-      y += 14;
+      y = pdfSubtotal(doc, pageW, M, y, 'Fixed FLPR Year 1', fmtUSD(m.year1Total));
+      y += 8;
     }
 
     // Grand totals — flow naturally right below the last section (no bottom anchor)
@@ -990,7 +1215,7 @@
     const grandRecurring = (sw ? sw.saasFull : 0) + hw.recurring;
 
     const contentW = pageW - 2 * M;
-    const totalsBoxH = 60;
+    const totalsBoxH = 52;
     const totalsBoxY = y;
 
     // Filled dark-teal totals block
@@ -998,51 +1223,51 @@
     doc.roundedRect(M, totalsBoxY, contentW, totalsBoxH, 8, 8, 'F');
 
     doc.setFont('helvetica','bold');
-    doc.setFontSize(10);
+    doc.setFontSize(9.5);
     doc.setTextColor.apply(doc, PDF_COLORS.white);
-    doc.text('TOTAL YEAR 1 INVESTMENT', M + 18, totalsBoxY + 22);
+    doc.text('TOTAL YEAR 1 INVESTMENT', M + 18, totalsBoxY + 19);
 
-    doc.setFontSize(22);
-    doc.text(fmtUSD(grandYr1), pageW - M - 18, totalsBoxY + 26, { align: 'right' });
+    doc.setFontSize(20);
+    doc.text(fmtUSD(grandYr1), pageW - M - 18, totalsBoxY + 22, { align: 'right' });
 
     doc.setFont('helvetica','normal');
-    doc.setFontSize(9);
+    doc.setFontSize(8.5);
     doc.setTextColor(180, 220, 230);
-    doc.text('Annual Recurring (Year 2+)', M + 18, totalsBoxY + 44);
+    doc.text('Annual Recurring (Year 2+)', M + 18, totalsBoxY + 38);
     doc.setFont('helvetica','bold');
     doc.setTextColor.apply(doc, PDF_COLORS.white);
-    doc.text(fmtUSD(grandRecurring) + '/yr', pageW - M - 18, totalsBoxY + 46, { align: 'right' });
+    doc.text(fmtUSD(grandRecurring) + '/yr', pageW - M - 18, totalsBoxY + 40, { align: 'right' });
 
-    y = totalsBoxY + totalsBoxH + 12;
+    y = totalsBoxY + totalsBoxH + 10;
 
-    // Professional Services panel (grey, mirrors old PDF treatment)
-    const psBoxH = 56;
+    // Professional Services panel (grey, mirrors old PDF treatment — compact layout)
+    const psBoxH = 34;
     doc.setFillColor(240, 240, 242);
     doc.setDrawColor(200, 205, 210);
     doc.setLineWidth(0.5);
     doc.roundedRect(M, y, contentW, psBoxH, 6, 6, 'FD');
 
     doc.setFont('helvetica','bold');
-    doc.setFontSize(8);
+    doc.setFontSize(7);
     doc.setTextColor.apply(doc, PDF_COLORS.midTeal);
-    doc.text('PROFESSIONAL SERVICES', M + 16, y + 16);
+    doc.text('PROFESSIONAL SERVICES', M + 16, y + 10);
 
-    doc.setFontSize(10);
+    doc.setFontSize(8.5);
     doc.setFont('helvetica','normal');
     doc.setTextColor.apply(doc, PDF_COLORS.slate);
-    doc.text('Hourly rate', M + 16, y + 30);
+    doc.text('Hourly rate', M + 16, y + 20);
     doc.setFont('helvetica','bold');
     doc.setTextColor.apply(doc, PDF_COLORS.dark);
-    doc.text('$215/hr', pageW - M - 16, y + 30, { align: 'right' });
+    doc.text('$215/hr', pageW - M - 16, y + 20, { align: 'right' });
 
     doc.setFont('helvetica','normal');
-    doc.setFontSize(8);
+    doc.setFontSize(7);
     doc.setTextColor.apply(doc, PDF_COLORS.gray);
     const psDesc = doc.splitTextToSize(
       'Custom development and ancillary support billed via Statement of Work (SOW). Contact us for scoping.',
       contentW - 32
     );
-    doc.text(psDesc, M + 16, y + 44);
+    doc.text(psDesc, M + 16, y + 28);
 
     // Footer (centered, two lines) + bottom rainbow bar
     drawRainbowBar(doc, pageH - 6, 6);
@@ -1058,48 +1283,48 @@
   }
 
   function pdfLine(doc, pageW, M, y, label, value, note) {
-    // Label in 10pt slate
+    // Label in 9.5pt slate (compact layout)
     doc.setFont('helvetica','normal');
-    doc.setFontSize(10);
+    doc.setFontSize(9.5);
     doc.setTextColor.apply(doc, PDF_COLORS.slate);
     doc.text(label, M, y);
     // Optional small grey note appended after the label
     if (note) {
       const labelW = doc.getTextWidth(label);
-      doc.setFontSize(8);
+      doc.setFontSize(7.5);
       doc.setTextColor.apply(doc, PDF_COLORS.gray);
       doc.text(' ' + note, M + labelW, y);
     }
     // Value, right-aligned, dark + bold
-    doc.setFontSize(10);
+    doc.setFontSize(9.5);
     doc.setFont('helvetica','bold');
     doc.setTextColor.apply(doc, PDF_COLORS.dark);
     doc.text(value, pageW - M, y, { align: 'right' });
     doc.setFont('helvetica','normal');
     doc.setTextColor.apply(doc, PDF_COLORS.slate);
-    return y + 16;
+    return y + 13;
   }
   function pdfSubtotal(doc, pageW, M, y, label, value) {
     doc.setDrawColor(226, 232, 240);
     doc.setLineWidth(0.5);
     doc.line(M, y + 2, pageW - M, y + 2);
-    y += 16;
+    y += 12;
     doc.setFont('helvetica','bold');
-    doc.setFontSize(10);
+    doc.setFontSize(9.5);
     doc.setTextColor.apply(doc, PDF_COLORS.dark);
     doc.text(label, M, y);
     doc.text(value, pageW - M, y, { align: 'right' });
     doc.setFont('helvetica','normal');
-    return y + 14;
+    return y + 10;
   }
   // Bold body-size subheader (e.g. "SaaS Subscriptions", "Integrations")
   function pdfSubheader(doc, M, y, label) {
     doc.setFont('helvetica','bold');
-    doc.setFontSize(10);
+    doc.setFontSize(9.5);
     doc.setTextColor.apply(doc, PDF_COLORS.dark);
     doc.text(label, M, y);
     doc.setFont('helvetica','normal');
-    return y + 14;
+    return y + 11;
   }
 
   // ── Event Wiring ─────────────────────────────────
@@ -1215,44 +1440,109 @@
       });
     });
 
-    // MLPR toggle (card click)
-    const mlprCard = $('#mlprCardV2');
-    const mlprToggle = $('#mlprToggleV2');
-    if (mlprCard && mlprToggle) {
-      mlprToggle.addEventListener('click', (e) => {
+    // Fixed FLPR toggle (card click)
+    const flprCard = $('#flprCard');
+    const flprToggle = $('#flprToggle');
+    if (flprCard && flprToggle) {
+      flprToggle.addEventListener('click', (e) => {
         if (e.target.closest('input, label, .mlpr-tier-card, .addon-check, .stepper')) return;
-        state.mlprEnabled = !state.mlprEnabled;
-        mlprCard.classList.toggle('active', state.mlprEnabled);
+        state.flprEnabled = !state.flprEnabled;
+        flprCard.classList.toggle('active', state.flprEnabled);
         render();
       });
     }
 
-    // MLPR tier radios (via label click)
+    // Fixed FLPR tier radios (via label click)
     $$('.mlpr-tier-card').forEach(card => {
       card.addEventListener('click', () => {
         const tier = card.dataset.tier;
-        state.mlprTier = tier;
+        state.flprTier = tier;
         $$('.mlpr-tier-card').forEach(c => c.classList.toggle('selected', c.dataset.tier === tier));
         const radio = card.querySelector('input[type="radio"]');
         if (radio) radio.checked = true;
-        // auto-enable MLPR if tier chosen
-        if (!state.mlprEnabled) {
-          state.mlprEnabled = true;
-          if (mlprCard) mlprCard.classList.add('active');
+        if (!state.flprEnabled) {
+          state.flprEnabled = true;
+          if (flprCard) flprCard.classList.add('active');
         }
         render();
       });
     });
 
-    // MLPR add-ons
+    // Fixed FLPR add-ons
     const addOverview = $('#addonOverview');
     if (addOverview) addOverview.addEventListener('change', () => {
-      state.mlprOverview = addOverview.checked;
+      state.flprOverview = addOverview.checked;
       render();
     });
     const add4G = $('#addon4G');
     if (add4G) add4G.addEventListener('change', () => {
-      state.mlpr4G = add4G.checked;
+      state.flpr4G = add4G.checked;
+      render();
+    });
+
+    // ── Mobile LPR (legacy, vehicle-mounted) event wiring ──
+    const mlprCardEl = $('#mlprCard');
+    const mlprToggleEl = $('#mlprToggle');
+    if (mlprCardEl && mlprToggleEl) {
+      mlprToggleEl.addEventListener('click', (e) => {
+        if (e.target.closest('input, label, .kit-card, [data-mlpr-model], .stepper, [data-mlpr-veh-dir]')) return;
+        state.mlpr.enabled = !state.mlpr.enabled;
+        mlprCardEl.classList.toggle('active', state.mlpr.enabled);
+        render();
+      });
+    }
+    // Kit toggle (Full / Mini). Mini Kit is HaaS-only — picking it force-switches model.
+    $$('[data-mlpr-kit]').forEach(card => {
+      card.addEventListener('click', () => {
+        state.mlpr.kit = card.dataset.mlprKit;
+        if (state.mlpr.kit === 'mini' && state.mlpr.model !== 'haas') {
+          state.mlpr.model = 'haas';
+        }
+        syncMlprCardStates();
+        if (!state.mlpr.enabled) {
+          state.mlpr.enabled = true;
+          if (mlprCardEl) mlprCardEl.classList.add('active');
+        }
+        render();
+      });
+    });
+    // Payment model toggle (CapEx / HaaS). CapEx is disabled while Mini is selected.
+    $$('[data-mlpr-model]').forEach(card => {
+      card.addEventListener('click', () => {
+        // Block CapEx selection when Mini is active
+        if (card.dataset.mlprModel === 'capex' && state.mlpr.kit === 'mini') return;
+        state.mlpr.model = card.dataset.mlprModel;
+        syncMlprCardStates();
+        if (!state.mlpr.enabled) {
+          state.mlpr.enabled = true;
+          if (mlprCardEl) mlprCardEl.classList.add('active');
+        }
+        render();
+      });
+    });
+    function syncMlprCardStates() {
+      $$('[data-mlpr-kit]').forEach(c => c.classList.toggle('selected', c.dataset.mlprKit === state.mlpr.kit));
+      $$('[data-mlpr-model]').forEach(c => {
+        c.classList.toggle('selected-teal', c.dataset.mlprModel === state.mlpr.model);
+        // Visually disable CapEx when Mini is the chosen kit
+        const disabled = c.dataset.mlprModel === 'capex' && state.mlpr.kit === 'mini';
+        c.classList.toggle('is-disabled', disabled);
+        if (disabled) c.title = 'CapEx not available with Mini Kit'; else c.removeAttribute('title');
+      });
+    }
+    // Vehicle count stepper
+    $$('[data-mlpr-veh-dir]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const dir = btn.dataset.mlprVehDir;
+        state.mlpr.vehicles = clamp(state.mlpr.vehicles + (dir === '+' ? 1 : -1), 1, 50);
+        const input = $('#mlprVehicles');
+        if (input) input.value = state.mlpr.vehicles;
+        render();
+      });
+    });
+    const mlprVehInput = $('#mlprVehicles');
+    if (mlprVehInput) mlprVehInput.addEventListener('input', () => {
+      state.mlpr.vehicles = clamp(Number(mlprVehInput.value) | 0, 1, 50);
       render();
     });
 
@@ -1260,8 +1550,8 @@
     $$('[data-cam-dir]').forEach(btn => {
       btn.addEventListener('click', () => {
         const dir = btn.dataset.camDir;
-        const next = clamp(state.cameraCount + (dir === '+' ? 1 : -1), 1, 500);
-        state.cameraCount = next;
+        const next = clamp(state.flprCameras + (dir === '+' ? 1 : -1), 1, 500);
+        state.flprCameras = next;
         const input = $('#cameraCount');
         if (input) input.value = next;
         render();
@@ -1269,7 +1559,7 @@
     });
     const camInput = $('#cameraCount');
     if (camInput) camInput.addEventListener('input', () => {
-      state.cameraCount = clamp(Number(camInput.value) | 0, 1, 500);
+      state.flprCameras = clamp(Number(camInput.value) | 0, 1, 500);
       render();
     });
 
@@ -1295,14 +1585,15 @@
       state.size = null;
       state.muniModules = { vpermit: false, vcompliance: false, vpark: false };
       state.muniUsage = { permits: 12000, citations: 6000, transactions: 60000, avgTxnValue: 5 };
+      state.mlpr = { enabled: false, vehicles: 1, kit: 'full', model: 'capex' };
       state.goLiveMonth = 7;
       state.integrations = { 1:0, 2:0, 3:0 };
       state.hw = { tablet:0, lprHandheld:0, printer:0 };
-      state.mlprEnabled = false;
-      state.mlprTier = null;
-      state.mlprOverview = false;
-      state.mlpr4G = false;
-      state.cameraCount = 1;
+      state.flprEnabled = false;
+      state.flprTier = null;
+      state.flprOverview = false;
+      state.flpr4G = false;
+      state.flprCameras = 1;
       // Reset DOM
       if (sizeSel) { sizeSel.value = ''; if (window.ThemedSelect) window.ThemedSelect.syncValue(sizeSel); }
       if (golSel)  { golSel.value = '7'; if (window.ThemedSelect) window.ThemedSelect.syncValue(golSel); }
@@ -1319,7 +1610,12 @@
       if (addOverview) addOverview.checked = false;
       if (add4G) add4G.checked = false;
       $$('.mlpr-tier-card').forEach(c => c.classList.remove('selected'));
-      if (mlprCard) mlprCard.classList.remove('active');
+      if (flprCard) flprCard.classList.remove('active');
+      // Reset legacy Mobile LPR DOM
+      if (mlprCardEl) mlprCardEl.classList.remove('active');
+      if (mlprVehInput) mlprVehInput.value = 1;
+      $$('[data-mlpr-kit]').forEach(c => c.classList.toggle('selected', c.dataset.mlprKit === 'full'));
+      $$('[data-mlpr-model]').forEach(c => c.classList.toggle('selected-teal', c.dataset.mlprModel === 'capex'));
       goToStep(1);
     });
   }
@@ -1327,12 +1623,12 @@
   function updateCamCardDesc() {
     const desc = $('#camCardDesc');
     if (!desc) return;
-    if (state.mlprTier) {
-      const band = mlprVolumeBand(state.cameraCount);
-      const monthly = MLPR_V2.monthlyPerCamera[state.mlprTier][band];
-      desc.textContent = `Camera hardware is $1,500 per unit and ${fmtUSD(monthly)}/month.`;
+    if (state.flprTier) {
+      const band = flprVolumeBand(state.flprCameras);
+      const monthly = FLPR_PRICING.monthlyPerCamera[state.flprTier][band];
+      desc.textContent = `Camera hardware is $1,575 per unit ($1,950 MSRP) and ${fmtUSD(monthly)}/month.`;
     } else {
-      desc.textContent = 'Camera hardware is $1,500 per unit.';
+      desc.textContent = 'Camera hardware is $1,575 per unit ($1,950 MSRP).';
     }
   }
 
@@ -1383,6 +1679,11 @@
     updateIntegrationPrices();
     setupMagneticSnap();
     render();
+    let resizeTimer = null;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(updateSummaryCardCentering, 120);
+    }, { passive: true });
   }
 
   if (document.readyState === 'loading') {

@@ -41,8 +41,13 @@ button.btn-text:focus-visible {
   animation: none;
 }
 .slide.active {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  min-height: 672px;
   animation: slideFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.slide-body {
+  flex: 1 0 auto;
 }
 @keyframes slideFadeIn {
   from { opacity: 0; transform: translateY(12px); }
@@ -60,12 +65,21 @@ button.btn-text:focus-visible {
 .slide-header { margin-bottom: 40px; }
 .slide-footer {
   margin-top: 64px;
-  padding-top: 24px;
-  padding-bottom: 64px;          /* breathing room below the buttons, still cream */
-  border-top: 1px solid rgba(0,0,0,0.06);
+  /* Buttons pushed toward the bottom of the cream area; total box height unchanged
+     so the cream→white cutoff stays fixed. Distance from button bottom to cutoff = 24px. */
+  padding-top: 64px;
+  padding-bottom: 24px;
 }
 .slide-footer-end {
   justify-content: flex-end;     /* Next button anchored bottom-right (Slide 1) */
+}
+
+/* Disabled MLPR model card (CapEx when Mini Kit is selected) */
+.toggle-card.is-disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+  pointer-events: none;
+  filter: grayscale(0.25);
 }
 .btn-slide-back,
 .btn-slide-next {
