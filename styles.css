@@ -452,7 +452,8 @@ section { position: relative; }
 }
 .product-logo-slot--hero.vpermit .product-logo-mark { height: 32px; }
 .product-logo-slot--hero.vcompliance .product-logo-mark { height: 29px; }
-.product-logo-slot--hero.vpark .product-logo-mark { height: 72px; }
+/* vPark image has icon overhang above/below text. Display height ≈52px so text portion renders ~32px (matches vPermit). */
+.product-logo-slot--hero.vpark .product-logo-mark { height: 52px; }
 .product-logo-mark {
   width: auto;
   max-width: 100%;
@@ -460,7 +461,7 @@ section { position: relative; }
 }
 .product-card.vpermit .product-logo-mark { height: 32px; }
 .product-card.vcompliance .product-logo-mark { height: 29px; }
-.product-card.vpark .product-logo-mark { height: 72px; }
+.product-card.vpark .product-logo-mark { height: 52px; }
 
 .product-card h3 {
   font-size: 24px; font-weight: 600; color: var(--dark);

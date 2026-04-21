@@ -43,7 +43,7 @@
     <div class="container"><a href="../index.html">Home</a> <span>/</span> <a href="../resources/library.html">Resource Library</a> <span>/</span> <span>Newsletter</span></div>
   </section>
 
-  <section class="page-hero" style="border-top: 4px solid #15626C">
+  <section class="page-hero" style="border-top: 4px solid #15626C; background:#fff; padding-bottom:32px">
     <div class="container">
       <div class="page-hero-inner reveal">
         <h1>The SCS Quarterly Newsletter</h1>
@@ -51,17 +51,39 @@
       </div>
     </div>
   </section>
+  <div style="height:1px;background:rgba(0,0,0,0.08);margin:0;"></div>
 
-  <section class="features-section">
-    <div class="container">
-      <div class="features-grid" style="grid-template-columns: repeat(2, 1fr)">
-        <div class="feature-card"><h4>Q1 2026 Issue</h4><p>Product roadmap, customer wins from across US universities, and the year ahead in parking technology.</p></div>
-        <div class="feature-card"><h4>Q4 2025 Issue</h4><p>Year-end review, new partnerships, and looking ahead to the corporate campus market.</p></div>
-        <div class="feature-card"><h4>Q3 2025 Issue</h4><p>vCompliance enhancements, new LPR partner integrations, and our first municipal deployment.</p></div>
-        <div class="feature-card"><h4>Q2 2025 Issue</h4><p>SSO with Workday, the move to multi-campus deployments, and customer spotlight features.</p></div>
+  <!-- ═══ Gated Content Area ══════════════════════ -->
+  <div id="gatedArea" style="position:relative;min-height:480px;">
+    <div id="gatedWrapper">
+      <section class="features-section">
+        <div class="container">
+          <div class="features-grid" style="grid-template-columns: repeat(2, 1fr)">
+            <div class="feature-card"><h4>Q1 2026 Issue</h4><p>Product roadmap, customer wins from across US universities, and the year ahead in parking technology.</p></div>
+            <div class="feature-card"><h4>Q4 2025 Issue</h4><p>Year-end review, new partnerships, and looking ahead to the corporate campus market.</p></div>
+            <div class="feature-card"><h4>Q3 2025 Issue</h4><p>vCompliance enhancements, new LPR partner integrations, and our first municipal deployment.</p></div>
+            <div class="feature-card"><h4>Q2 2025 Issue</h4><p>SSO with Workday, the move to multi-campus deployments, and customer spotlight features.</p></div>
+          </div>
+        </div>
+      </section>
+    </div><!-- /gatedWrapper -->
+
+    <!-- Gating Overlay — sits on top of blurred wrapper only -->
+    <div id="gatedOverlay" style="display:none;position:absolute;top:0;left:0;right:0;z-index:100;pointer-events:none;padding-top:48px">
+      <div id="gatedCard" style="pointer-events:all;margin:0 auto;background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:20px;padding:48px 56px;max-width:520px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,0.12)">
+        <img src="../assets/sourcewell-logo.png" alt="Sourcewell" style="height:32px;width:auto;margin-bottom:16px">
+        <h3 style="margin-bottom:8px;font-family:'DM Sans',sans-serif;font-size:22px;font-weight:600;color:var(--dark)">Member Sign-In</h3>
+        <p style="font-size:14px;color:var(--gray);margin-bottom:24px;line-height:1.6">Log in with your Sourcewell credentials to read the newsletter.</p>
+        <div id="gatedAuthError" style="background:rgba(212,27,36,0.06);border:1px solid rgba(212,27,36,0.15);border-radius:8px;padding:10px 14px;font-size:13px;color:#D41B24;margin-bottom:16px;display:none"></div>
+        <form id="gatedLoginForm" style="text-align:left">
+          <div style="margin-bottom:14px"><label style="display:block;font-size:13px;font-weight:600;color:#15626C;margin-bottom:6px;font-family:'DM Sans',sans-serif">Sourcewell Email</label><input type="text" id="gatedSwEmail" placeholder="Enter your Sourcewell email" required style="width:100%;padding:12px 16px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:15px;font-family:'Inter',sans-serif;outline:none;box-sizing:border-box"></div>
+          <div style="margin-bottom:18px"><label style="display:block;font-size:13px;font-weight:600;color:#15626C;margin-bottom:6px;font-family:'DM Sans',sans-serif">Sourcewell Account Number</label><input type="text" id="gatedSwAccount" placeholder="Enter your account number" required style="width:100%;padding:12px 16px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:15px;font-family:'Inter',sans-serif;outline:none;box-sizing:border-box"></div>
+          <button type="submit" class="btn-primary" style="width:100%;justify-content:center">Sign In</button>
+          <p style="font-size:12px;color:#94a3b8;text-align:center;margin-top:12px">Demo credentials: <code>demo</code> / <code>0000</code></p>
+        </form>
       </div>
     </div>
-  </section>
+  </div><!-- /gatedArea -->
 
   <footer class="footer">
     <div class="rainbow-bar"><div style="background:#15626C"></div><div style="background:#47BBE8"></div><div style="background:#429839"></div><div style="background:#88BF57"></div><div style="background:#F0AE25"></div><div style="background:#EB5B25"></div><div style="background:#D41B24"></div></div>
@@ -79,50 +101,40 @@
   <script src="../script.js"></script>
   <script>
   (function(){
-    var SW_ACCOUNTS={'demo':'0000'};
-    var isAuthed=localStorage.getItem('scs_authed')==='true';
-    var userEmail=localStorage.getItem('scs_user')||'';
-    var navBtn=document.querySelector('.nav-cta');
-    var sections=document.querySelectorAll('.breadcrumb-bar,.page-hero,.features-section');
-    var oldOverlay=document.querySelector('.gated-overlay');
-
-    if(!isAuthed){
-      sections.forEach(function(el){el.style.filter='blur(6px) grayscale(0.3)';el.style.pointerEvents='none';el.style.userSelect='none';el.style.opacity='0.75';el.style.transition='filter 0.5s ease,opacity 0.5s ease';});
-      if(oldOverlay)oldOverlay.style.display='none';
-      var card=document.createElement('div');
-      card.id='gatedCardFixed';
-      card.style.cssText='position:fixed;left:50%;transform:translateX(-50%);z-index:9999;background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:20px;padding:48px 56px;max-width:520px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,0.12);will-change:top;transition:opacity 0.5s ease,transform 0.5s ease;';
-      card.innerHTML='<div style="width:72px;height:72px;border-radius:50%;background:rgba(44,116,128,0.1);color:#2C7480;display:flex;align-items:center;justify-content:center;margin:0 auto 24px"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div><h2 style="font-size:28px;margin:0 0 12px 0;color:#15626C;font-family:DM Sans,sans-serif;font-weight:400;letter-spacing:-1px">Sourcewell Member Access</h2><p style="font-size:16px;color:#64748B;margin:0 0 28px 0;line-height:1.6;font-family:Inter,sans-serif">Log in with your Sourcewell credentials to view this content.</p><div id="gatedAuthError" style="background:rgba(212,27,36,0.06);border:1px solid rgba(212,27,36,0.15);border-radius:8px;padding:10px 14px;font-size:13px;color:#D41B24;margin-bottom:16px;display:none"></div><form id="gatedLoginForm" style="text-align:left"><div style="margin-bottom:14px"><label style="display:block;font-size:13px;font-weight:600;color:#15626C;margin-bottom:6px;font-family:DM Sans,sans-serif">Sourcewell Email</label><input type="text" id="gatedSwEmail" placeholder="Enter your Sourcewell email" required style="width:100%;padding:12px 16px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:15px;font-family:Inter,sans-serif;outline:none;transition:border-color 0.2s;box-sizing:border-box"></div><div style="margin-bottom:18px"><label style="display:block;font-size:13px;font-weight:600;color:#15626C;margin-bottom:6px;font-family:DM Sans,sans-serif">Sourcewell Account Number</label><input type="text" id="gatedSwAccount" placeholder="Enter your account number" required style="width:100%;padding:12px 16px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:15px;font-family:Inter,sans-serif;outline:none;transition:border-color 0.2s;box-sizing:border-box"></div><button type="submit" style="width:100%;padding:14px 24px;background:#D41B24;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;font-family:DM Sans,sans-serif;cursor:pointer;transition:background 0.2s,transform 0.15s">Log In</button></form>';
-      document.body.appendChild(card);
-      var rb=document.querySelector('.footer .rainbow-bar');
-      var ticking=false;
-      function pos(){var vh=window.innerHeight,ch=card.offsetHeight,cy=(vh-ch)/2;if(rb){var rr=rb.getBoundingClientRect().top,mx=rr-ch-40;if(mx<cy)card.style.top=Math.max(80,mx)+'px';else card.style.top=cy+'px';}else card.style.top=cy+'px';ticking=false;}
-      function onS(){if(!ticking){requestAnimationFrame(pos);ticking=true;}}
-      pos();window.addEventListener('scroll',onS,{passive:true});window.addEventListener('resize',onS,{passive:true});
-      var form=document.getElementById('gatedLoginForm');
-      var errorEl=document.getElementById('gatedAuthError');
-      form.addEventListener('submit',function(e){
-        e.preventDefault();
-        var email=document.getElementById('gatedSwEmail').value.trim().toLowerCase();
-        var account=document.getElementById('gatedSwAccount').value.trim();
-        if(SW_ACCOUNTS[email]&&SW_ACCOUNTS[email]===account){
-          localStorage.setItem('scs_authed','true');
-          localStorage.setItem('scs_user',email);
-          card.style.opacity='0';card.style.transform='translateX(-50%) translateY(12px)';
-          sections.forEach(function(el){el.style.filter='none';el.style.pointerEvents='';el.style.userSelect='';el.style.opacity='1';});
-          setTimeout(function(){card.remove();},500);
-          if(window.SCSNavAuth)window.SCSNavAuth.refresh();
-        }else{
-          errorEl.textContent='Invalid Sourcewell credentials. Please check your email and account number.';
-          errorEl.style.display='block';
-        }
-      });
-    }else{
-      if(oldOverlay)oldOverlay.style.display='none';
-      var gc=document.querySelector('.gated-content');
-      if(gc){gc.style.filter='none';gc.style.pointerEvents='';gc.style.userSelect='';gc.style.opacity='1';}
-      // Nav swap handled by /assets/nav-auth.js
+    var overlay = document.getElementById('gatedOverlay');
+    var wrapper = document.getElementById('gatedWrapper');
+    if (!overlay || !wrapper) return;
+    var authed = localStorage.getItem('scs_authed') === 'true';
+    if (authed) {
+      overlay.style.display = 'none';
+      wrapper.style.filter = '';
+      wrapper.style.pointerEvents = '';
+      wrapper.style.userSelect = '';
+      return;
     }
+    overlay.style.display = 'block';
+    wrapper.style.filter = 'blur(6px)';
+    wrapper.style.pointerEvents = 'none';
+    wrapper.style.userSelect = 'none';
+    var form = document.getElementById('gatedLoginForm');
+    var errorEl = document.getElementById('gatedAuthError');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var email = document.getElementById('gatedSwEmail').value.trim().toLowerCase();
+      var account = document.getElementById('gatedSwAccount').value.trim();
+      if (email === 'demo' && account === '0000') {
+        localStorage.setItem('scs_authed', 'true');
+        localStorage.setItem('scs_user', email);
+        overlay.style.display = 'none';
+        wrapper.style.filter = '';
+        wrapper.style.pointerEvents = '';
+        wrapper.style.userSelect = '';
+        if (window.SCSNavAuth && window.SCSNavAuth.refresh) window.SCSNavAuth.refresh();
+      } else {
+        errorEl.style.display = 'block';
+        errorEl.textContent = 'Invalid credentials. Try demo / 0000.';
+      }
+    });
   })();
   </script>
 <script src="../assets/nav-auth.js"></script>
