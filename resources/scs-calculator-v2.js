@@ -809,7 +809,7 @@
 
     if (hasFLPR) {
       const m = hw.flpr;
-      lines.push('<div class="summary-group-label">Fixed FLPR (Survision)</div>');
+      lines.push('<div class="summary-group-label">Fixed LPR (Survision)</div>');
       lines.push(
         `<div class="summary-line"><span class="summary-line-label">Camera hardware &times; ${m.cameras} <span class="summary-line-sub">(one-time)</span></span><span class="summary-line-value">${fmtUSD(m.hwTotal)}</span></div>`
       );
@@ -847,7 +847,7 @@
     linesEl.innerHTML = lines.join('');
     totalEl.textContent = fmtUSD(hw.year1Total);
     const recurringParts = [];
-    if (hasFLPR) recurringParts.push(`Fixed FLPR: ${fmtUSD(hw.flpr.subAnnualRecurring)}/yr`);
+    if (hasFLPR) recurringParts.push(`Fixed LPR: ${fmtUSD(hw.flpr.subAnnualRecurring)}/yr`);
     if (hasMLPR) recurringParts.push(`Mobile LPR: ${fmtUSD(hw.mlpr.recurring)}/yr`);
     if (recurringParts.length) {
       recurringEl.style.display = 'block';
@@ -861,7 +861,7 @@
     const parts = [];
     if (hw.devices.some(d => d.count > 0)) parts.push('Enforcement devices');
     if (hw.mlpr) parts.push(`Mobile LPR (${hw.mlpr.model === 'capex' ? 'CapEx' : 'HaaS'})`);
-    if (hw.flpr) parts.push(`Fixed FLPR (${FLPR_TIER_LABELS[hw.flpr.tier]})`);
+    if (hw.flpr) parts.push(`Fixed LPR (${FLPR_TIER_LABELS[hw.flpr.tier]})`);
     return parts.join(' · ') || 'No hardware selected';
   }
 
@@ -928,7 +928,7 @@
       if (sw) cats.push('Software');
       if (hasDevices) cats.push('Hardware');
       if (hw.mlpr) cats.push('Mobile LPR');
-      if (hw.flpr) cats.push('Fixed FLPR');
+      if (hw.flpr) cats.push('Fixed LPR');
       subtitleEl.textContent = cats.length ? cats.join(' · ') : 'Configure your deployment to see totals';
     }
 
@@ -1186,7 +1186,7 @@
       doc.setFontSize(11);
       doc.setTextColor.apply(doc, PDF_COLORS.darkTeal);
       doc.setFont('helvetica','bold');
-      doc.text(`FIXED FLPR — ${FLPR_TIER_LABELS[m.tier].toUpperCase()}`, M, y);
+      doc.text(`FIXED LPR — ${FLPR_TIER_LABELS[m.tier].toUpperCase()}`, M, y);
       doc.setDrawColor.apply(doc, PDF_COLORS.orange);
       doc.setLineWidth(0.5);
       doc.line(M, y + 4, pageW - M, y + 4);
@@ -1206,7 +1206,7 @@
       if (m.sourcewellApplies) {
         y = pdfLine(doc, pageW, M, y, 'Sourcewell subscription discount', '-' + fmtUSD(m.subDiscount), '(10% off)');
       }
-      y = pdfSubtotal(doc, pageW, M, y, 'Fixed FLPR Year 1', fmtUSD(m.year1Total));
+      y = pdfSubtotal(doc, pageW, M, y, 'Fixed LPR Year 1', fmtUSD(m.year1Total));
       y += 8;
     }
 

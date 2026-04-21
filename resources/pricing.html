@@ -386,16 +386,16 @@
               </div>
             </div>
 
-            <!-- Fixed FLPR Options (camera-based, Bronze/Silver/Gold) -->
+            <!-- Fixed LPR Options (camera-based, Bronze/Silver/Gold) -->
             <div class="input-block">
-              <label class="input-block-label">Fixed FLPR Options</label>
+              <label class="input-block-label">Fixed LPR Options</label>
               <div class="mlpr-card" id="flprCard">
                 <div class="mlpr-card-header" id="flprToggle">
                   <div class="entity-card-top">
                     <div class="toggle-card-icon orange">
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
                     </div>
-                    <div class="toggle-card-title" style="display:inline-flex;align-items:center;gap:6px;margin-bottom:0;transform:translateY(-1px)"><span>Add</span><img src="../assets/survision-logo-2025.png" alt="Survision" style="height:14px;width:auto"><span>Fixed FLPR</span></div></div>
+                    <div class="toggle-card-title" style="display:inline-flex;align-items:center;gap:6px;margin-bottom:0;transform:translateY(-1px)"><span>Add</span><img src="../assets/survision-logo-2025.png" alt="Survision" style="height:14px;width:auto"><span>Fixed LPR</span></div></div>
                 </div>
                 <div class="mlpr-card-expand" id="flprExpand">
                   <div class="expand-field">
@@ -452,39 +452,38 @@
                     </div>
                     <div class="expand-hint">Per-camera subscription is invoiced annually. Bulk pricing kicks in at 50 and 100 cameras.</div>
                   </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="input-block conditional-section" id="cameraSection" style="display:none">
-              <label class="input-block-label">Fixed FLPR Cameras</label>
-              <div class="hw-card-with-addons">
-                <div class="hw-item">
-                  <div class="hw-item-info">
-                    <div class="hw-item-name">Number of Cameras</div>
-                    <div class="hw-item-detail" id="camCardDesc">Camera hardware is $1,575 per unit ($1,950 MSRP).</div>
+                  <div class="expand-field conditional-section" id="cameraSection" style="display:none">
+                    <label class="expand-label">Cameras</label>
+                    <div class="hw-card-with-addons">
+                      <div class="hw-item">
+                        <div class="hw-item-info">
+                          <div class="hw-item-name">Number of Cameras</div>
+                          <div class="hw-item-detail" id="camCardDesc">Camera hardware is $1,575 per unit ($1,950 MSRP).</div>
+                        </div>
+                        <div class="stepper stepper-sm">
+                          <button class="stepper-btn" type="button" data-cam-dir="-">&minus;</button>
+                          <input type="number" id="cameraCount" value="1" min="1" max="500">
+                          <button class="stepper-btn" type="button" data-cam-dir="+">+</button>
+                        </div>
+                      </div>
+                      <button type="button" class="addons-toggle" id="addonsToggle" aria-expanded="false">
+                        <span>Camera Add-Ons (per camera)</span>
+                        <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                      </button>
+                      <div class="addons-panel" id="addonsPanel">
+                        <label class="addon-check">
+                          <input type="checkbox" id="addonOverview">
+                          <span class="addon-name">Overview</span>
+                          <span class="addon-price">+$500</span>
+                        </label>
+                        <label class="addon-check">
+                          <input type="checkbox" id="addon4G">
+                          <span class="addon-name">Embedded 4G</span>
+                          <span class="addon-price">+$200</span>
+                        </label>
+                      </div>
+                    </div>
                   </div>
-                  <div class="stepper stepper-sm">
-                    <button class="stepper-btn" type="button" data-cam-dir="-">&minus;</button>
-                    <input type="number" id="cameraCount" value="1" min="1" max="500">
-                    <button class="stepper-btn" type="button" data-cam-dir="+">+</button>
-                  </div>
-                </div>
-                <button type="button" class="addons-toggle" id="addonsToggle" aria-expanded="false">
-                  <span>Camera Add-Ons (per camera)</span>
-                  <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-                </button>
-                <div class="addons-panel" id="addonsPanel">
-                  <label class="addon-check">
-                    <input type="checkbox" id="addonOverview">
-                    <span class="addon-name">Overview</span>
-                    <span class="addon-price">+$500</span>
-                  </label>
-                  <label class="addon-check">
-                    <input type="checkbox" id="addon4G">
-                    <span class="addon-name">Embedded 4G</span>
-                    <span class="addon-price">+$200</span>
-                  </label>
                 </div>
               </div>
             </div>
@@ -595,7 +594,7 @@
             <div class="grand-total-col" id="reviewFlprCol" style="display:none">
               <div class="grand-col-label">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M12 9v6M9 12h6"/></svg>
-                Fixed FLPR
+                Fixed LPR
               </div>
               <div class="grand-col-yr1" id="reviewFlprYr1">$0</div>
               <div class="grand-col-sub">Year 1</div>
