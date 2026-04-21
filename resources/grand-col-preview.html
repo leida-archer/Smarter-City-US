@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Grand Total Column Spacing Preview</title>
+<link rel="stylesheet" href="scs-calculator.css">
+<style>
+  body { background: #FAFAF8; font-family: Inter, system-ui, sans-serif; padding: 40px; color: #1e293b; }
+  h1 { font-family: 'DM Sans', sans-serif; font-weight: 300; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .wrap { max-width: 1200px; margin: 0 auto; }
+  .tag { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #64748b; margin: 24px 0 10px; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+  /* Mark guide lines so you can visually confirm alignment */
+  .ruler { position: relative; }
+  .ruler::before, .ruler::after {
+    content: ""; position: absolute; left: 0; right: 0; height: 1px;
+    background: rgba(235, 91, 37, 0.25); pointer-events: none;
+  }
+  .ruler::before { top: var(--y1, 50%); }
+  .ruler::after  { top: var(--y2, 60%); }
+
+  /* Proposed spacing override — evenly distributes sub + recurring below the big number */
+  .proposed .grand-total-col { padding-bottom: 18px; }
+  .proposed .grand-col-sub { margin-top: 18px; }
+  .proposed .grand-col-recurring { margin-top: 14px; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Complete Deployment — column spacing</h1>
+    <p style="color:#64748b; margin-bottom: 8px;">Current rhythm is top-heavy (4px → 8px → ~28px bottom padding). Proposed evens it out so the sub / recurring lines sit where the eye expects them, and both tiers align across all three columns.</p>
+
+    <div class="tag">Current</div>
+    <div class="grid">
+      <div class="grand-total-col">
+        <div class="grand-col-label">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--dark-teal)" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          Software Platform
+        </div>
+        <div class="grand-col-yr1">$112,500</div>
+        <div class="grand-col-sub">Year 1</div>
+        <div class="grand-col-recurring">$103,500/yr recurring</div>
+      </div>
+      <div class="grand-total-col">
+        <div class="grand-col-label">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 13h6M9 17h2"/></svg>
+          Hardware &amp; Devices
+        </div>
+        <div class="grand-col-yr1">$20,250</div>
+        <div class="grand-col-sub">One-time purchase</div>
+        <div class="grand-col-recurring">5 devices</div>
+      </div>
+      <div class="grand-total-col">
+        <div class="grand-col-label">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          Survision MLPR
+        </div>
+        <div class="grand-col-yr1">$29,322</div>
+        <div class="grand-col-sub">Year 1</div>
+        <div class="grand-col-recurring">$7,560/yr recurring</div>
+      </div>
+    </div>
+
+    <div class="tag">Proposed — evenly spaced</div>
+    <div class="grid proposed">
+      <div class="grand-total-col">
+        <div class="grand-col-label">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--dark-teal)" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          Software Platform
+        </div>
+        <div class="grand-col-yr1">$112,500</div>
+        <div class="grand-col-sub">Year 1</div>
+        <div class="grand-col-recurring">$103,500/yr recurring</div>
+      </div>
+      <div class="grand-total-col">
+        <div class="grand-col-label">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 13h6M9 17h2"/></svg>
+          Hardware &amp; Devices
+        </div>
+        <div class="grand-col-yr1">$20,250</div>
+        <div class="grand-col-sub">One-time purchase</div>
+        <div class="grand-col-recurring">5 devices</div>
+      </div>
+      <div class="grand-total-col">
+        <div class="grand-col-label">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          Survision MLPR
+        </div>
+        <div class="grand-col-yr1">$29,322</div>
+        <div class="grand-col-sub">Year 1</div>
+        <div class="grand-col-recurring">$7,560/yr recurring</div>
+      </div>
+    </div>
+
+    <div style="margin-top:32px; font-size:13px; color:#64748b; line-height:1.6;">
+      <strong style="color:#1e293b;">Overview</strong><br>
+      &bull; Columns already share identical CSS, so the sub / recurring lines are on the same Y axis &mdash; the shift after populating Hardware's "N devices" line made this visible.<br>
+      &bull; Current spacing: yr1 &rarr; sub = <strong>4px</strong>; sub &rarr; recurring = <strong>8px</strong>; recurring &rarr; bottom edge = <strong>~28px</strong> (from container padding). Feels top-heavy.<br>
+      &bull; Proposed spacing: yr1 &rarr; sub = <strong>18px</strong>; sub &rarr; recurring = <strong>14px</strong>; recurring &rarr; bottom = <strong>18px</strong> (reduce card padding-bottom to 18px). Roughly even tiers.<br>
+      &bull; Changes three CSS rules in `scs-calculator.css` &mdash; no HTML edits needed.<br>
+    </div>
+  </div>
+</body>
+</html>

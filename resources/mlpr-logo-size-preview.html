@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Survision Logo — Size Finder</title>
+<link rel="stylesheet" href="scs-calculator.css">
+<style>
+  body { background: #FAFAF8; font-family: Inter, system-ui, sans-serif; padding: 40px; color: #1e293b; }
+  h1 { font-family: 'DM Sans', sans-serif; font-weight: 300; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .wrap { max-width: 720px; margin: 0 auto; }
+  .hint { color: #64748b; font-size: 13px; margin-bottom: 24px; }
+
+  .btn {
+    position: relative;
+    background: #fff;
+    border: 1.5px solid rgba(0,0,0,0.08);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 14px;
+    overflow: visible;
+  }
+  .btn .row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+  }
+  .icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: rgba(235,91,37,0.1); color: #EB5B25;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .title {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'DM Sans', Inter, system-ui, sans-serif;
+    font-weight: 600; font-size: 16px; color: #1e293b;
+    position: relative;
+    transform: translateY(-1px); /* matches live site */
+  }
+  .title img { width: auto; }
+
+  /* Dashed guide through the icon center — y = 18px from row top */
+  .btn .row::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; top: 18px;
+    border-top: 1px dashed rgba(235, 91, 37, 0.55);
+    pointer-events: none;
+    z-index: 0;
+  }
+  /* Cap-height guide through the text (approx cap-height center at ~12.5px from row top for 16px text centered on 36px icon) */
+  .btn .row::before {
+    content: "";
+    position: absolute;
+    left: 120px; right: 0; top: 18px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .btn .row > * { position: relative; z-index: 1; }
+
+  .size-tag {
+    position: absolute; top: 8px; right: 12px;
+    font-size: 11px; color: #94a3b8; letter-spacing: 0.5px;
+    font-variant-numeric: tabular-nums;
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Survision logo — pick the size that reads level with &ldquo;Add&rdquo; / &ldquo;Mobile LPR&rdquo;</h1>
+    <p class="hint">Each row drops the logo 1px. Look for the size where the tops of the letters in the logo (S / U / R / V ...) match the cap-height of &ldquo;Add&rdquo; and &ldquo;Mobile LPR&rdquo; on either side. Icon stays fixed; dashed line marks the icon&rsquo;s vertical center for reference.</p>
+
+    <div class="btn"><div class="row">
+      <span class="size-tag">14px</span>
+      <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+      <div class="title"><span>Add</span><img src="../assets/survision-logo-2025.png" alt="Survision" style="height:14px"><span>Mobile LPR</span></div>
+    </div></div>
+
+    <div class="btn"><div class="row">
+      <span class="size-tag">13px</span>
+      <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+      <div class="title"><span>Add</span><img src="../assets/survision-logo-2025.png" alt="Survision" style="height:13px"><span>Mobile LPR</span></div>
+    </div></div>
+
+    <div class="btn"><div class="row">
+      <span class="size-tag">12px</span>
+      <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+      <div class="title"><span>Add</span><img src="../assets/survision-logo-2025.png" alt="Survision" style="height:12px"><span>Mobile LPR</span></div>
+    </div></div>
+
+    <div class="btn"><div class="row">
+      <span class="size-tag">11px</span>
+      <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+      <div class="title"><span>Add</span><img src="../assets/survision-logo-2025.png" alt="Survision" style="height:11px"><span>Mobile LPR</span></div>
+    </div></div>
+
+    <div class="btn"><div class="row">
+      <span class="size-tag">10px</span>
+      <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+      <div class="title"><span>Add</span><img src="../assets/survision-logo-2025.png" alt="Survision" style="height:10px"><span>Mobile LPR</span></div>
+    </div></div>
+
+    <div class="btn"><div class="row">
+      <span class="size-tag">9px</span>
+      <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+      <div class="title"><span>Add</span><img src="../assets/survision-logo-2025.png" alt="Survision" style="height:9px"><span>Mobile LPR</span></div>
+    </div></div>
+
+    <div class="btn"><div class="row">
+      <span class="size-tag">8px</span>
+      <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+      <div class="title"><span>Add</span><img src="../assets/survision-logo-2025.png" alt="Survision" style="height:8px"><span>Mobile LPR</span></div>
+    </div></div>
+
+    <div class="btn"><div class="row">
+      <span class="size-tag">7px</span>
+      <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+      <div class="title"><span>Add</span><img src="../assets/survision-logo-2025.png" alt="Survision" style="height:7px"><span>Mobile LPR</span></div>
+    </div></div>
+
+    <p class="hint" style="margin-top:24px">Tell me the logo size that matches cap-height best and I&rsquo;ll push it.</p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Prorated Subline Preview</title>
+<link rel="stylesheet" href="scs-calculator.css">
+<style>
+  body { background: #FAFAF8; font-family: Inter, system-ui, sans-serif; padding: 40px; color: #1e293b; }
+  .wrap { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #64748b; margin-bottom: 12px; }
+  .card { background: #fff; border: 1px solid rgba(0,0,0,0.08); border-radius: 16px; padding: 28px; }
+
+  /* Proposed subline styles — scoped so we can preview without affecting prod */
+  .preview-new .summary-line.is-subline {
+    padding: 2px 0 7px 18px;
+    font-size: 13px;
+    margin-top: -4px;
+  }
+  .preview-new .summary-line.is-subline .summary-line-label,
+  .preview-new .summary-line.is-subline .summary-line-amount {
+    color: #94a3b8;
+    font-weight: 400;
+  }
+  .preview-new .summary-line.is-subline .summary-line-arrow {
+    display: inline-block;
+    margin-right: 6px;
+    color: #cbd5e1;
+  }
+</style>
+</head>
+<body>
+  <h1 style="font-family: 'DM Sans', sans-serif; font-weight: 300; letter-spacing: -0.02em; margin-bottom: 8px;">Prorated subline — preview</h1>
+  <p style="color:#64748b; margin-bottom: 32px;">Campus tier, Sourcewell eligible, go-live November (8 months prorated).</p>
+
+  <div class="wrap">
+    <div>
+      <div class="label">Current</div>
+      <div class="card">
+        <div class="summary-lines">
+          <div class="summary-line">
+            <span class="summary-line-label">Sourcewell Subscription <span class="summary-line-sub">(annual, 10% off)</span></span>
+            <span class="summary-line-amount">$45,000</span>
+          </div>
+          <div class="summary-line">
+            <span class="summary-line-label">Prorated to 8 months <span class="summary-line-sub">()</span></span>
+            <span class="summary-line-amount">$15,000</span>
+          </div>
+          <div class="summary-line">
+            <span class="summary-line-label">Implementation &amp; Training <span class="summary-line-sub">(one-time, includes 2 integrations)</span></span>
+            <span class="summary-line-amount">$25,000</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="preview-new">
+      <div class="label">Proposed</div>
+      <div class="card">
+        <div class="summary-lines">
+          <div class="summary-line">
+            <span class="summary-line-label">Sourcewell Subscription <span class="summary-line-sub">(annual, 10% off)</span></span>
+            <span class="summary-line-amount">$45,000</span>
+          </div>
+          <div class="summary-line is-subline">
+            <span class="summary-line-label"><span class="summary-line-arrow">&#8627;</span>Prorated to 8 months</span>
+            <span class="summary-line-amount">&minus;$15,000</span>
+          </div>
+          <div class="summary-line">
+            <span class="summary-line-label">Implementation &amp; Training <span class="summary-line-sub">(one-time, includes 2 integrations)</span></span>
+            <span class="summary-line-amount">$25,000</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width: 1100px; margin: 40px auto 0; font-size: 13px; color: #64748b; line-height: 1.6;">
+    <strong style="color:#1e293b;">Notes</strong><br>
+    &bull; Subline uses a corner-arrow glyph (&#8627;) in light gray, 18px left indent, 13px text (vs 15px parent).<br>
+    &bull; Both label and amount are muted gray (#94a3b8) at weight 400.<br>
+    &bull; Amount shows as &minus;$15,000 to read as a credit against the subscription above.<br>
+    &bull; Empty "()" note removed from the prorated line (it had no content).
+  </div>
+</body>
+</html>

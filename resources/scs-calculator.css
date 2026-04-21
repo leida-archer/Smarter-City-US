@@ -3,6 +3,12 @@
    Page-specific styles (extends SCS shared CSS)
    ============================================ */
 
+:root {
+  --anim-duration: 300ms;
+  --anim-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --anim-fade-half: 150ms; /* fade-out / fade-in half (total = anim-duration) */
+}
+
 /* ── Calculator Section ──────────────────────── */
 .calc-section {
   padding: 80px 0 120px;
@@ -132,7 +138,7 @@
   border-radius: 12px;
   padding: 20px 20px;
   cursor: pointer;
-  transition: border-color 0.2s, box-shadow 0.2s, opacity 0.2s;
+  transition: border-color var(--anim-duration) var(--anim-ease), box-shadow var(--anim-duration) var(--anim-ease), opacity var(--anim-duration) var(--anim-ease), background var(--anim-duration) var(--anim-ease);
 }
 .toggle-card:hover {
   border-color: rgba(0,0,0,0.15);
@@ -239,7 +245,7 @@
   border-radius: 12px;
   padding: 18px 20px;
   cursor: pointer;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color var(--anim-duration) var(--anim-ease), box-shadow var(--anim-duration) var(--anim-ease), background var(--anim-duration) var(--anim-ease);
   overflow: hidden;
 }
 .checkbox-card:hover {
@@ -260,7 +266,7 @@
   max-height: 0;
   opacity: 0;
   overflow: hidden;
-  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, margin 0.35s ease;
+  transition: max-height var(--anim-duration) var(--anim-ease), opacity var(--anim-duration) var(--anim-ease), margin var(--anim-duration) var(--anim-ease);
   margin-top: 0;
 }
 .checkbox-card.checked .checkbox-card-expand {
@@ -457,7 +463,7 @@
   border-radius: 12px;
   padding: 20px;
   cursor: pointer;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color var(--anim-duration) var(--anim-ease), box-shadow var(--anim-duration) var(--anim-ease);
   overflow: hidden;
 }
 .mlpr-card:hover {
@@ -468,7 +474,7 @@
   box-shadow: 0 0 0 3px rgba(235,91,37,0.1);
 }
 .mlpr-card .entity-card-top {
-  margin-bottom: 6px;
+  margin-bottom: 0;
 }
 .mlpr-card .toggle-card-icon {
   margin-bottom: 0;
@@ -477,7 +483,7 @@
   max-height: 0;
   opacity: 0;
   overflow: hidden;
-  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, margin 0.35s ease;
+  transition: max-height var(--anim-duration) var(--anim-ease), opacity var(--anim-duration) var(--anim-ease), margin var(--anim-duration) var(--anim-ease);
   margin-top: 0;
 }
 .mlpr-card.active .mlpr-card-expand {
@@ -546,99 +552,7 @@
   }
 }
 
-/* ── Custom Select Dropdown ──────────────────── */
-.custom-select {
-  position: relative;
-  width: 100%;
-}
-.custom-select select {
-  display: none !important;
-}
-.custom-select-trigger {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  width: 100%;
-  height: 44px;
-  padding: 0 16px;
-  border: 1.5px solid rgba(0,0,0,0.08);
-  border-radius: 10px;
-  background: #fff;
-  font-size: 15px;
-  font-family: var(--font-body);
-  font-weight: 500;
-  color: var(--dark);
-  cursor: pointer;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  user-select: none;
-  -webkit-user-select: none;
-  box-sizing: border-box;
-}
-.custom-select-trigger:hover {
-  border-color: rgba(0,0,0,0.15);
-}
-.custom-select.open .custom-select-trigger {
-  border-color: var(--mid-teal);
-  box-shadow: 0 0 0 3px rgba(44,116,128,0.1);
-}
-.custom-select-text {
-  flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.custom-select-arrow {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.2s;
-}
-.custom-select-arrow svg {
-  width: 12px;
-  height: 8px;
-  display: block;
-}
-.custom-select.open .custom-select-arrow {
-  transform: rotate(180deg);
-}
-.custom-select-options {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
-  right: 0;
-  background: #fff;
-  border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 12px;
-  padding: 6px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-  z-index: 100;
-  display: none;
-  max-height: 280px;
-  overflow-y: auto;
-}
-.custom-select.open .custom-select-options {
-  display: block;
-}
-.custom-select-option {
-  padding: 10px 14px;
-  font-size: 14px;
-  font-family: var(--font-body);
-  color: var(--slate);
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.12s, color 0.12s;
-}
-.custom-select-option:hover {
-  background: rgba(21,98,108,0.05);
-  color: var(--dark-teal);
-}
-.custom-select-option.active {
-  background: rgba(21,98,108,0.08);
-  color: var(--dark-teal);
-  font-weight: 600;
-}
+/* Custom select dropdown styles moved to /assets/themed-select.css */
 
 /* ── Info Card (Professional Services) ───────── */
 .info-card {
@@ -687,7 +601,7 @@
   color: var(--slate);
   border: none;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition: background var(--anim-duration) var(--anim-ease), color var(--anim-duration) var(--anim-ease);
   text-align: center;
 }
 .segmented-btn + .segmented-btn {
@@ -714,7 +628,7 @@
 
 /* ── Summary transition wrapper ──────────────── */
 .summary-body {
-  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity var(--anim-fade-half) var(--anim-ease);
 }
 .summary-body.fading {
   opacity: 0;
@@ -733,7 +647,7 @@
 .grand-col-yr1,
 .grand-col-recurring,
 .breakeven-callout p {
-  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity var(--anim-fade-half) var(--anim-ease);
 }
 .projection-cell-num.updating,
 .grand-tco-num.updating,
@@ -749,6 +663,7 @@
 .grand-col-recurring.updating,
 .breakeven-callout p.updating {
   opacity: 0;
+  visibility: hidden; /* hide during the swap so no partial text is visible */
 }
 .summary-card h3 {
   font-family: var(--font-heading);
@@ -777,6 +692,23 @@
   flex-direction: column;
   gap: 0;
 }
+/* Double-buffered cross-fade container. Two .summary-lines layers share the
+   same grid cell so content never reflows mid-fade and text nodes from the
+   outgoing and incoming versions live on completely separate DOM layers —
+   eliminating position-stable-glyph artifacts during the swap. */
+.summary-lines-stack {
+  display: grid;
+}
+.summary-lines-stack .summary-lines-layer {
+  grid-column: 1;
+  grid-row: 1;
+  opacity: 1;
+  transition: opacity var(--anim-fade-half) var(--anim-ease);
+}
+.summary-lines-stack .summary-lines-layer.is-inactive {
+  opacity: 0;
+  pointer-events: none;
+}
 .summary-line {
   display: flex;
   justify-content: space-between;
@@ -797,6 +729,21 @@
   font-size: 11px;
   color: #94a3b8;
   font-weight: 400;
+}
+.summary-line.is-subline {
+  padding: 2px 0 7px 18px;
+  font-size: 13px;
+  margin-top: -4px;
+}
+.summary-line.is-subline .summary-line-label,
+.summary-line.is-subline .summary-line-amount {
+  color: #94a3b8;
+  font-weight: 400;
+}
+.summary-line-arrow {
+  display: inline-block;
+  margin-right: 6px;
+  color: #cbd5e1;
 }
 .summary-divider {
   height: 1px;
@@ -904,10 +851,60 @@
   color: var(--dark);
 }
 
+/* ── Integration Category Chips ──────────────── */
+.int-categories {
+  margin-top: 16px;
+  border: 1px dashed #e2e8f0;
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.int-categories-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--gray);
+  margin-bottom: 10px;
+}
+.int-chips {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.int-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--slate);
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 4px 10px;
+  background: #fff;
+  cursor: default;
+  user-select: none;
+  white-space: nowrap;
+}
+.int-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
 /* ── Section Divider Bar ─────────────────────── */
 .section-divider-bar {
   padding: 24px 0;
   background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+}
+/* Beige above, white below (hero → software) */
+.section-divider-bar.fade-up {
+  background: linear-gradient(180deg, var(--bg) 0%, #fff 100%);
+}
+/* Beige above AND below — soft glow band through the middle (hardware → grand total) */
+.section-divider-bar.fade-glow {
+  background: linear-gradient(180deg, var(--bg) 0%, #fff 50%, var(--bg) 100%);
 }
 .section-divider-inner {
   display: flex;
@@ -932,14 +929,14 @@
 /* ── Grand Total Section ─────────────────────── */
 .grand-total-section {
   padding: 80px 0 120px;
-  background: var(--bg);
+  background: #fff;
 }
 .grand-total-card {
   background: #fff;
-  border: 2px solid var(--dark-teal);
+  border: 1px solid rgba(0,0,0,0.08);
   border-radius: 24px;
   padding: 56px 48px;
-  box-shadow: 0 12px 48px rgba(21,98,108,0.1);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.06);
 }
 .grand-total-header {
   text-align: center;
@@ -963,7 +960,7 @@
 }
 .grand-total-col {
   text-align: center;
-  padding: 28px 20px;
+  padding: 28px 20px 18px;
   background: rgba(21,98,108,0.03);
   border-radius: 16px;
   border: 1px solid rgba(21,98,108,0.08);
@@ -991,12 +988,12 @@
 .grand-col-sub {
   font-size: 12px;
   color: #94a3b8;
-  margin-top: 4px;
+  margin-top: 18px;
 }
 .grand-col-recurring {
   font-size: 13px;
   color: var(--gray);
-  margin-top: 8px;
+  margin-top: 14px;
 }
 
 .grand-total-divider {

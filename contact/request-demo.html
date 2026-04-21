@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../assets/themed-select.css">
 </head>
 <body>
 <nav class="navbar" id="navbar">
@@ -110,7 +111,7 @@
               <div class="form-row">
                 <div class="form-group full">
                   <label>How did you hear about us?</label>
-                  <select name="referral_source">
+                  <select name="referral_source" class="themed-select">
                     <option value="">Select one...</option>
                     <option>IPMI Conference</option>
                     <option>Colleague / Referral</option>
@@ -151,5 +152,7 @@
     </div>
   </footer>
   <script src="../script.js"></script>
+  <script src="../assets/themed-select.js"></script>
+<script src="../assets/nav-auth.js"></script>
 </body>
 </html>

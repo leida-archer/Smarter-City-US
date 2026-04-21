@@ -70,14 +70,12 @@
   const MUNICIPAL = {
     vpermit: {
       base: 42000,
-      year1Discount: 0.65,
-      includedPermits: 1000,
+      includedPermits: 12000,
       overageStart: 0.99,
       overageFloor: 0.59,
     },
     vcompliance: {
       base: 35000,
-      year1Discount: 0.65,
       baseCitationRate: 0.75,
       citationFloor: 0.35,
     },
@@ -86,33 +84,33 @@
       rateFlat: 0.25,
     },
     integrationCost: 3750,
-    implementationFee: null, // [NEED FEE]
+    implementationFactor: 0.65, // implementation = 65% of selected module base subscriptions
   };
 
   // Hardware pricing
   const HARDWARE = {
-    tablet: { label: 'Rugged Handheld Enforcement Tablet', price: 4500 },
-    lprHandheld: { label: 'Handheld LPR Citation Device', price: 2400 },
-    printer: { label: 'Zebra Printer', price: 750 },
+    tablet: { label: 'Handheld Enforcement Tablet', price: 4050 },
+    lprHandheld: { label: 'Handheld LPR Citation Device', price: 2160 },
+    printer: { label: 'Wireless Printer', price: 675 },
   };
 
   // MLPR Survision pricing — tiered
   const MLPR_TIERS = {
-    scs: {
-      label: 'SCS',
+    msrp: {
+      label: 'MSRP',
       capex_full: { hardware: 15120, software: 7560, commissioning: 2362.50 },
       haas_full: { monthly: 1219.05, annual: 14628.60 },
       haas_mini: { monthly: 1039.50, annual: 12474 },
     },
-    partner: {
-      label: 'SCS Partner',
+    sourcewell: {
+      label: 'Sourcewell',
       capex_full: { hardware: 14400, software: 7200, commissioning: 2250 },
       haas_full: { monthly: 1161, annual: 13932 },
       haas_mini: { monthly: 990, annual: 11880 },
     },
   };
-  // Active MLPR pricing (defaults to SCS)
-  var MLPR = MLPR_TIERS.scs;
+  // Active MLPR pricing (defaults to MSRP)
+  var MLPR = MLPR_TIERS.msrp;
 
   // ── State ────────────────────────────────────────
   const state = {
@@ -127,9 +125,9 @@
     vpermit: true,
     vcompliance: true,
     vpark: false,
-    monthlyPermits: 1000,
-    monthlyCitations: 500,
-    monthlyTransactions: 5000,
+    annualPermits: 12000,
+    annualCitations: 6000,
+    annualTransactions: 60000,
     vpermitIntegrations: 0,
     vcomplianceIntegrations: 0,
     vparkIntegrations: 0,
@@ -147,7 +145,7 @@
     kit: 'full',
     model: 'capex',
     mlprDiscount: 0,
-    mlprTier: 'scs',  // 'scs' | 'partner'
+    mlprTier: 'msrp',  // 'msrp' | 'sourcewell'
   };
 
   // ── DOM Helpers ──────────────────────────────────
@@ -160,30 +158,130 @@
   }
 
   // ── Fade Value Transition ───────────────────────
+  // Phase-locked to the CSS opacity transition (see --anim-fade-half in CSS).
+  // The DOM swap waits for transitionend (not setTimeout) so opacity is
+  // guaranteed to be 0 at the moment of the swap, and a double-rAF forces the
+  // browser to commit the new DOM at opacity:0 before the fade-in starts —
+  // preventing engines from collapsing the out/in transitions into one pass
+  // (which was painting the first characters of new content mid-fade).
   var _skipFade = false;
+  var FADE_FALLBACK_MS = 260; // safety net if transitionend never fires
 
-  function fadeValue(el, newVal) {
+  function runFade(el, applyNew) {
+    // Cancel any in-flight fade on this element so rapid clicks don't stack.
+    if (el._fadeCleanup) el._fadeCleanup();
+
+    var settled = false;
+    function finish() {
+      if (settled) return;
+      settled = true;
+      el.removeEventListener('transitionend', onEnd);
+      if (el._fadeSafety) { clearTimeout(el._fadeSafety); el._fadeSafety = null; }
+      el._fadeCleanup = null;
+
+      // Swap while .updating is still active (opacity:0, visibility:hidden).
+      applyNew();
+
+      // Force layout commit, then wait one more frame so the browser paints
+      // the new DOM at opacity:0 as a discrete frame before we remove the
+      // class and start the fade-in.
+      // eslint-disable-next-line no-unused-expressions
+      el.offsetHeight;
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+          el.classList.remove('updating');
+        });
+      });
+    }
+
+    function onEnd(e) {
+      if (e.target !== el || e.propertyName !== 'opacity') return;
+      finish();
+    }
+
+    el._fadeCleanup = function() {
+      el.removeEventListener('transitionend', onEnd);
+      if (el._fadeSafety) { clearTimeout(el._fadeSafety); el._fadeSafety = null; }
+      el._fadeCleanup = null;
+    };
+
+    el.addEventListener('transitionend', onEnd);
+    el._fadeSafety = setTimeout(finish, FADE_FALLBACK_MS);
+    el.classList.add('updating');
+  }
+
+  function fadeValue(el, newVal, useHTML) {
     if (_skipFade) {
-      el.textContent = newVal;
+      if (useHTML) el.innerHTML = newVal; else el.textContent = newVal;
       return;
     }
-    el.classList.add('updating');
-    setTimeout(function() {
-      el.textContent = newVal;
-      el.classList.remove('updating');
-    }, 500);
+    runFade(el, function() {
+      if (useHTML) el.innerHTML = newVal; else el.textContent = newVal;
+    });
   }
 
   function fadeHTML(el, newHTML) {
     if (_skipFade) {
+      // When skipping fades (e.g. during a larger section transition), still
+      // honour the stack structure so internal state stays consistent.
+      if (el.classList && el.classList.contains('summary-lines-stack')) {
+        var layers = el.querySelectorAll('.summary-lines-layer');
+        if (layers.length === 2) {
+          var active = el._activeLayer || layers[0];
+          active.innerHTML = newHTML;
+          el._activeLayer = active;
+          return;
+        }
+      }
       el.innerHTML = newHTML;
       return;
     }
-    el.classList.add('updating');
-    setTimeout(function() {
-      el.innerHTML = newHTML;
-      el.classList.remove('updating');
-    }, 500);
+    if (el.classList && el.classList.contains('summary-lines-stack')) {
+      crossFadeStack(el, newHTML);
+      return;
+    }
+    runFade(el, function() { el.innerHTML = newHTML; });
+  }
+
+  // Read the "visible" HTML from either a plain element or a stack's active layer.
+  function currentContent(el) {
+    if (el.classList && el.classList.contains('summary-lines-stack')) {
+      var active = el._activeLayer;
+      if (!active) {
+        var layers = el.querySelectorAll('.summary-lines-layer');
+        active = layers[0] && !layers[0].classList.contains('is-inactive') ? layers[0] : layers[1];
+      }
+      return active ? active.innerHTML : '';
+    }
+    return el.innerHTML;
+  }
+
+  // Double-buffered cross-fade for the two-layer .summary-lines-stack.
+  // The layer currently marked active receives .is-inactive (fading out) and
+  // the other layer gets populated with the new HTML and fades in. Old and
+  // new text live on separate DOM nodes — no position-shared glyph caching
+  // can carry over mid-fade.
+  function crossFadeStack(stack, newHTML) {
+    var layers = stack.querySelectorAll('.summary-lines-layer');
+    if (layers.length !== 2) {
+      stack.innerHTML = newHTML;
+      return;
+    }
+    var active = stack._activeLayer;
+    if (!active) {
+      // First call: pick the layer that isn't .is-inactive, else layers[0].
+      active = layers[0].classList.contains('is-inactive') ? layers[1] : layers[0];
+    }
+    var incoming = active === layers[0] ? layers[1] : layers[0];
+
+    incoming.innerHTML = newHTML;
+    // Commit the new DOM at opacity 0 before starting the fade-in.
+    // eslint-disable-next-line no-unused-expressions
+    incoming.offsetHeight;
+
+    active.classList.add('is-inactive');
+    incoming.classList.remove('is-inactive');
+    stack._activeLayer = incoming;
   }
 
   // ── Proration Logic ──────────────────────────────
@@ -198,42 +296,43 @@
   }
 
   // ── vPermit Overage Calculation ──────────────────
-  function calcPermitOverage(monthlyPermits) {
-    if (monthlyPermits <= 1000) return 0;
-    const excess = monthlyPermits - 1000;
-    // Tiered: rate starts at $0.99, drops by ~$0.05 per 1000-unit tier, floor $0.59
-    const tiers = Math.ceil(excess / 1000);
+  function calcPermitOverage(annualPermits) {
+    if (annualPermits <= 12000) return 0;
+    const excess = annualPermits - 12000;
+    // Tiered: rate starts at $0.99, drops by ~$0.05 per 12,000-unit tier, floor $0.59
+    const tiers = Math.ceil(excess / 12000);
     let total = 0;
     for (let t = 0; t < tiers; t++) {
-      const count = Math.min(1000, excess - t * 1000);
+      const count = Math.min(12000, excess - t * 12000);
       const rate = Math.max(0.59, 0.99 - t * 0.05);
       total += count * rate;
     }
-    return total; // per month
+    return total; // annual
   }
 
   // ── vCompliance Citation Calculation ─────────────
-  function calcCitationCost(monthlyCitations) {
-    if (monthlyCitations <= 0) return 0;
-    // First 1000 at $0.75, tiered discount per additional 1000, floor $0.35
+  function calcCitationCost(annualCitations) {
+    if (annualCitations <= 0) return 0;
+    // First 12,000 at $0.75, tiered discount per additional 12,000, floor $0.35
     let total = 0;
-    let remaining = monthlyCitations;
+    let remaining = annualCitations;
     let tier = 0;
     while (remaining > 0) {
-      const count = Math.min(1000, remaining);
+      const count = Math.min(12000, remaining);
       const rate = Math.max(0.35, 0.75 - tier * 0.05);
       total += count * rate;
       remaining -= count;
       tier++;
     }
-    return total; // per month
+    return total; // annual
   }
 
   // ── vPark Transaction Calculation ────────────────
-  function calcVparkCost(monthlyTransactions, avgValue) {
+  // Fee per transaction = 5% of value + flat fee. Sourcewell 10% reduces the flat fee only.
+  function calcVparkCost(annualTransactions, avgValue, flatFee) {
     const percentFee = avgValue * 0.05;
-    const effectiveRate = Math.max(percentFee, 0.25);
-    return monthlyTransactions * effectiveRate; // per month
+    const effectiveRate = percentFee + (flatFee != null ? flatFee : 0.35);
+    return annualTransactions * effectiveRate; // annual
   }
 
   // ── Software Calculation ─────────────────────────
@@ -243,29 +342,36 @@
     if (state.entity === 'campus') {
       const tier = CAMPUS_TIERS[state.campusTier];
       const proFactor = getProrationFactor(state.goLiveMonth);
-      let saas = tier.saas;
+      const sourcewellActive = state.sourcewell && tier.sourcewellDiscount;
+      const discountFactor = sourcewellActive ? 0.9 : 1;
+      let saas = tier.saas * discountFactor;
 
-      // Sourcewell discount (10% for eligible tiers)
-      if (state.sourcewell && tier.sourcewellDiscount) {
-        saas = saas * 0.9;
-        result.lines.push({ label: 'SaaS Subscription (Sourcewell)', amount: saas, note: 'annual, 10% off' });
+      if (sourcewellActive) {
+        result.lines.push({ label: 'Sourcewell Subscription', amount: saas, note: 'annual, 10% off' });
       } else {
-        result.lines.push({ label: 'SaaS Subscription', amount: saas, note: 'annual' });
+        result.lines.push({ label: 'Standard Subscription', amount: saas, note: 'annual' });
       }
 
       const proratedSaas = saas * proFactor;
-      result.lines.push({ label: 'Year 1 Prorated SaaS', amount: proratedSaas, note: Math.round(proFactor * 12) + ' months' });
-      result.lines.push({ label: 'Implementation & Training', amount: tier.implementation, note: 'one-time, ' + tier.implementationNote });
+      const proratedSavings = saas - proratedSaas;
+      if (proratedSavings > 0) {
+        result.lines.push({ label: 'Prorated to ' + Math.round(proFactor * 12) + ' months', amount: proratedSavings, note: '', type: 'subline' });
+      }
 
-      // Extra integrations
+      // Extra integrations (Sourcewell discount applies)
       const extraInt = state.extraIntegrations;
+      const intUnit = 3750 * discountFactor;
+      const intCost = extraInt * intUnit;
       if (extraInt > 0) {
-        const intCost = extraInt * 3750;
-        result.lines.push({ label: 'Extra Integrations (' + extraInt + ')', amount: intCost, note: 'annual' });
+        const intNote = sourcewellActive ? 'annual, 10% off' : 'annual';
+        result.lines.push({ label: 'Extra Integrations (' + extraInt + ')', amount: intCost, note: intNote });
         saas += intCost;
       }
 
-      result.year1 = proratedSaas + tier.implementation + (extraInt > 0 ? extraInt * 3750 : 0);
+      // Implementation & Training — always last line item
+      result.lines.push({ label: 'Implementation & Training', amount: tier.implementation, note: 'one-time' });
+
+      result.year1 = proratedSaas + intCost + tier.implementation;
       result.recurring = saas;
       result.implementation = tier.implementation;
       result.integrationsIncluded = tier.integrationsIncluded;
@@ -273,71 +379,65 @@
     } else {
       // Municipal / Standalone
       let baseSaas = 0;
-      let year1Saas = 0;
+      let moduleBaseTotal = 0;
+      const sourcewellActive = state.sourcewell;
+      const discountFactor = sourcewellActive ? 0.9 : 1;
+      const subNote = sourcewellActive ? 'annual, 10% off' : 'annual';
 
       if (state.vpermit) {
-        const base = MUNICIPAL.vpermit.base;
-        const yr1 = base * MUNICIPAL.vpermit.year1Discount;
+        const base = MUNICIPAL.vpermit.base * discountFactor;
+        moduleBaseTotal += base;
         baseSaas += base;
-        year1Saas += yr1;
-        result.lines.push({ label: 'vPermit Subscription', amount: base, note: 'annual' });
-        result.lines.push({ label: 'vPermit Year 1 (65%)', amount: yr1, note: 'first year' });
+        result.lines.push({ label: sourcewellActive ? 'vPermit (Sourcewell)' : 'vPermit Subscription', amount: base, note: subNote });
 
-        const overage = calcPermitOverage(state.monthlyPermits) * 12;
+        const overage = calcPermitOverage(state.annualPermits);
         if (overage > 0) {
-          result.lines.push({ label: 'vPermit Overages', amount: overage, note: 'annual est.' });
+          result.lines.push({ label: 'Estimated Active Permits', amount: overage, note: 'annual', type: 'subitem' });
           baseSaas += overage;
-          year1Saas += overage;
         }
       }
 
       if (state.vcompliance) {
-        const base = MUNICIPAL.vcompliance.base;
-        const yr1 = base * MUNICIPAL.vcompliance.year1Discount;
+        const base = MUNICIPAL.vcompliance.base * discountFactor;
+        moduleBaseTotal += base;
         baseSaas += base;
-        year1Saas += yr1;
-        result.lines.push({ label: 'vCompliance Subscription', amount: base, note: 'annual' });
-        result.lines.push({ label: 'vCompliance Year 1 (65%)', amount: yr1, note: 'first year' });
+        result.lines.push({ label: sourcewellActive ? 'vCompliance (Sourcewell)' : 'vCompliance Subscription', amount: base, note: subNote });
 
-        const citationCost = calcCitationCost(state.monthlyCitations) * 12;
+        const citationCost = calcCitationCost(state.annualCitations);
         if (citationCost > 0) {
-          result.lines.push({ label: 'Citation Fees', amount: citationCost, note: 'annual est.' });
+          result.lines.push({ label: 'Estimated Citations', amount: citationCost, note: 'annual', type: 'subitem' });
           baseSaas += citationCost;
-          year1Saas += citationCost;
         }
       }
 
       if (state.vpark) {
-        const vparkMonthly = calcVparkCost(state.monthlyTransactions, state.avgTransactionValue);
-        const vparkAnnual = vparkMonthly * 12;
-        result.lines.push({ label: 'vPark Transaction Fees', amount: vparkAnnual, note: 'annual est.' });
+        const vparkFlatFee = sourcewellActive ? 0.35 * 0.9 : 0.35;
+        const vparkAnnual = calcVparkCost(state.annualTransactions, state.avgTransactionValue, vparkFlatFee);
+        result.lines.push({ label: sourcewellActive ? 'vPark (Sourcewell)' : 'vPark Subscription', amount: vparkAnnual, note: 'annual est.' });
         baseSaas += vparkAnnual;
-        year1Saas += vparkAnnual;
       }
 
-      // Implementation (placeholder)
-      const implFee = MUNICIPAL.implementationFee;
-      if (implFee) {
-        result.lines.push({ label: 'Implementation & Training', amount: implFee, note: 'one-time' });
-        result.implementation = implFee;
-      } else {
-        result.lines.push({ label: 'Implementation & Training', amount: 0, note: '[NEED FEE] — contact for quote' });
-        result.implementation = 0;
-      }
-
-      // Per-module integrations
+      // Per-module integrations (Sourcewell 10% applies)
       var totalInt = 0;
       if (state.vpermit) totalInt += state.vpermitIntegrations;
       if (state.vcompliance) totalInt += state.vcomplianceIntegrations;
       if (state.vpark) totalInt += state.vparkIntegrations;
       if (totalInt > 0) {
-        const intCost = totalInt * MUNICIPAL.integrationCost;
-        result.lines.push({ label: 'Integrations (' + totalInt + ')', amount: intCost, note: 'annual' });
+        const intUnit = MUNICIPAL.integrationCost * discountFactor;
+        const intCost = totalInt * intUnit;
+        const intNote = sourcewellActive ? 'annual, 10% off' : 'annual';
+        result.lines.push({ label: 'Integrations (' + totalInt + ')', amount: intCost, note: intNote });
         baseSaas += intCost;
-        year1Saas += intCost;
       }
 
-      result.year1 = year1Saas + result.implementation;
+      // Implementation & Training — 65% of selected module base subscriptions (always last)
+      const implFee = moduleBaseTotal * MUNICIPAL.implementationFactor;
+      if (implFee > 0) {
+        result.lines.push({ label: 'Implementation & Training', amount: implFee, note: 'one-time' });
+      }
+      result.implementation = implFee;
+
+      result.year1 = baseSaas + result.implementation;
       result.recurring = baseSaas;
     }
 
@@ -363,17 +463,17 @@
     // Enforcement devices
     if (state.hwTablet > 0) {
       const cost = HARDWARE.tablet.price * state.hwTablet;
-      result.lines.push({ label: HARDWARE.tablet.label + ' \u00D7' + state.hwTablet, amount: cost, note: 'one-time' });
+      result.lines.push({ label: HARDWARE.tablet.label + ' (' + state.hwTablet + ')', amount: cost, note: '' });
       result.total += cost;
     }
     if (state.hwLprHandheld > 0) {
       const cost = HARDWARE.lprHandheld.price * state.hwLprHandheld;
-      result.lines.push({ label: HARDWARE.lprHandheld.label + ' \u00D7' + state.hwLprHandheld, amount: cost, note: 'one-time' });
+      result.lines.push({ label: HARDWARE.lprHandheld.label + ' (' + state.hwLprHandheld + ')', amount: cost, note: '' });
       result.total += cost;
     }
     if (state.hwPrinter > 0) {
       const cost = HARDWARE.printer.price * state.hwPrinter;
-      result.lines.push({ label: HARDWARE.printer.label + ' \u00D7' + state.hwPrinter, amount: cost, note: 'one-time' });
+      result.lines.push({ label: HARDWARE.printer.label + ' (' + state.hwPrinter + ')', amount: cost, note: '' });
       result.total += cost;
     }
 
@@ -388,15 +488,15 @@
         const p = MLPR.capex_full;
         const yr1 = (p.hardware + p.software + p.commissioning) * v * d;
         const rec = p.software * v * d;
-        result.lines.push({ label: 'MLPR Hardware \u00D7' + v, amount: p.hardware * v * d, note: 'one-time' });
-        result.lines.push({ label: 'MLPR Software \u00D7' + v, amount: p.software * v * d, note: 'annual' });
-        result.lines.push({ label: 'MLPR Commissioning \u00D7' + v, amount: p.commissioning * v * d, note: 'one-time' });
+        result.lines.push({ label: 'MLPR Hardware (' + v + ')', amount: p.hardware * v * d, note: '' });
+        result.lines.push({ label: 'MLPR Software (' + v + ')', amount: p.software * v * d, note: 'annual' });
+        result.lines.push({ label: 'MLPR Commissioning (' + v + ')', amount: p.commissioning * v * d, note: 'one-time' });
         result.mlprYear1 = yr1;
         result.mlprRecurring = rec;
       } else {
         const rate = state.kit === 'full' ? MLPR.haas_full : MLPR.haas_mini;
-        result.lines.push({ label: 'MLPR All-inclusive \u00D7' + v, amount: rate.monthly * v * d, note: '/month' });
-        result.lines.push({ label: 'MLPR Annual \u00D7' + v, amount: rate.annual * v * d, note: 'billed annually' });
+        result.lines.push({ label: 'MLPR All-inclusive (' + v + ')', amount: rate.monthly * v * d, note: '/month' });
+        result.lines.push({ label: 'MLPR Annual (' + v + ')', amount: rate.annual * v * d, note: 'billed annually' });
         result.mlprYear1 = rate.annual * v * d;
         result.mlprRecurring = rate.annual * v * d;
       }
@@ -549,7 +649,7 @@
           note.textContent = 'Sourcewell discount is not available for X-Small tier';
           note.style.color = '#EB5B25';
         } else {
-          note.textContent = 'Sourcewell 10% discount applied to SaaS subscription';
+          note.textContent = 'Available for Small tier and above via Sourcewell contract';
           note.style.color = '';
         }
       }
@@ -557,7 +657,10 @@
       // Integrations note
       const intNote = $('#integrationsNote');
       if (intNote) {
-        intNote.textContent = tier.integrationsIncluded + ' integrations included with your tier. Additional integrations at $3,750/yr each.';
+        const sourcewellActive = state.sourcewell && tier.sourcewellDiscount;
+        const intPrice = sourcewellActive ? '$3,375' : '$3,750';
+        const intSuffix = sourcewellActive ? '/yr each (10% off).' : '/yr each.';
+        intNote.textContent = tier.integrationsIncluded + ' integrations included with your tier. Additional integrations at ' + intPrice + intSuffix;
       }
 
       // Sync integration stepper input
@@ -575,6 +678,23 @@
         card.classList.toggle('checked', checked);
       });
 
+      // Sync municipal Sourcewell toggle visual state
+      const munSwYes = $('#munSourcewellYes');
+      const munSwNo = $('#munSourcewellNo');
+      if (munSwYes && munSwNo) {
+        munSwYes.classList.toggle('selected-teal', state.sourcewell);
+        munSwNo.classList.toggle('selected-teal', !state.sourcewell);
+      }
+
+      // Integration rate hints (reflect Sourcewell 10% discount)
+      const munIntText = state.sourcewell ? '$3,375/yr each (10% off)' : '$3,750/yr each';
+      $$('.mun-int-hint').forEach(el => { el.textContent = munIntText; });
+
+      // vPark rate hint (Sourcewell reduces the flat fee only)
+      $$('.vpark-rate-hint').forEach(el => {
+        el.textContent = state.sourcewell ? '5% of transaction + $0.315/transaction (10% off flat fee)' : '5% of transaction + $0.35/transaction';
+      });
+
       // Sync per-module integration inputs
       $$('.mod-integrations').forEach(inp => {
         const mod = inp.dataset.mod;
@@ -588,26 +708,36 @@
       var newEcho;
       if (state.entity === 'campus') {
         const tier = CAMPUS_TIERS[state.campusTier];
-        newEcho = 'Campus \u00B7 ' + tier.label + ' Tier (' + tier.population + ')';
+        newEcho = 'Campus \u00B7 ' + tier.label + ' Tier (' + tier.population + ')' +
+          '<br><span class="toggle-pill teal" style="margin-top:4px">' + tier.integrationsIncluded + ' Integrations Included</span>';
       } else {
         const mods = [];
         if (state.vpermit) mods.push('vPermit');
         if (state.vcompliance) mods.push('vCompliance');
         if (state.vpark) mods.push('vPark');
-        newEcho = 'Municipality \u00B7 ' + (mods.length ? mods.join(' + ') : 'No modules selected');
+        newEcho = 'Municipality \u00B7 ' + (mods.length ? mods.join(' \u00B7 ') : 'No modules selected');
       }
-      if (echo.textContent !== newEcho) fadeValue(echo, newEcho);
+      if (echo.innerHTML !== newEcho) fadeValue(echo, newEcho, true);
     }
 
     // Summary lines
     const linesEl = $('#softwareSummaryLines');
     if (linesEl) {
-      var newLinesHTML = sw.lines.map(l =>
-        '<div class="summary-line"><span class="summary-line-label">' + l.label +
-        ' <span class="summary-line-sub">(' + l.note + ')</span></span><span class="summary-line-amount">' +
-        (l.amount > 0 ? fmt(l.amount) : l.note.includes('[NEED FEE]') ? 'TBD' : '$0') + '</span></div>'
-      ).join('');
-      if (linesEl.innerHTML !== newLinesHTML) fadeHTML(linesEl, newLinesHTML);
+      var newLinesHTML = sw.lines.map(l => {
+        if (l.type === 'subline' || l.type === 'subitem') {
+          var subNoteHTML = l.note ? ' <span class="summary-line-sub">(' + l.note + ')</span>' : '';
+          var prefix = l.type === 'subline' ? '\u2212' : '';
+          return '<div class="summary-line is-subline"><span class="summary-line-label"><span class="summary-line-arrow">\u21B3</span>' + l.label + subNoteHTML + '</span><span class="summary-line-amount">' + prefix + fmt(l.amount) + '</span></div>';
+        }
+        var noteHTML = l.note ? ' <span class="summary-line-sub">(' + l.note + ')</span>' : '';
+        var amountHTML;
+        if (l.amount > 0) amountHTML = fmt(l.amount);
+        else if (l.note && l.note.includes('[NEED FEE]')) amountHTML = 'TBD';
+        else if (l.note === 'transaction-based') amountHTML = '\u2014';
+        else amountHTML = '$0';
+        return '<div class="summary-line"><span class="summary-line-label">' + l.label + noteHTML + '</span><span class="summary-line-amount">' + amountHTML + '</span></div>';
+      }).join('');
+      if (currentContent(linesEl) !== newLinesHTML) fadeHTML(linesEl, newLinesHTML);
     }
 
     // Totals
@@ -616,7 +746,12 @@
     const recurringLine = $('#softwareRecurringLine');
 
     if (totalLabel) {
-      var newTotalLabel = state.entity === 'campus' ? 'Year 1 Total (Prorated)' : 'Year 1 Total (65% Discount)';
+      var newTotalLabel;
+      if (state.entity === 'campus' && state.goLiveMonth !== 7) {
+        newTotalLabel = 'Year 1 Total (Prorated)';
+      } else {
+        newTotalLabel = 'Year 1 Total';
+      }
       if (totalLabel.textContent !== newTotalLabel) fadeValue(totalLabel, newTotalLabel);
     }
     if (totalAmount) {
@@ -644,16 +779,11 @@
       if (monthlyEl.innerHTML !== newMonthly) fadeHTML(monthlyEl, newMonthly);
     }
 
-    // Prorate callout
+    // Prorate callout (campus only)
     const prorateText = $('#prorateText');
-    if (prorateText) {
-      var newProrate;
-      if (state.entity === 'campus') {
-        const months = Math.round(getProrationFactor(state.goLiveMonth) * 12);
-        newProrate = 'Year 1 prorated to <strong>' + months + ' months</strong> based on fiscal year (July\u2013June). Full annual pricing applies from Year 2.';
-      } else {
-        newProrate = 'Year 1 subscription at <strong>65% discount</strong>. Full annual pricing applies from Year 2.';
-      }
+    if (prorateText && state.entity === 'campus') {
+      const months = Math.round(getProrationFactor(state.goLiveMonth) * 12);
+      const newProrate = 'Year 1 prorated to <strong>' + months + ' months</strong> based on fiscal year (July\u2013June). Full annual pricing applies from Year 2.';
       if (prorateText.innerHTML !== newProrate) fadeHTML(prorateText, newProrate);
     }
 
@@ -775,12 +905,14 @@
     // Hardware summary lines
     const linesEl = $('#hardwareSummaryLines');
     if (linesEl) {
-      var newLinesHTML = hw.lines.map(l =>
-        '<div class="summary-line"><span class="summary-line-label">' + l.label +
-        ' <span class="summary-line-sub">(' + l.note + ')</span></span><span class="summary-line-amount">' +
-        fmt(l.amount) + '</span></div>'
-      ).join('');
-      if (linesEl.innerHTML !== newLinesHTML) fadeHTML(linesEl, newLinesHTML);
+      var newLinesHTML = hw.lines.map(l => {
+        var noteHTML = l.note ? ' <span class="summary-line-sub">(' + l.note + ')</span>' : '';
+        return '<div class="summary-line"><span class="summary-line-label">' + l.label + noteHTML + '</span><span class="summary-line-amount">' + fmt(l.amount) + '</span></div>';
+      }).join('');
+      if (state.mlprEnabled && state.mlprDiscount > 0) {
+        newLinesHTML += '<div class="summary-line" style="color:#4DAE37;font-size:13px;padding-top:4px"><span class="summary-line-label">MLPR volume discount</span><span class="summary-line-amount" style="color:#4DAE37">-' + state.mlprDiscount + '%</span></div>';
+      }
+      if (currentContent(linesEl) !== newLinesHTML) fadeHTML(linesEl, newLinesHTML);
     }
 
     // Hardware total
@@ -841,11 +973,6 @@
       }
     }
 
-    // MLPR discount
-    if (state.mlprEnabled && state.mlprDiscount > 0 && linesEl) {
-      linesEl.innerHTML += '<div class="summary-line" style="color:#4DAE37;font-size:13px;padding-top:4px"><span class="summary-line-label">MLPR volume discount</span><span class="summary-line-amount" style="color:#4DAE37">-' + state.mlprDiscount + '%</span></div>';
-    }
-
     return hw;
   }
 
@@ -860,10 +987,13 @@
     fadeIfChanged($('#grandSoftwareYr1'), fmt(sw.year1));
     fadeIfChanged($('#grandSoftwareRecurring'), fmt(sw.recurring) + '/yr recurring');
 
-    // Hardware column
+    // Hardware column — hide when no devices selected
+    var deviceCount = state.hwTablet + state.hwLprHandheld + state.hwPrinter;
+    const hwCol = $('#grandHardwareCol');
+    if (hwCol) hwCol.style.display = deviceCount > 0 ? '' : 'none';
     fadeIfChanged($('#grandHardwareYr1'), fmt(hw.total));
     var gHwRec = $('#grandHardwareRecurring');
-    if (gHwRec) gHwRec.innerHTML = hw.total > 0 ? 'One-time purchase' : '&nbsp;';
+    if (gHwRec) gHwRec.innerHTML = deviceCount > 0 ? deviceCount + ' device' + (deviceCount === 1 ? '' : 's') : '&nbsp;';
 
     // MLPR column
     const mlprCol = $('#grandMlprCol');
@@ -878,26 +1008,31 @@
     fadeIfChanged($('#grandTotalYear1'), fmt(totalYr1));
     fadeIfChanged($('#grandTotalRecurring'), fmt(totalRec) + '/yr');
 
-    // Grand TCO
-    [1, 3, 5].forEach(y => {
-      const swTco = sw.tco[y] || 0;
-      const mlprTco = state.mlprEnabled ? (hw.mlprTco[y] || 0) : 0;
-      const total = swTco + hw.total + mlprTco;
-      const el = $('#grandTco' + y);
-      if (el) {
-        const newVal = fmt(total);
-        if (el.textContent !== newVal) {
-          fadeValue(el, newVal);
-        }
-      }
-    });
+    // Subtitle — list only the components present in the package
+    const subtitleEl = $('#grandTotalSubtitle');
+    if (subtitleEl) {
+      const parts = ['Software'];
+      const hwCount = state.hwTablet + state.hwLprHandheld + state.hwPrinter;
+      if (hwCount > 0) parts.push('Hardware');
+      if (state.mlprEnabled) parts.push('Mobile LPR');
+      const newSubtitle = parts.join(' \u00B7 ');
+      if (subtitleEl.textContent !== newSubtitle) subtitleEl.textContent = newSubtitle;
+    }
   }
 
   // ── Master Render ────────────────────────────────
+  // Coalesce multiple state-change calls in the same frame into one pass,
+  // so rapid clicks (e.g. double-tap Sourcewell toggle) don't overlap fades.
+  var _renderScheduled = false;
   function render() {
-    const sw = renderSoftware();
-    const hw = renderHardware();
-    renderGrandTotal(sw, hw);
+    if (_renderScheduled) return;
+    _renderScheduled = true;
+    requestAnimationFrame(function() {
+      _renderScheduled = false;
+      const sw = renderSoftware();
+      const hw = renderHardware();
+      renderGrandTotal(sw, hw);
+    });
   }
 
   // ── Event Binding ────────────────────────────────
@@ -956,7 +1091,7 @@
     });
 
     // Municipal volume inputs
-    ['monthlyPermits', 'monthlyCitations', 'monthlyTransactions', 'avgTransactionValue'].forEach(id => {
+    ['annualPermits', 'annualCitations', 'annualTransactions', 'avgTransactionValue'].forEach(id => {
       const el = $('#' + id);
       if (el) {
         el.addEventListener('change', () => {
@@ -1127,90 +1262,19 @@
     });
   }
 
+  // Volume discount is now negotiated directly with Survision (no automated
+  // tier), so keep state.mlprDiscount at 0 regardless of vehicle count.
   function autoMlprDiscount() {
-    if (state.vehicles >= 10) {
-      state.mlprDiscount = 10;
-    } else if (state.vehicles >= 5) {
-      state.mlprDiscount = 5;
-    } else {
-      state.mlprDiscount = 0;
-    }
+    state.mlprDiscount = 0;
   }
 
-  // ── Custom Select Initialization ──────────────────
-  function initCustomSelects() {
-    $$('.calc-inputs select').forEach(sel => {
-      // Build wrapper
-      var wrap = document.createElement('div');
-      wrap.className = 'custom-select';
-
-      // Build trigger
-      var trigger = document.createElement('div');
-      trigger.className = 'custom-select-trigger';
-      var textSpan = document.createElement('span');
-      textSpan.className = 'custom-select-text';
-      textSpan.textContent = sel.options[sel.selectedIndex].textContent;
-      trigger.appendChild(textSpan);
-
-      // SVG arrow (inline, no viewBox issues)
-      var arrow = document.createElement('span');
-      arrow.className = 'custom-select-arrow';
-      arrow.innerHTML = '<svg width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1.5L6 6.5L11 1.5" stroke="#64748B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-      trigger.appendChild(arrow);
-
-      // Build options panel
-      var panel = document.createElement('div');
-      panel.className = 'custom-select-options';
-
-      Array.from(sel.options).forEach(function(opt) {
-        var item = document.createElement('div');
-        item.className = 'custom-select-option';
-        if (opt.selected) item.classList.add('active');
-        item.setAttribute('data-value', opt.value);
-        item.textContent = opt.textContent;
-
-        item.addEventListener('click', function(e) {
-          e.stopPropagation();
-          sel.value = opt.value;
-          sel.dispatchEvent(new Event('change'));
-          textSpan.textContent = opt.textContent;
-          panel.querySelectorAll('.custom-select-option').forEach(function(o) {
-            o.classList.toggle('active', o.getAttribute('data-value') === opt.value);
-          });
-          wrap.classList.remove('open');
-        });
-
-        panel.appendChild(item);
-      });
-
-      // Toggle
-      trigger.addEventListener('click', function(e) {
-        e.stopPropagation();
-        $$('.custom-select.open').forEach(function(cs) {
-          if (cs !== wrap) cs.classList.remove('open');
-        });
-        wrap.classList.toggle('open');
-      });
-
-      // Insert into DOM
-      sel.parentNode.insertBefore(wrap, sel);
-      wrap.appendChild(trigger);
-      wrap.appendChild(panel);
-      wrap.appendChild(sel);
-
-      // Store ref for programmatic sync
-      wrap._textSpan = textSpan;
-      wrap._select = sel;
-    });
-
-    // Close all on outside click
-    document.addEventListener('click', function() {
-      $$('.custom-select.open').forEach(function(cs) { cs.classList.remove('open'); });
-    });
-  }
-
-  // Sync custom select display after programmatic value change
+  // Custom select upgrade is handled by shared /assets/themed-select.js.
+  // Any <select class="themed-select"> inside the calculator gets themed.
   function syncSelect(selectEl) {
+    if (window.ThemedSelect && window.ThemedSelect.syncValue) {
+      window.ThemedSelect.syncValue(selectEl);
+      return;
+    }
     var wrap = selectEl.closest('.custom-select');
     if (!wrap) return;
     var textSpan = wrap._textSpan;
@@ -1222,7 +1286,11 @@
 
   // ── Init ─────────────────────────────────────────
   function init() {
-    initCustomSelects();
+    // Ensure themed selects are upgraded (shared script also auto-runs;
+    // calling init() again is a no-op thanks to _themedUpgraded guard).
+    if (window.ThemedSelect && window.ThemedSelect.init) {
+      window.ThemedSelect.init();
+    }
     bind();
     render();
   }

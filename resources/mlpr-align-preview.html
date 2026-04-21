@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mobile LPR Button — Alignment Preview</title>
+<link rel="stylesheet" href="scs-calculator.css">
+<style>
+  body { background: #FAFAF8; font-family: Inter, system-ui, sans-serif; padding: 40px; color: #1e293b; }
+  h1 { font-family: 'DM Sans', sans-serif; font-weight: 300; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .wrap { max-width: 720px; margin: 0 auto; }
+  .tag { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #64748b; margin: 24px 0 10px; }
+  .hint { color: #64748b; font-size: 13px; margin-bottom: 24px; }
+
+  /* Button mirrors .mlpr-card header layout */
+  .btn {
+    position: relative;
+    background: #fff;
+    border: 1.5px solid rgba(0,0,0,0.08);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 18px;
+    overflow: visible; /* let the dotted guide extend past */
+  }
+  .btn .row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+  }
+  .icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: rgba(235,91,37,0.1); color: #EB5B25;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .title {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'DM Sans', Inter, system-ui, sans-serif;
+    font-weight: 600; font-size: 16px; color: #1e293b;
+    position: relative;
+  }
+  .title img { width: auto; }
+
+  /* Dotted guide line through the vertical center of the ICON (18px = icon height / 2) */
+  .btn .row::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; top: 18px;
+    border-top: 1px dashed rgba(235, 91, 37, 0.6);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .btn .row > * { position: relative; z-index: 1; }
+
+  /* Per-row title offset so you can eyeball where the center of the text lands */
+  .title.shift-up-2 { transform: translateY(-2px); }
+  .title.shift-up-1 { transform: translateY(-1px); }
+  .title.shift-0    { transform: translateY(0); }
+  .title.shift-dn-1 { transform: translateY(1px); }
+  .title.shift-dn-2 { transform: translateY(2px); }
+
+  .offset-label {
+    position: absolute; top: 6px; right: 12px;
+    font-size: 11px; color: #94a3b8; letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Mobile LPR button — center-alignment audit</h1>
+    <p class="hint">Dotted orange line runs through the vertical center of the camera icon (y = 18px from row top). The icon stays fixed; each row below offsets only the title text so you can pick the offset where the text&rsquo;s visual center sits on the line.</p>
+
+    <div class="tag">Logo @ 14px  (current production size)</div>
+
+    <div class="btn">
+      <div class="row">
+        <span class="offset-label">shift 0</span>
+        <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+        <div class="title shift-0"><span>Add</span><img src="../assets/survision-logo-2025.png" alt="Survision" style="height:14px"><span>Mobile LPR</span></div>
+      </div>
+    </div>
+
+    <div class="btn">
+      <div class="row">
+        <span class="offset-label">shift -1</span>
+        <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+        <div class="title shift-up-1"><span>Add</span><img src="../assets/survision-logo-2025.png" alt="Survision" style="height:14px"><span>Mobile LPR</span></div>
+      </div>
+    </div>
+
+    <div class="btn">
+      <div class="row">
+        <span class="offset-label">shift -2</span>
+        <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+        <div class="title shift-up-2"><span>Add</span><img src="../assets/survision-logo-2025.png" alt="Survision" style="height:14px"><span>Mobile LPR</span></div>
+      </div>
+    </div>
+
+    <div class="btn">
+      <div class="row">
+        <span class="offset-label">shift +1</span>
+        <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+        <div class="title shift-dn-1"><span>Add</span><img src="../assets/survision-logo-2025.png" alt="Survision" style="height:14px"><span>Mobile LPR</span></div>
+      </div>
+    </div>
+
+    <div class="btn">
+      <div class="row">
+        <span class="offset-label">shift +2</span>
+        <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+        <div class="title shift-dn-2"><span>Add</span><img src="../assets/survision-logo-2025.png" alt="Survision" style="height:14px"><span>Mobile LPR</span></div>
+      </div>
+    </div>
+
+    <div class="tag">Logo @ 12px</div>
+    <div class="btn">
+      <div class="row">
+        <span class="offset-label">shift 0</span>
+        <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+        <div class="title shift-0"><span>Add</span><img src="../assets/survision-logo-2025.png" alt="Survision" style="height:12px"><span>Mobile LPR</span></div>
+      </div>
+    </div>
+    <div class="btn">
+      <div class="row">
+        <span class="offset-label">shift -1</span>
+        <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+        <div class="title shift-up-1"><span>Add</span><img src="../assets/survision-logo-2025.png" alt="Survision" style="height:12px"><span>Mobile LPR</span></div>
+      </div>
+    </div>
+    <div class="btn">
+      <div class="row">
+        <span class="offset-label">shift -2</span>
+        <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+        <div class="title shift-up-2"><span>Add</span><img src="../assets/survision-logo-2025.png" alt="Survision" style="height:12px"><span>Mobile LPR</span></div>
+      </div>
+    </div>
+
+    <p class="hint" style="margin-top:24px">Tell me which logo size + shift combination reads as centered and I&rsquo;ll push to the live site (and restore &ldquo;Add&rdquo; to the title).</p>
+  </div>
+</body>
+</html>

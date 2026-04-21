@@ -111,8 +111,7 @@
           card.style.opacity='0';card.style.transform='translateX(-50%) translateY(12px)';
           sections.forEach(function(el){el.style.filter='none';el.style.pointerEvents='';el.style.userSelect='';el.style.opacity='1';});
           setTimeout(function(){card.remove();},500);
-          if(navBtn){navBtn.outerHTML='<button class="nav-user-btn" id="navLogout" style="font-size:13px;font-weight:500;color:#475569;padding:9px 16px;border:1.5px solid #e2e8f0;border-radius:8px;margin-left:8px;display:inline-flex;align-items:center;gap:8px;cursor:pointer;background:none;font-family:Inter,sans-serif">'+email.split('@')[0]+' <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg></button>';document.getElementById('navLogout').addEventListener('click',function(){localStorage.removeItem('scs_authed');localStorage.removeItem('scs_user');window.location.reload();});}
-          document.querySelectorAll('.dropdown a svg').forEach(function(svg){if(svg.innerHTML.indexOf('3 3 0 016 0')!==-1)svg.style.display='none';});
+          if(window.SCSNavAuth)window.SCSNavAuth.refresh();
         }else{
           errorEl.textContent='Invalid Sourcewell credentials. Please check your email and account number.';
           errorEl.style.display='block';
@@ -122,9 +121,10 @@
       if(oldOverlay)oldOverlay.style.display='none';
       var gc=document.querySelector('.gated-content');
       if(gc){gc.style.filter='none';gc.style.pointerEvents='';gc.style.userSelect='';gc.style.opacity='1';}
-      if(navBtn){navBtn.outerHTML='<button class="nav-user-btn" id="navLogout" style="font-size:13px;font-weight:500;color:#475569;padding:9px 16px;border:1.5px solid #e2e8f0;border-radius:8px;margin-left:8px;display:inline-flex;align-items:center;gap:8px;cursor:pointer;background:none;font-family:Inter,sans-serif">'+userEmail.split('@')[0]+' <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg></button>';document.getElementById('navLogout').addEventListener('click',function(){localStorage.removeItem('scs_authed');localStorage.removeItem('scs_user');window.location.reload();});}
+      // Nav swap handled by /assets/nav-auth.js
     }
   })();
   </script>
+<script src="../assets/nav-auth.js"></script>
 </body>
 </html>

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mobile LPR — inline logo preview</title>
+<link rel="stylesheet" href="scs-calculator.css">
+<style>
+  body { background: #FAFAF8; font-family: Inter, system-ui, sans-serif; padding: 40px; color: #1e293b; }
+  .wrap { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #64748b; margin-bottom: 12px; }
+  .card-shell { background: #fff; border: 1px solid rgba(0,0,0,0.08); border-radius: 16px; padding: 28px; }
+  .block-label { font-size: 14px; font-weight: 600; color: #1e293b; display: block; margin-bottom: 10px; }
+  .mock-card { background: #fff; border: 1px solid rgba(0,0,0,0.08); border-radius: 12px; padding: 18px; }
+  .mock-top { display: flex; align-items: center; gap: 12px; }
+  .mock-icon { width: 36px; height: 36px; border-radius: 10px; background: rgba(235, 91, 37, 0.12); color: #EB5B25; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .mock-title { font-family: 'DM Sans', Inter, system-ui, sans-serif; font-weight: 600; font-size: 16px; color: #1e293b; display: inline-flex; align-items: center; gap: 6px; }
+  .mock-title img { height: 14px; width: auto; }
+
+  .size-row { display: flex; gap: 24px; margin-top: 14px; align-items: center; }
+  .size-tag { font-size: 11px; color: #94a3b8; min-width: 60px; }
+</style>
+</head>
+<body>
+  <h1 style="font-family: 'DM Sans', sans-serif; font-weight: 300; letter-spacing: -0.02em; margin-bottom: 8px;">Mobile LPR — inline logo in title</h1>
+  <p style="color:#64748b; margin-bottom: 32px;">Logo moves into the button title between "Add" and "Mobile LPR". Descriptor line is removed.</p>
+
+  <div class="wrap">
+    <div>
+      <div class="label">Current</div>
+      <div class="card-shell">
+        <span class="block-label">Mobile LPR Options</span>
+        <div class="mock-card">
+          <div class="mock-top">
+            <div class="mock-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+            <div class="mock-title"><span>Add Mobile LPR</span></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:4px;margin-top:8px;color:#64748b;font-size:14px"><img src="../assets/survision-logo-2025.png" alt="Survision" style="height:12px;width:auto"><span style="font-size:14px;line-height:14px">mobile LPR cameras</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="label">Proposed</div>
+      <div class="card-shell">
+        <span class="block-label">Mobile LPR Options</span>
+        <div class="mock-card">
+          <div class="mock-top">
+            <div class="mock-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+            <div class="mock-title"><span>Add</span><img src="../assets/survision-logo-2025.png" alt="Survision"><span>Mobile LPR</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width: 1100px; margin: 32px auto 0;">
+    <div class="label">Inline logo height options (title text stays at 16px)</div>
+    <div class="card-shell">
+      <div class="size-row">
+        <span class="size-tag">12px</span>
+        <div class="mock-title"><span>Add</span><img src="../assets/survision-logo-2025.png" alt="Survision" style="height:12px"><span>Mobile LPR</span></div>
+      </div>
+      <div class="size-row">
+        <span class="size-tag">14px</span>
+        <div class="mock-title"><span>Add</span><img src="../assets/survision-logo-2025.png" alt="Survision" style="height:14px"><span>Mobile LPR</span></div>
+      </div>
+      <div class="size-row">
+        <span class="size-tag">16px</span>
+        <div class="mock-title"><span>Add</span><img src="../assets/survision-logo-2025.png" alt="Survision" style="height:16px"><span>Mobile LPR</span></div>
+      </div>
+      <div class="size-row">
+        <span class="size-tag">18px</span>
+        <div class="mock-title"><span>Add</span><img src="../assets/survision-logo-2025.png" alt="Survision" style="height:18px"><span>Mobile LPR</span></div>
+      </div>
+      <div class="size-row">
+        <span class="size-tag">20px</span>
+        <div class="mock-title"><span>Add</span><img src="../assets/survision-logo-2025.png" alt="Survision" style="height:20px"><span>Mobile LPR</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width: 1100px; margin: 32px auto 0; font-size: 13px; color: #64748b; line-height: 1.6;">
+    <strong style="color:#1e293b;">Markup change</strong><br>
+    <pre style="background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:8px;padding:16px;overflow:auto;color:#1e293b;font-size:12px">&lt;div class="mlpr-card-header" id="mlprToggle"&gt;
+  &lt;div class="entity-card-top"&gt;
+    &lt;div class="toggle-card-icon orange"&gt;&lt;svg .../&gt;&lt;/div&gt;
+    &lt;div class="toggle-card-title" style="display:inline-flex;align-items:center;gap:6px"&gt;
+      &lt;span&gt;Add&lt;/span&gt;
+      &lt;img src="../assets/survision-logo-2025.png" alt="Survision" style="height:14px;width:auto"&gt;
+      &lt;span&gt;Mobile LPR&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- toggle-card-desc removed entirely --&gt;
+&lt;/div&gt;</pre>
+  </div>
+</body>
+</html>
