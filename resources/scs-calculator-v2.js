@@ -13,8 +13,8 @@
 
   // Higher Education tier table (XLSX source of truth)
   const HE_TIERS = {
-    k12:     { label: 'K-12',      popLabel: 'any student body',   base:  24000, installPct: 0.45, sizeBucket: 'small', sourcewellEligible: false },
-    x_small: { label: 'X-Small',   popLabel: 'up to 5,000',        base:  36000, installPct: 0.50, sizeBucket: 'small', sourcewellEligible: false },
+    k12:     { label: 'K-12',      popLabel: 'any student body',   base:  24000, installPct: 0.45, sizeBucket: 'small', sourcewellEligible: true  },
+    x_small: { label: 'X-Small',   popLabel: 'up to 5,000',        base:  36000, installPct: 0.50, sizeBucket: 'small', sourcewellEligible: true  },
     small:   { label: 'Small',     popLabel: '5,001 – 10,000',     base:  60000, installPct: 0.55, sizeBucket: 'small', sourcewellEligible: true  },
     medium:  { label: 'Medium',    popLabel: '10,001 – 20,000',    base:  72000, installPct: 0.65, sizeBucket: 'small', sourcewellEligible: true  },
     large:   { label: 'Large',     popLabel: '20,001 – 30,000',    base: 125000, installPct: 0.70, sizeBucket: 'large', sourcewellEligible: true  },
@@ -305,8 +305,7 @@
     const integrationSum = integrationCosts.reduce((a,b) => a + b.subtotal, 0);
     const integrationLift = tier.base + integrationSum;
 
-    // Sourcewell 10% applies to all eligible tiers (Small and above).
-    // K-12 and X-Small are excluded.
+    // Sourcewell 10% applies to all HE tiers.
     const sourcewellApplies = !!tier.sourcewellEligible;
     const discount = sourcewellApplies ? SOURCEWELL_DISCOUNT : 0;
     const saasFull = integrationLift * (1 - discount);
@@ -367,7 +366,7 @@
       const subYr1Gross = monthlyRate * cameras * monthsForYr1;
       const subAnnualGross = monthlyRate * cameras * 12;
 
-      // Sourcewell 10% applies to the SUBSCRIPTION when the SaaS tier is eligible (Small+).
+      // Sourcewell 10% applies to the SUBSCRIPTION when the SaaS tier is eligible.
       // Hardware already carries its own MSRP-vs-Customer discount (~19.2%).
       const sourcewellApplies = !!(softwareCalc && softwareCalc.sourcewellApplies);
       const subDiscount = sourcewellApplies ? subYr1Gross * SOURCEWELL_DISCOUNT : 0;
@@ -576,13 +575,6 @@
 
     // 5b. Show / hide camera count + add-ons (only if FLPR enabled + tier selected)
     updateConditionalSections();
-
-    // 6. Size eligibility constraint note (K-12 / X-Small don't get Sourcewell discount)
-    const note = $('#sizeConstraintNote');
-    if (note) {
-      const t = HE_TIERS[state.size];
-      note.style.display = (t && !t.sourcewellEligible) ? 'block' : 'none';
-    }
 
     // 7. Software summary
     renderSoftwareSummary();
