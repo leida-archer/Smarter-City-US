@@ -76,8 +76,8 @@
 
   // Hardware — prices carried over from existing catalog
   const HARDWARE = {
-    tablet:      { label: 'Handheld Enforcement Tablet',   price: 4050 },
-    lprHandheld: { label: 'Handheld LPR Citation Device',  price: 2160 },
+    tablet:      { label: 'Rugged Handheld Enforcement Tablet',           price: 4050 },
+    lprHandheld: { label: 'Standard Handheld LPR Citation Writing Device', price: 2160 },
     printer:     { label: 'Wireless Printer',              price:  675 },
   };
 
@@ -551,11 +551,7 @@
 
   // ── Render Functions ─────────────────────────────
   function render() {
-    // 1. Next button enablement for entity slide
-    const nextEntityBtn = $('#slide-entity .btn-slide-next');
-    if (nextEntityBtn) nextEntityBtn.disabled = !state.entity;
-
-    // 2. Selected states for entity cards
+    // Selected states for entity cards (slide 1 auto-advances on click; no Next button)
     $$('.big-choice-card[data-entity]').forEach(btn => {
       btn.classList.toggle('selected', btn.dataset.entity === state.entity);
       btn.setAttribute('aria-pressed', btn.dataset.entity === state.entity ? 'true' : 'false');
@@ -775,7 +771,7 @@
       const tierHeader = mv.model === 'capex'
         ? 'CapEx · Full Kit'
         : `HaaS · ${mv.kit === 'mini' ? 'Mini Kit' : 'Full Kit'}`;
-      lines.push(`<div class="summary-group-label">Mobile LPR (Survision) &middot; ${tierHeader}</div>`);
+      lines.push(`<div class="summary-group-label">Mobile LPR &middot; ${tierHeader}</div>`);
       if (mv.model === 'capex') {
         lines.push(
           `<div class="summary-line"><span class="summary-line-label">Vehicle hardware &times; ${mv.vehicles} <span class="summary-line-sub">(one-time)</span></span><span class="summary-line-value">${fmtUSD(mv.hardware)}</span></div>`
@@ -801,7 +797,7 @@
 
     if (hasFLPR) {
       const m = hw.flpr;
-      lines.push('<div class="summary-group-label">Fixed LPR (Survision)</div>');
+      lines.push('<div class="summary-group-label">Fixed LPR</div>');
       lines.push(
         `<div class="summary-line"><span class="summary-line-label">Camera hardware &times; ${m.cameras} <span class="summary-line-sub">(one-time)</span></span><span class="summary-line-value">${fmtUSD(m.hwTotal)}</span></div>`
       );
@@ -1321,12 +1317,14 @@
 
   // ── Event Wiring ─────────────────────────────────
   function wireEvents() {
-    // Slide 1: Entity cards
+    // Slide 1: Entity cards — picking an entity auto-advances to slide 2
+    // so the user doesn't have to scroll up to find the Next button.
     $$('.big-choice-card[data-entity]').forEach(btn => {
       btn.addEventListener('click', () => {
         if (btn.classList.contains('disabled') || btn.disabled) return;
         state.entity = btn.dataset.entity;
         render();
+        if (state.currentStep === 1) goToStep(2);
       });
     });
 
