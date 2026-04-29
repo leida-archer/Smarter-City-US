@@ -31,11 +31,28 @@
     return null;
   }
 
+  // Hide the Resources dropdown for unauthenticated visitors. The Resources
+  // surface (Pricing, Sales Deck, Newsletter, Library, Blog, Webinars, Tier
+  // Sheets, Case Studies) is members-only — see resources-gate.js for the
+  // page-level overlay that catches direct URL access.
+  function gateResourcesNav() {
+    var items = document.querySelectorAll('.nav-item.has-dropdown');
+    for (var i = 0; i < items.length; i++) {
+      var anchor = items[i].querySelector('a[href*="resources/"]');
+      if (anchor) {
+        items[i].style.display = 'none';
+      }
+    }
+  }
+
   function init() {
     var isAuthed = localStorage.getItem('scs_authed') === 'true';
     console.log('[nav-auth] loaded, authed=', isAuthed);
 
-    if (!isAuthed) return;
+    if (!isAuthed) {
+      gateResourcesNav();
+      return;
+    }
 
     var btn = findNavButton();
     if (!btn) {
