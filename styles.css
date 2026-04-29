@@ -225,6 +225,28 @@ section { position: relative; }
 }
 .nav-cta:hover { background: var(--mid-teal); color: #fff !important; transform: translateY(-1px); }
 
+/* Customer Login — secondary text button paired with the prominent
+   Sourcewell members button. Sourcewell is the primary path
+   (members-only pricing); customer login is for everyone else. */
+.nav-customer-login {
+  display: inline-flex;
+  align-items: center;
+  height: 38px;
+  padding: 0 14px;
+  margin-right: 4px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--gray);
+  border-radius: 8px;
+  transition: color 0.2s, background 0.2s;
+  text-decoration: none;
+}
+.nav-customer-login:hover {
+  color: var(--dark-teal);
+  background: rgba(21,98,108,0.04);
+}
+
 /* Hamburger */
 .hamburger {
   display: none;
