@@ -551,11 +551,7 @@
 
   // ── Render Functions ─────────────────────────────
   function render() {
-    // 1. Next button enablement for entity slide
-    const nextEntityBtn = $('#slide-entity .btn-slide-next');
-    if (nextEntityBtn) nextEntityBtn.disabled = !state.entity;
-
-    // 2. Selected states for entity cards
+    // Selected states for entity cards (slide 1 auto-advances on click; no Next button)
     $$('.big-choice-card[data-entity]').forEach(btn => {
       btn.classList.toggle('selected', btn.dataset.entity === state.entity);
       btn.setAttribute('aria-pressed', btn.dataset.entity === state.entity ? 'true' : 'false');
@@ -1321,12 +1317,14 @@
 
   // ── Event Wiring ─────────────────────────────────
   function wireEvents() {
-    // Slide 1: Entity cards
+    // Slide 1: Entity cards — picking an entity auto-advances to slide 2
+    // so the user doesn't have to scroll up to find the Next button.
     $$('.big-choice-card[data-entity]').forEach(btn => {
       btn.addEventListener('click', () => {
         if (btn.classList.contains('disabled') || btn.disabled) return;
         state.entity = btn.dataset.entity;
         render();
+        if (state.currentStep === 1) goToStep(2);
       });
     });
 
