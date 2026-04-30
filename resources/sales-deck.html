@@ -53,38 +53,17 @@
   </section>
   <div style="height:1px;background:rgba(0,0,0,0.08);margin:0;"></div>
 
-  <!-- ═══ Gated Content Area ══════════════════════ -->
-  <div id="gatedArea" style="position:relative;min-height:480px;">
-    <div id="gatedWrapper">
-      <section class="features-section">
-        <div class="container">
-          <div style="text-align:center; padding: 60px 0">
-            <div style="display:inline-block; background:#fff; border:1px solid rgba(0,0,0,0.1); border-radius:12px; padding:48px 96px; box-shadow:0 12px 32px rgba(0,0,0,0.06)">
-              <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#2C7480" stroke-width="1.5" style="margin-bottom:24px"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-              <h3 style="margin:0 0 8px 0">SCS_Sales_Deck_2026.pdf</h3>
-              <p style="color:var(--gray); margin:0">42 pages &middot; 8.4 MB</p>
-            </div>
-          </div>
+  <section class="features-section">
+    <div class="container">
+      <div style="text-align:center; padding: 60px 0">
+        <div style="display:inline-block; background:#fff; border:1px solid rgba(0,0,0,0.1); border-radius:12px; padding:48px 96px; box-shadow:0 12px 32px rgba(0,0,0,0.06)">
+          <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#2C7480" stroke-width="1.5" style="margin-bottom:24px"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          <h3 style="margin:0 0 8px 0">SCS_Sales_Deck_2026.pdf</h3>
+          <p style="color:var(--gray); margin:0">42 pages &middot; 8.4 MB</p>
         </div>
-      </section>
-    </div><!-- /gatedWrapper -->
-
-    <!-- Gating Overlay — sits on top of blurred wrapper only -->
-    <div id="gatedOverlay" style="display:none;position:absolute;top:0;left:0;right:0;z-index:100;pointer-events:none;padding-top:48px">
-      <div id="gatedCard" style="pointer-events:all;margin:0 auto;background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:20px;padding:48px 56px;max-width:520px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,0.12)">
-        <img src="../assets/sourcewell-logo.png" alt="Sourcewell" style="height:32px;width:auto;margin-bottom:16px">
-        <h3 style="margin-bottom:8px;font-family:'DM Sans',sans-serif;font-size:22px;font-weight:600;color:var(--dark)">Member Sign-In</h3>
-        <p style="font-size:14px;color:var(--gray);margin-bottom:24px;line-height:1.6">Log in with your Sourcewell credentials to view the sales deck.</p>
-        <div id="gatedAuthError" style="background:rgba(212,27,36,0.06);border:1px solid rgba(212,27,36,0.15);border-radius:8px;padding:10px 14px;font-size:13px;color:#D41B24;margin-bottom:16px;display:none"></div>
-        <form id="gatedLoginForm" style="text-align:left">
-          <div style="margin-bottom:14px"><label style="display:block;font-size:13px;font-weight:600;color:#15626C;margin-bottom:6px;font-family:'DM Sans',sans-serif">Sourcewell Email</label><input type="text" id="gatedSwEmail" placeholder="Enter your Sourcewell email" required style="width:100%;padding:12px 16px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:15px;font-family:'Inter',sans-serif;outline:none;box-sizing:border-box"></div>
-          <div style="margin-bottom:18px"><label style="display:block;font-size:13px;font-weight:600;color:#15626C;margin-bottom:6px;font-family:'DM Sans',sans-serif">Sourcewell Account Number</label><input type="text" id="gatedSwAccount" placeholder="Enter your account number" required style="width:100%;padding:12px 16px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:15px;font-family:'Inter',sans-serif;outline:none;box-sizing:border-box"></div>
-          <button type="submit" class="btn-primary" style="width:100%;justify-content:center">Sign In</button>
-          <p style="font-size:12px;color:#94a3b8;text-align:center;margin-top:12px">Demo credentials: <code>demo</code> / <code>0000</code></p>
-        </form>
       </div>
     </div>
-  </div><!-- /gatedArea -->
+  </section>
 
   <footer class="footer">
     <div class="rainbow-bar"><div style="background:#15626C"></div><div style="background:#47BBE8"></div><div style="background:#429839"></div><div style="background:#88BF57"></div><div style="background:#F0AE25"></div><div style="background:#EB5B25"></div><div style="background:#D41B24"></div></div>
@@ -100,44 +79,6 @@
     </div>
   </footer>
   <script src="../script.js"></script>
-  <script>
-  (function(){
-    var overlay = document.getElementById('gatedOverlay');
-    var wrapper = document.getElementById('gatedWrapper');
-    if (!overlay || !wrapper) return;
-    var authed = localStorage.getItem('scs_authed') === 'true';
-    if (authed) {
-      overlay.style.display = 'none';
-      wrapper.style.filter = '';
-      wrapper.style.pointerEvents = '';
-      wrapper.style.userSelect = '';
-      return;
-    }
-    overlay.style.display = 'block';
-    wrapper.style.filter = 'blur(6px)';
-    wrapper.style.pointerEvents = 'none';
-    wrapper.style.userSelect = 'none';
-    var form = document.getElementById('gatedLoginForm');
-    var errorEl = document.getElementById('gatedAuthError');
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      var email = document.getElementById('gatedSwEmail').value.trim().toLowerCase();
-      var account = document.getElementById('gatedSwAccount').value.trim();
-      if (email === 'demo' && account === '0000') {
-        localStorage.setItem('scs_authed', 'true');
-        localStorage.setItem('scs_user', email);
-        overlay.style.display = 'none';
-        wrapper.style.filter = '';
-        wrapper.style.pointerEvents = '';
-        wrapper.style.userSelect = '';
-        if (window.SCSNavAuth && window.SCSNavAuth.refresh) window.SCSNavAuth.refresh();
-      } else {
-        errorEl.style.display = 'block';
-        errorEl.textContent = 'Invalid credentials. Try demo / 0000.';
-      }
-    });
-  })();
-  </script>
 <script src="../assets/nav-auth.js"></script>
 <script src="../assets/resources-gate.js"></script>
 </body>
