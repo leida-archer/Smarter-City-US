@@ -70,6 +70,7 @@
             <div class="form-group full"><label>Sourcewell Member Number</label><input type="text" name="sw_account" id="swAccount" placeholder="Enter your member number" required></div>
           </div>
           <button type="submit" class="form-submit" style="margin-top:18px">Log In</button>
+          <p style="font-size:12px;color:#94a3b8;text-align:center;margin-top:14px">Demo credentials: <code>demo</code> / <code>0000</code></p>
         </form>
       </div>
     </div>
@@ -89,6 +90,7 @@
     </div>
   </footer>
   <script src="../script.js"></script>
+<script src="../assets/nav-auth.js"></script>
   <script>
   (function() {
     'use strict';
@@ -98,8 +100,8 @@
       'demo': '0000'
     };
 
-    // If already logged in, redirect to homepage
-    if (localStorage.getItem('scs_authed') === 'true') {
+    // If already logged in (and TTL not expired), redirect to homepage
+    if (window.SCSAuth && window.SCSAuth.isAuthed()) {
       window.location.href = '../index.html';
       return;
     }
@@ -114,8 +116,7 @@
       if (!email || !account) return;
 
       if (SW_ACCOUNTS[email] && SW_ACCOUNTS[email] === account) {
-        localStorage.setItem('scs_authed', 'true');
-        localStorage.setItem('scs_user', email);
+        window.SCSAuth.login(email);
         window.location.href = '../index.html';
       } else {
         errorEl.textContent = 'Invalid Sourcewell credentials. Please check your email and account number.';
@@ -124,6 +125,5 @@
     });
   })();
   </script>
-<script src="../assets/nav-auth.js"></script>
 </body>
 </html>
