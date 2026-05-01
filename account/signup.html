@@ -151,6 +151,7 @@
     </div>
   </footer>
   <script src="../script.js"></script>
+<script src="../assets/nav-auth.js"></script>
   <script>
   (function() {
     'use strict';
@@ -187,8 +188,7 @@
       }
       accts[email] = { password: password, name: this.full_name.value };
       localStorage.setItem('scs_accounts', JSON.stringify(accts));
-      localStorage.setItem('scs_authed', 'true');
-      localStorage.setItem('scs_user', email);
+      window.SCSAuth.login(email);
       window.location.href = '../resources/pricing.html';
     });
 
@@ -209,12 +209,10 @@
         errorEl.style.display = 'block';
         return;
       }
-      localStorage.setItem('scs_authed', 'true');
-      localStorage.setItem('scs_user', email);
+      window.SCSAuth.login(email);
       window.location.href = '../resources/pricing.html';
     });
   })();
   </script>
-<script src="../assets/nav-auth.js"></script>
 </body>
 </html>

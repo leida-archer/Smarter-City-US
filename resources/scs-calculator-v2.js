@@ -1628,7 +1628,7 @@
     const wrapper = $('#gatedWrapper');
     if (!overlay || !wrapper) return;
 
-    const authed = localStorage.getItem('scs_authed') === 'true';
+    const authed = window.SCSAuth && window.SCSAuth.isAuthed();
     if (authed) {
       overlay.style.display = 'none';
       wrapper.style.filter = '';
@@ -1649,7 +1649,7 @@
       const email = ($('#gatedSwEmail').value || '').trim().toLowerCase();
       const account = ($('#gatedSwAccount').value || '').trim();
       if (email === 'demo' && account === '0000') {
-        localStorage.setItem('scs_authed', 'true');
+        window.SCSAuth.login(email);
         overlay.style.display = 'none';
         wrapper.style.filter = '';
         wrapper.style.pointerEvents = '';

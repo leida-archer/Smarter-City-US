@@ -1,18 +1,19 @@
 /* ============================================
    Resources Gate — block all Resources pages
-   behind sign-in. If localStorage.scs_authed !==
-   'true', a full-page overlay is injected with
-   two CTAs (Sourcewell Members / Customer Login)
-   and the underlying page is visually hidden.
-   Pages that already implement their own gating
-   (resources/pricing.html) should NOT include
-   this script.
+   behind sign-in. Calls window.SCSAuth.isAuthed()
+   (defined in assets/nav-auth.js) — if not authed
+   or TTL has expired, a full-page overlay is
+   injected with two CTAs (Sourcewell Members /
+   Customer Login) and the underlying page is
+   visually hidden. Pages that already implement
+   their own gating (resources/pricing.html)
+   should NOT include this script.
    ============================================ */
 (function () {
   'use strict';
 
   function init() {
-    if (localStorage.getItem('scs_authed') === 'true') return;
+    if (window.SCSAuth && window.SCSAuth.isAuthed()) return;
 
     // Determine relative paths (script may load from any depth under /resources/)
     var loginPath = '../account/sourcewell-login.html';

@@ -1,16 +1,41 @@
 /* ============================================
    Nav Auth — shared logged-in state for the
    Sourcewell Members navbar button across all
-   pages. If localStorage.scs_authed === 'true',
-   the Sourcewell logo <img> is swapped for
-   {username} + logout icon. No style overrides:
-   the existing .nav-cta class + page-level
-   inline styles carry the entire look, so the
-   button's size, color, and position stay
-   pixel-identical to the logged-out version.
+   pages. Also exposes the centralized SCSAuth
+   helper used by every page that gates content.
+   Auth state has a 7-day TTL (mimics a real
+   account session) — expired logins are
+   silently cleared on next isAuthed() check.
    ============================================ */
 (function () {
   'use strict';
+
+  // ── Centralized auth (TTL-bounded localStorage) ──
+  var TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
+
+  function login(email) {
+    localStorage.setItem('scs_authed', 'true');
+    localStorage.setItem('scs_user', email || '');
+    localStorage.setItem('scs_authed_at', String(Date.now()));
+  }
+
+  function logout() {
+    localStorage.removeItem('scs_authed');
+    localStorage.removeItem('scs_user');
+    localStorage.removeItem('scs_authed_at');
+  }
+
+  function isAuthed() {
+    if (localStorage.getItem('scs_authed') !== 'true') return false;
+    var loginAt = parseInt(localStorage.getItem('scs_authed_at') || '0', 10);
+    if (!loginAt || Date.now() - loginAt > TTL_MS) {
+      logout();
+      return false;
+    }
+    return true;
+  }
+
+  window.SCSAuth = { TTL_MS: TTL_MS, isAuthed: isAuthed, login: login, logout: logout };
 
   function escapeHTML(s) {
     return String(s).replace(/[&<>"']/g, function (ch) {
@@ -46,10 +71,10 @@
   }
 
   function init() {
-    var isAuthed = localStorage.getItem('scs_authed') === 'true';
-    console.log('[nav-auth] loaded, authed=', isAuthed);
+    var authed = isAuthed();
+    console.log('[nav-auth] loaded, authed=', authed);
 
-    if (!isAuthed) {
+    if (!authed) {
       gateResourcesNav();
       return;
     }
@@ -74,8 +99,7 @@
     btn.title = 'Sign out';
     btn.addEventListener('click', function (e) {
       e.preventDefault();
-      localStorage.removeItem('scs_authed');
-      localStorage.removeItem('scs_user');
+      logout();
       window.location.reload();
     });
 
