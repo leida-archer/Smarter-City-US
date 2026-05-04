@@ -263,41 +263,49 @@ section { position: relative; }
 .dot.orange { background: var(--orange); }
 .dot.amber { background: var(--amber); }
 
-/* Nav CTA */
+/* Nav CTA — Sourcewell Member Sign-In button.
+   Solid dark-teal default; "Sign in" text sits with its bounding-box bottom
+   flush against the bottom edge of the logo image. align-items: flex-end +
+   line-height: 1 makes the descender bottom of "g" align with the logo's
+   bottom edge. Logged-in state replaces innerHTML via nav-auth.js — the
+   alignment rules still work for the username + sign-out svg pair. */
 .nav-cta {
   display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  height: 42px;
-  padding: 0 16px;
-  background: rgba(21,98,108,0.06);
-  color: var(--dark-teal);
-  border: 1px solid rgba(21,98,108,0.18);
+  align-items: flex-end;
+  gap: 10px;
+  height: 44px;
+  padding: 0 20px 10px;
+  background: var(--dark-teal);
+  color: #fff;
+  border: 1px solid var(--dark-teal);
   border-radius: 10px;
   font-family: 'DM Sans', sans-serif;
-  font-weight: 600;
-  font-size: 14px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: -0.2px;
   text-decoration: none;
-  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.15s;
+  transition: background 0.2s, transform 0.15s;
   margin-left: 8px;
 }
 .nav-cta:hover {
-  background: var(--dark-teal);
-  border-color: var(--dark-teal);
-  color: #fff;
+  background: #0E4A52;
   transform: translateY(-1px);
 }
 .nav-cta img {
   height: 22px;
   width: auto;
   display: block;
-  transition: filter 0.2s;
+  filter: brightness(0) invert(1);
 }
-.nav-cta:hover img { filter: brightness(0) invert(1); }
 
-/* Customer Login — tertiary text link. Sourcewell members get gated pricing;
-   the customer login is the secondary path for everyone else. */
+/* Customer Login — HIDDEN FOR NOW. The page at /account/signup.html
+   still works by direct URL; only the UI entry point is suppressed.
+   To bring back: delete the `display: none` line below. */
 .nav-customer-login {
+  display: none;
+
+  /* Restore styling (kept here so re-enabling is one-line):
   display: inline-flex;
   align-items: center;
   padding: 4px 6px;
@@ -307,7 +315,7 @@ section { position: relative; }
   font-size: 13px;
   color: var(--gray);
   text-decoration: none;
-  transition: color 0.2s;
+  transition: color 0.2s; */
 }
 .nav-customer-login:hover {
   color: var(--dark-teal);

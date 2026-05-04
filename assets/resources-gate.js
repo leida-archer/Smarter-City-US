@@ -3,9 +3,10 @@
    behind sign-in. Calls window.SCSAuth.isAuthed()
    (defined in assets/nav-auth.js) — if not authed
    or TTL has expired, a full-page overlay is
-   injected with one primary Sourcewell sign-in
-   CTA and a secondary Customer Login text link,
-   matching the unified hierarchy used in the nav.
+   injected with the Sourcewell Member Sign-In CTA.
+   The Customer Login path still exists at
+   /account/signup.html but its UI entry is hidden
+   for now (see .nav-customer-login in styles.css).
    Pages that already implement their own gating
    (resources/pricing.html) should NOT include
    this script.
@@ -18,7 +19,6 @@
 
     // Determine relative paths (script may load from any depth under /resources/)
     var loginPath = '../account/sourcewell-login.html';
-    var signupPath = '../account/signup.html';
     var sourcewellLogo = '../assets/sourcewell-logo.png';
 
     // Hide page content underneath the overlay
@@ -57,10 +57,6 @@
           'style="height:18px;width:auto;filter:brightness(0) invert(1)">' +
           'Sourcewell Member Sign-In' +
         '</a>' +
-        '<p style="margin:18px 0 0;font-size:13px;color:#94a3b8;text-align:center">' +
-          'Not a Sourcewell member? ' +
-          '<a href="' + signupPath + '" style="color:#475569;text-decoration:underline;font-weight:500">Customer Login</a>' +
-        '</p>' +
       '</div>';
 
     document.body.appendChild(overlay);
