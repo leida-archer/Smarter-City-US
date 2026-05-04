@@ -22,6 +22,7 @@
   </style>
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to main content</a>
 <nav class="navbar" id="navbar">
     <div class="container nav-inner">
       <a href="../index.html" class="nav-logo"><img src="../assets/scs-icon.png" alt="Smarter City Solutions"></a>
@@ -39,10 +40,11 @@
           </div>
         </div>
       </div>
-      <a href="../account/signup.html" class="nav-customer-login">Customer Login</a><a href="../account/sourcewell-login.html" class="nav-cta" style="padding:6px 12px;height:42px;display:inline-flex;align-items:center;background:rgba(21,98,108,0.06);border:1px solid rgba(21,98,108,0.18);border-radius:10px;margin-left:0"><img src="../assets/sourcewell-logo.png" alt="Sourcewell Members" style="height:26px;width:auto;display:block"></a>
+      <a href="../account/signup.html" class="nav-customer-login">Customer Login</a><a href="../account/sourcewell-login.html" class="nav-cta" title="Sign in for Sourcewell-member pricing"><img src="../assets/sourcewell-logo.png" alt=""><span>Sign in</span></a>
       <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
+<a id="main" tabindex="-1" aria-hidden="true"></a>
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-inner">
       <a href="../solutions/vpermit.html">vPermit</a><a href="../solutions/vcompliance.html">vCompliance</a><a href="../solutions/vpark.html">vPark</a><a href="../solutions/platform.html">The Platform</a>
@@ -54,11 +56,9 @@
   <section class="auth-page">
     <div class="container">
       <div class="auth-card reveal visible">
-        <div style="width:72px;height:72px;border-radius:50%;background:rgba(44,116,128,0.1);color:#2C7480;display:flex;align-items:center;justify-content:center;margin:0 auto 24px">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-        </div>
-        <h1>Sourcewell Member Access</h1>
-        <p class="auth-sub">Log in with your Sourcewell credentials to access pricing, tier sheets, sales materials, and full case studies.</p>
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#15626C" stroke-width="2" style="display:block;margin:0 auto 20px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        <h1>Sourcewell Member Sign-In</h1>
+        <p class="auth-sub">Sign in with your Sourcewell credentials to access pricing, tier sheets, sales materials, and full case studies.</p>
 
         <div class="auth-error" id="authError"></div>
 
@@ -69,9 +69,12 @@
           <div class="form-row">
             <div class="form-group full"><label>Sourcewell Member Number</label><input type="text" name="sw_account" id="swAccount" placeholder="Enter your member number" required></div>
           </div>
-          <button type="submit" class="form-submit" style="margin-top:18px">Log In</button>
+          <button type="submit" class="form-submit" style="margin-top:18px">Sign In</button>
           <p style="font-size:12px;color:#94a3b8;text-align:center;margin-top:14px">Demo credentials: <code>demo</code> / <code>0000</code></p>
         </form>
+        <p style="font-size:13px;color:#94a3b8;text-align:center;margin-top:24px;padding-top:20px;border-top:1px solid rgba(0,0,0,0.06)">
+          Not a Sourcewell member? <a href="signup.html" style="color:#475569;text-decoration:underline;font-weight:500">Customer Login &rarr;</a>
+        </p>
       </div>
     </div>
   </section>

@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to main content</a>
 <nav class="navbar" id="navbar">
     <div class="container nav-inner">
       <a href="../index.html" class="nav-logo"><img src="../assets/scs-icon.png" alt="Smarter City Solutions"></a>
@@ -27,10 +28,11 @@
           </div>
         </div>
       </div>
-      <a href="../account/signup.html" class="nav-customer-login">Customer Login</a><a href="../account/sourcewell-login.html" class="nav-cta" style="padding:6px 12px;height:42px;display:inline-flex;align-items:center;background:rgba(21,98,108,0.06);border:1px solid rgba(21,98,108,0.18);border-radius:10px;margin-left:0"><img src="../assets/sourcewell-logo.png" alt="Sourcewell Members" style="height:26px;width:auto;display:block"></a>
+      <a href="../account/signup.html" class="nav-customer-login">Customer Login</a><a href="../account/sourcewell-login.html" class="nav-cta" title="Sign in for Sourcewell-member pricing"><img src="../assets/sourcewell-logo.png" alt=""><span>Sign in</span></a>
       <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
+<a id="main" tabindex="-1" aria-hidden="true"></a>
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-inner">
       <a href="../solutions/vpermit.html">vPermit</a><a href="../solutions/vcompliance.html">vCompliance</a><a href="../solutions/vpark.html">vPark</a><a href="../solutions/platform.html">The Platform</a>
@@ -47,7 +49,7 @@
     <div class="container">
       <div class="page-hero-inner reveal">
         <h1>Campus Parking &amp; Security for High Schools and K-12 Districts</h1>
-        <p>Know exactly who's on campus. Manage staff permits, parent drop-off zones, and student vehicle accountability — all from one platform.</p>
+        <p>Know exactly who’s on campus. Manage staff permits, parent drop-off zones, and student vehicle accountability — all from one platform.</p>
         <a href="../contact/request-demo.html" class="btn-primary">Contact Us <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
     </div>
@@ -59,7 +61,7 @@
       <div class="features-grid" style="grid-template-columns: repeat(2, 1fr)">
         <div class="feature-card reveal"><h4>Staff Permits</h4><p>Managing permits across multiple school sites with different lot configurations and staff rosters.</p></div>
         <div class="feature-card reveal"><h4>Parent Drop-Off Zones</h4><p>Keeping pick-up and drop-off zones clear during peak times and managing violations fairly.</p></div>
-        <div class="feature-card reveal"><h4>Knowing Who's on Campus</h4><p>Visitor identification, student vehicle registration, and real-time LPR awareness so administrators know which vehicles are on school grounds at any moment.</p></div>
+        <div class="feature-card reveal"><h4>Knowing Who’s on Campus</h4><p>Visitor identification, student vehicle registration, and real-time LPR awareness so administrators know which vehicles are on school grounds at any moment.</p></div>
         <div class="feature-card reveal"><h4>Limited Budgets</h4><p>School districts need maximum functionality at minimum cost, with no ongoing infrastructure investment.</p></div>
       </div>
     </div>
@@ -79,9 +81,9 @@
   <section class="cta-section">
     <div class="container-wide">
       <div class="cta-grid">
-        <div class="cta-content reveal"><h2>Parking doesn't have to be complicated</h2><p>See how SCS makes parking management simple and affordable for K-12 school districts.</p></div>
+        <div class="cta-content reveal"><h2>Parking doesn’t have to be complicated</h2><p>See how SCS makes parking management simple and affordable for K-12 school districts.</p></div>
         <div class="cta-form-card reveal reveal-delay-2">
-          <h3>Contact Us</h3><p>We'll respond within one business day.</p>
+          <h3>Contact Us</h3><p>We’ll respond within one business day.</p>
           <form method="POST" action="/api/submit">
             <input type="hidden" name="form_name" value="Demo Request - K-12">
             <div class="form-row"><div class="form-group"><label>Full Name</label><input type="text" name="full_name" placeholder="Jane Smith" required></div><div class="form-group"><label>Work Email</label><input type="email" name="email" placeholder="jane@district.edu" required></div></div>

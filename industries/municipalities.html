@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to main content</a>
 <nav class="navbar" id="navbar">
     <div class="container nav-inner">
       <a href="../index.html" class="nav-logo"><img src="../assets/scs-icon.png" alt="Smarter City Solutions"></a>
@@ -27,10 +28,11 @@
           </div>
         </div>
       </div>
-      <a href="../account/signup.html" class="nav-customer-login">Customer Login</a><a href="../account/sourcewell-login.html" class="nav-cta" style="padding:6px 12px;height:42px;display:inline-flex;align-items:center;background:rgba(21,98,108,0.06);border:1px solid rgba(21,98,108,0.18);border-radius:10px;margin-left:0"><img src="../assets/sourcewell-logo.png" alt="Sourcewell Members" style="height:26px;width:auto;display:block"></a>
+      <a href="../account/signup.html" class="nav-customer-login">Customer Login</a><a href="../account/sourcewell-login.html" class="nav-cta" title="Sign in for Sourcewell-member pricing"><img src="../assets/sourcewell-logo.png" alt=""><span>Sign in</span></a>
       <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
+<a id="main" tabindex="-1" aria-hidden="true"></a>
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-inner">
       <a href="../solutions/vpermit.html">vPermit</a><a href="../solutions/vcompliance.html">vCompliance</a><a href="../solutions/vpark.html">vPark</a><a href="../solutions/platform.html">The Platform</a>
@@ -49,7 +51,7 @@
         <div class="page-hero-inner reveal">
           <h1>Smart Parking for Modern Cities</h1>
           <p>Replace aging meters, reduce congestion, and improve citizen satisfaction with a mobile-first parking platform.</p>
-          <a href="../contact/request-demo.html" class="btn-primary">Let's Talk <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a href="../contact/request-demo.html" class="btn-primary">Let’s Talk <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
         <div class="page-hero-illustration reveal reveal-delay-2">
           <img src="../assets/scs_landing_v13a.png" alt="Municipal parking">
@@ -120,11 +122,11 @@
             Imagine a New England university town with residents-only blocks ringing the campus &mdash; quiet streets that fill up every weekday morning with student spillover. Today, the city issues paper hangtags, fields constant complaints, and sends officers out with chalk. Enforcement is reactive and uneven, residents are frustrated, and contractor visits turn into citation appeals.
           </p>
           <p style="font-size: 17px; line-height: 1.75; color: var(--gray); margin-bottom: 0;">
-            With SCS, the same city issues virtual permits tied to license plates, lets residents grant guest passes from their phones, and runs LPR patrols that distinguish residents from non-residents in real time. Contractors get time-windowed access. Students get a clear signal not to park there. And the city's parking team stops chasing paper.
+            With SCS, the same city issues virtual permits tied to license plates, lets residents grant guest passes from their phones, and runs LPR patrols that distinguish residents from non-residents in real time. Contractors get time-windowed access. Students get a clear signal not to park there. And the city’s parking team stops chasing paper.
           </p>
         </div>
         <div style="background:#fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 16px; padding: 32px;">
-          <h4 style="margin: 0 0 20px 0; font-size: 18px; color: var(--dark-teal);">What's included</h4>
+          <h4 style="margin: 0 0 20px 0; font-size: 18px; color: var(--dark-teal);">What’s included</h4>
           <ul style="list-style: none; padding: 0; margin: 0;">
             <li style="display:flex; gap:12px; align-items:flex-start; padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2C7480" stroke-width="2.5" style="flex-shrink:0;margin-top:3px"><polyline points="20 6 9 17 4 12"/></svg>
@@ -161,15 +163,15 @@
     <div class="container-wide">
       <div class="cta-grid">
         <div class="cta-content reveal">
-          <h2>Let's open the conversation about your city</h2>
-          <p>Every municipality is different. Tell us how parking works in your city today &mdash; we'll share what we've learned from cities like yours and explore where SCS might fit. No pitch deck required.</p>
+          <h2>Let’s open the conversation about your city</h2>
+          <p>Every municipality is different. Tell us how parking works in your city today &mdash; we’ll share what we’ve learned from cities like yours and explore where SCS might fit. No pitch deck required.</p>
         </div>
         <div class="cta-form-card reveal reveal-delay-2">
-          <h3>Start a Conversation</h3><p>We'll respond within one business day.</p>
+          <h3>Start a Conversation</h3><p>We’ll respond within one business day.</p>
           <form method="POST" action="/api/submit">
             <input type="hidden" name="form_name" value="Demo Request - Municipalities">
             <div class="form-row"><div class="form-group"><label>Full Name</label><input type="text" name="full_name" placeholder="Jane Smith" required></div><div class="form-group"><label>Work Email</label><input type="email" name="email" placeholder="jane@city.gov" required></div></div>
-            <div class="form-row"><div class="form-group"><label>Municipality</label><input type="text" name="institution" placeholder="City of..." required></div><div class="form-group"><label>Title / Role</label><input type="text" name="title_role" placeholder="Director of Transportation"></div></div>
+            <div class="form-row"><div class="form-group"><label>Municipality</label><input type="text" name="institution" placeholder="City of…" required></div><div class="form-group"><label>Title / Role</label><input type="text" name="title_role" placeholder="Director of Transportation"></div></div>
             <button type="submit" class="form-submit">Get Started</button>
           </form>
         </div>
