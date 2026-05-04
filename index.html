@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to main content</a>
 <!-- ═══ Sticky Navigation ════════════════════════ -->
   <nav class="navbar" id="navbar">
     <div class="container nav-inner">
@@ -60,12 +61,13 @@
           </div>
         </div>
       </div>
-      <a href="account/signup.html" class="nav-customer-login">Customer Login</a><a href="account/sourcewell-login.html" class="nav-cta" style="padding:6px 12px;height:42px;display:inline-flex;align-items:center;background:rgba(21,98,108,0.06);border:1px solid rgba(21,98,108,0.18);border-radius:10px;margin-left:0"><img src="assets/sourcewell-logo.png" alt="Sourcewell Members" style="height:26px;width:auto;display:block"></a>
+      <a href="account/signup.html" class="nav-customer-login">Customer Login</a><a href="account/sourcewell-login.html" class="nav-cta" title="Sign in for Sourcewell-member pricing"><img src="assets/sourcewell-logo.png" alt=""><span>Sign in</span></a>
       <button class="hamburger" id="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
     </div>
   </nav>
+<a id="main" tabindex="-1" aria-hidden="true"></a>
 
   <!-- ═══ Mobile Menu Overlay ══════════════════════ -->
   <div class="mobile-menu" id="mobileMenu">
@@ -279,7 +281,7 @@
         <div class="logo-track">
           <div class="client-logo"><img src="assets/logos/university/harvard-university.png" alt="Harvard University"></div>
           <div class="client-logo"><img src="assets/logos/university/princeton-university.png" alt="Princeton University"></div>
-          <div class="client-logo"><img src="assets/logos/university/st-edwards-university.png" alt="St. Edward's University"></div>
+          <div class="client-logo"><img src="assets/logos/university/st-edwards-university.png" alt="St. Edward’s University"></div>
           <div class="client-logo"><img src="assets/logos/university/chapman-university.png" alt="Chapman University"></div>
           <div class="client-logo"><img src="assets/logos/university/seton-hall-university.png" alt="Seton Hall University"></div>
           <div class="client-logo"><img src="assets/logos/university/university-of-san-diego.png" alt="University of San Diego"></div>
@@ -288,7 +290,7 @@
           <!-- Duplicate for seamless loop -->
           <div class="client-logo"><img src="assets/logos/university/harvard-university.png" alt="Harvard University"></div>
           <div class="client-logo"><img src="assets/logos/university/princeton-university.png" alt="Princeton University"></div>
-          <div class="client-logo"><img src="assets/logos/university/st-edwards-university.png" alt="St. Edward's University"></div>
+          <div class="client-logo"><img src="assets/logos/university/st-edwards-university.png" alt="St. Edward’s University"></div>
           <div class="client-logo"><img src="assets/logos/university/chapman-university.png" alt="Chapman University"></div>
           <div class="client-logo"><img src="assets/logos/university/seton-hall-university.png" alt="Seton Hall University"></div>
           <div class="client-logo"><img src="assets/logos/university/university-of-san-diego.png" alt="University of San Diego"></div>
@@ -360,7 +362,7 @@
       <div class="switching-grid">
         <div class="switching-content reveal">
           <h2>Replacing your legacy system?<br>Switching is easier than you think.</h2>
-          <p>We've helped universities migrate from legacy on-premise systems &mdash; with hands-on support, zero disruption to operations, and transparent, all-inclusive pricing with no hidden fees.</p>
+          <p>We’ve helped universities migrate from legacy on-premise systems &mdash; with hands-on support, zero disruption to operations, and transparent, all-inclusive pricing with no hidden fees.</p>
           <a href="contact/request-demo.html" class="btn-primary">Talk to Our Team &rarr;</a>
         </div>
         <div class="reveal reveal-delay-2">
@@ -415,13 +417,13 @@
             <div class="testimonial-avatar" style="background:linear-gradient(135deg,#4DAE37,#88BF57)">DY</div>
             <div>
               <div class="testimonial-card-name">Don Yarosevit</div>
-              <div class="testimonial-card-role">St. Edward's University</div>
+              <div class="testimonial-card-role">St. Edward’s University</div>
             </div>
           </div>
         </div>
 
         <div class="testimonial-card reveal reveal-delay-2">
-          <blockquote>"The team approaches simple to understand and use interfaces that significantly reduce the burden. We're excited for the future and look forward to our continued partnership with Smarter City Solutions."</blockquote>
+          <blockquote>"The team approaches simple to understand and use interfaces that significantly reduce the burden. We’re excited for the future and look forward to our continued partnership with Smarter City Solutions."</blockquote>
           <div class="testimonial-card-author">
             <div class="testimonial-avatar" style="background:linear-gradient(135deg,#3194B6,#47BBE8)">SG</div>
             <div>
@@ -432,7 +434,7 @@
         </div>
 
         <div class="testimonial-card reveal reveal-delay-3">
-          <blockquote>"Our Parking Team's productivity increased exponentially with vCompliance, and the response from the community has been overwhelmingly positive. Smarter Cities industry leading solutions have added value to every aspect."</blockquote>
+          <blockquote>"Our Parking Team’s productivity increased exponentially with vCompliance, and the response from the community has been overwhelmingly positive. Smarter Cities industry leading solutions have added value to every aspect."</blockquote>
           <div class="testimonial-card-author">
             <div class="testimonial-avatar" style="background:linear-gradient(135deg,#EB5B25,#F0AE25)">SB</div>
             <div>
@@ -501,12 +503,12 @@
     <div class="container-wide">
       <div class="cta-grid">
         <div class="cta-content reveal">
-          <h2>Let's brainstorm your parking operation</h2>
-          <p>Spend 30 minutes with our team. We'll learn about your campus, share what we've seen work elsewhere, and walk through the platform if it's relevant. No hard sell &mdash; just open dialogue between parking people.</p>
+          <h2>Let’s brainstorm your parking operation</h2>
+          <p>Spend 30 minutes with our team. We’ll learn about your campus, share what we’ve seen work elsewhere, and walk through the platform if it’s relevant. No hard sell &mdash; just open dialogue between parking people.</p>
         </div>
         <div class="cta-form-card reveal reveal-delay-2">
           <h3>Contact Us</h3>
-          <p>We'll respond within one business day. No spam, ever.</p>
+          <p>We’ll respond within one business day. No spam, ever.</p>
           <form method="POST" action="/api/submit">
             <input type="hidden" name="form_name" value="Demo Request">
             <div class="form-row">
@@ -522,7 +524,7 @@
             <div class="form-row">
               <div class="form-group">
                 <label>Institution</label>
-                <input type="text" name="institution" placeholder="University of..." required>
+                <input type="text" name="institution" placeholder="University of…" required>
               </div>
               <div class="form-group">
                 <label>Title / Role</label>
@@ -531,8 +533,8 @@
             </div>
             <div class="form-row">
               <div class="form-group full">
-                <label>What's your biggest parking challenge?</label>
-                <textarea name="challenge" rows="3" placeholder="Tell us about your current situation..."></textarea>
+                <label>What’s your biggest parking challenge?</label>
+                <textarea name="challenge" rows="3" placeholder="Tell us about your current situation…"></textarea>
               </div>
             </div>
             <button type="submit" class="form-submit">Get Started</button>

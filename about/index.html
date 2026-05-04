@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to main content</a>
 <nav class="navbar" id="navbar">
     <div class="container nav-inner">
       <a href="../index.html" class="nav-logo"><img src="../assets/scs-icon.png" alt="Smarter City Solutions"></a>
@@ -27,10 +28,11 @@
           </div>
         </div>
       </div>
-      <a href="../account/signup.html" class="nav-customer-login">Customer Login</a><a href="../account/sourcewell-login.html" class="nav-cta" style="padding:6px 12px;height:42px;display:inline-flex;align-items:center;background:rgba(21,98,108,0.06);border:1px solid rgba(21,98,108,0.18);border-radius:10px;margin-left:0"><img src="../assets/sourcewell-logo.png" alt="Sourcewell Members" style="height:26px;width:auto;display:block"></a>
+      <a href="../account/signup.html" class="nav-customer-login">Customer Login</a><a href="../account/sourcewell-login.html" class="nav-cta" title="Sign in for Sourcewell-member pricing"><img src="../assets/sourcewell-logo.png" alt=""><span>Sign in</span></a>
       <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
+<a id="main" tabindex="-1" aria-hidden="true"></a>
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-inner">
       <a href="../solutions/vpermit.html">vPermit</a><a href="../solutions/vcompliance.html">vCompliance</a><a href="../solutions/vpark.html">vPark</a><a href="../solutions/platform.html">The Platform</a>
@@ -58,7 +60,7 @@
       <div class="switching-grid">
         <div class="switching-content reveal">
           <h2>Our US journey</h2>
-          <p>Built on 15+ years of proven technology from across Australia and New Zealand, SCS came to the United States to do one thing: bring a fully integrated parking platform to American universities, cities, and corporate campuses. Here's how we got here &mdash; and where we're going next.</p>
+          <p>Built on 15+ years of proven technology from across Australia and New Zealand, SCS came to the United States to do one thing: bring a fully integrated parking platform to American universities, cities, and corporate campuses. Here’s how we got here &mdash; and where we’re going next.</p>
         </div>
         <div class="reveal reveal-delay-2">
           <div class="timeline">
@@ -66,7 +68,7 @@
               <div class="timeline-dot"></div>
               <div class="timeline-week">[YEAR]</div>
               <h4>First US deployment</h4>
-              <p>[PLACEHOLDER &mdash; first US customer name + the pilot story. Mike's framing: "we started small, with [SCHOOL NAME], and proved the model on a campus where every detail mattered."]</p>
+              <p>[PLACEHOLDER &mdash; first US customer name + the pilot story. Mike’s framing: "we started small, with [SCHOOL NAME], and proved the model on a campus where every detail mattered."]</p>
             </div>
             <div class="timeline-step">
               <div class="timeline-dot"></div>
@@ -83,7 +85,7 @@
             <div class="timeline-step">
               <div class="timeline-dot"></div>
               <div class="timeline-week">2026 onwards</div>
-              <h4>What's coming next</h4>
+              <h4>What’s coming next</h4>
               <p>[PLACEHOLDER &mdash; forward-looking roadmap teaser. Examples: AI-assisted appeals processing, residential permit programs for cities, the new Corporate Campus practice, and a gated resource library for prospects. Confirm with Jim before publishing.]</p>
             </div>
           </div>
@@ -97,7 +99,7 @@
     <div class="container">
       <div class="values-header reveal">
         <h2>Our approach: true partnership</h2>
-        <p>We're not just a software vendor. We're a hands-on partner invested in your success.</p>
+        <p>We’re not just a software vendor. We’re a hands-on partner invested in your success.</p>
       </div>
       <div class="values-grid">
         <div class="value-item reveal">
@@ -108,12 +110,12 @@
         <div class="value-item reveal">
           <div class="value-number">02</div>
           <h4>Open Architecture</h4>
-          <p>API-first design with 30+ integration partners. Your data is yours, your systems stay yours, and you're never locked in.</p>
+          <p>API-first design with 30+ integration partners. Your data is yours, your systems stay yours, and you’re never locked in.</p>
         </div>
         <div class="value-item reveal">
           <div class="value-number">03</div>
           <h4>On-Site Workshopping &amp; Go-Live</h4>
-          <p>On-site go-live is included with every deployment. We also accommodate on-site workshopping for discovery and configuration when your team needs face-to-face collaboration. We don't disappear after kickoff.</p>
+          <p>On-site go-live is included with every deployment. We also accommodate on-site workshopping for discovery and configuration when your team needs face-to-face collaboration. We don’t disappear after kickoff.</p>
         </div>
         <div class="value-item reveal">
           <div class="value-number">04</div>
@@ -140,14 +142,14 @@
       <div class="cta-grid">
         <div class="cta-content reveal">
           <h2>Get to know us</h2>
-          <p>We'd love to hear about your parking challenges and show you how SCS can help.</p>
+          <p>We’d love to hear about your parking challenges and show you how SCS can help.</p>
         </div>
         <div class="cta-form-card reveal reveal-delay-2">
-          <h3>Contact Us</h3><p>We'll respond within one business day.</p>
+          <h3>Contact Us</h3><p>We’ll respond within one business day.</p>
           <form method="POST" action="/api/submit">
             <input type="hidden" name="form_name" value="Contact - About">
             <div class="form-row"><div class="form-group"><label>Full Name</label><input type="text" name="full_name" placeholder="Jane Smith" required></div><div class="form-group"><label>Work Email</label><input type="email" name="email" placeholder="jane@university.edu" required></div></div>
-            <div class="form-row"><div class="form-group"><label>Institution</label><input type="text" name="institution" placeholder="University of..." required></div><div class="form-group"><label>Title / Role</label><input type="text" name="title_role" placeholder="Director of Parking"></div></div>
+            <div class="form-row"><div class="form-group"><label>Institution</label><input type="text" name="institution" placeholder="University of…" required></div><div class="form-group"><label>Title / Role</label><input type="text" name="title_role" placeholder="Director of Parking"></div></div>
             <button type="submit" class="form-submit">Get Started</button>
           </form>
         </div>

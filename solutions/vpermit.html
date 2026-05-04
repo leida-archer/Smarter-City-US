@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to main content</a>
 <nav class="navbar" id="navbar">
     <div class="container nav-inner">
       <a href="../index.html" class="nav-logo"><img src="../assets/scs-icon.png" alt="Smarter City Solutions"></a>
@@ -52,10 +53,11 @@
           </div>
         </div>
       </div>
-      <a href="../account/signup.html" class="nav-customer-login">Customer Login</a><a href="../account/sourcewell-login.html" class="nav-cta" style="padding:6px 12px;height:42px;display:inline-flex;align-items:center;background:rgba(21,98,108,0.06);border:1px solid rgba(21,98,108,0.18);border-radius:10px;margin-left:0"><img src="../assets/sourcewell-logo.png" alt="Sourcewell Members" style="height:26px;width:auto;display:block"></a>
+      <a href="../account/signup.html" class="nav-customer-login">Customer Login</a><a href="../account/sourcewell-login.html" class="nav-cta" title="Sign in for Sourcewell-member pricing"><img src="../assets/sourcewell-logo.png" alt=""><span>Sign in</span></a>
       <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
+<a id="main" tabindex="-1" aria-hidden="true"></a>
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-inner">
       <a href="../solutions/vpermit.html">vPermit</a>
@@ -180,7 +182,7 @@
       <div class="reveal">
         <blockquote>Working with Smarter City during our transition from our previous platform has been a breath of fresh air. They have worked with us to understand how we could adopt the way we have done things in the past to the way we will need to do them now.</blockquote>
         <div class="testimonial-author">Don Yarosevit</div>
-        <div class="testimonial-role">St. Edward's University</div>
+        <div class="testimonial-role">St. Edward’s University</div>
       </div>
     </div>
   </section>
@@ -217,11 +219,11 @@
       <div class="cta-grid">
         <div class="cta-content reveal">
           <h2>Walk us through your permit operation</h2>
-          <p>Tell us how permits work on your campus today &mdash; we'll share what we've seen work at other universities and walk through vPermit if it's relevant. No hard sell.</p>
+          <p>Tell us how permits work on your campus today &mdash; we’ll share what we’ve seen work at other universities and walk through vPermit if it’s relevant. No hard sell.</p>
         </div>
         <div class="cta-form-card reveal reveal-delay-2">
           <h3>Contact Us</h3>
-          <p>We'll respond within one business day.</p>
+          <p>We’ll respond within one business day.</p>
           <form method="POST" action="/api/submit">
             <input type="hidden" name="form_name" value="Demo Request - vPermit">
             <div class="form-row">
@@ -229,7 +231,7 @@
               <div class="form-group"><label>Work Email</label><input type="email" name="email" placeholder="jane@university.edu" required></div>
             </div>
             <div class="form-row">
-              <div class="form-group"><label>Institution</label><input type="text" name="institution" placeholder="University of..." required></div>
+              <div class="form-group"><label>Institution</label><input type="text" name="institution" placeholder="University of…" required></div>
               <div class="form-group"><label>Title / Role</label><input type="text" name="title_role" placeholder="Director of Parking"></div>
             </div>
             <button type="submit" class="form-submit">Get Started</button>

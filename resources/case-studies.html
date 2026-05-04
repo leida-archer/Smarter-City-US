@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to main content</a>
 <nav class="navbar" id="navbar">
     <div class="container nav-inner">
       <a href="../index.html" class="nav-logo"><img src="../assets/scs-icon.png" alt="Smarter City Solutions"></a>
@@ -27,10 +28,11 @@
           </div>
         </div>
       </div>
-      <a href="../account/signup.html" class="nav-customer-login">Customer Login</a><a href="../account/sourcewell-login.html" class="nav-cta" style="padding:6px 12px;height:42px;display:inline-flex;align-items:center;background:rgba(21,98,108,0.06);border:1px solid rgba(21,98,108,0.18);border-radius:10px;margin-left:0"><img src="../assets/sourcewell-logo.png" alt="Sourcewell Members" style="height:26px;width:auto;display:block"></a>
+      <a href="../account/signup.html" class="nav-customer-login">Customer Login</a><a href="../account/sourcewell-login.html" class="nav-cta" title="Sign in for Sourcewell-member pricing"><img src="../assets/sourcewell-logo.png" alt=""><span>Sign in</span></a>
       <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
+<a id="main" tabindex="-1" aria-hidden="true"></a>
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-inner">
       <a href="../solutions/vpermit.html">vPermit</a><a href="../solutions/vcompliance.html">vCompliance</a><a href="../solutions/vpark.html">vPark</a><a href="../solutions/platform.html">The Platform</a>
@@ -62,7 +64,7 @@
         <div class="cs-eyebrow">University of Toledo</div>
         <h3>ParkUToledo &mdash; Citation Hold Buffer Innovation</h3>
         <div class="cs-section-label">The Challenge</div>
-        <p class="cs-challenge">The University of Toledo needed a citation hold buffer &mdash; a system that would delay citation issuance when a vehicle entered without an active permit, giving drivers time to register. Every competitor they evaluated said it couldn't be done.</p>
+        <p class="cs-challenge">The University of Toledo needed a citation hold buffer &mdash; a system that would delay citation issuance when a vehicle entered without an active permit, giving drivers time to register. Every competitor they evaluated said it couldn’t be done.</p>
         <div class="cs-metrics">
           <div class="cs-metric"><span class="cs-metric-num">[XX]%</span><span class="cs-metric-label">Citation appeals reduced</span></div>
           <div class="cs-metric"><span class="cs-metric-num">[X.X]x</span><span class="cs-metric-label">Permit registration speed</span></div>
@@ -79,12 +81,12 @@
         </div>
       </div>
 
-      <!-- St. Edward's -->
+      <!-- St. Edward’s -->
       <div class="cs-cliffhanger reveal" id="st-edwards">
-        <div class="cs-eyebrow">St. Edward's University</div>
+        <div class="cs-eyebrow">St. Edward’s University</div>
         <h3>Migrating off a Legacy Platform Without Losing Operational Continuity</h3>
         <div class="cs-section-label">The Challenge</div>
-        <p class="cs-challenge">St. Edward's was transitioning away from a legacy platform and needed a partner who would understand their existing business processes rather than force a one-size-fits-all migration. The risk: weeks of operational disruption during the cutover.</p>
+        <p class="cs-challenge">St. Edward’s was transitioning away from a legacy platform and needed a partner who would understand their existing business processes rather than force a one-size-fits-all migration. The risk: weeks of operational disruption during the cutover.</p>
         <div class="cs-metrics">
           <div class="cs-metric"><span class="cs-metric-num">[X]</span><span class="cs-metric-label">Days of downtime</span></div>
           <div class="cs-metric"><span class="cs-metric-num">[XXX]</span><span class="cs-metric-label">Permit rules migrated</span></div>
@@ -92,7 +94,7 @@
         </div>
         <div class="cs-fade-region">
           <div class="cs-section-label">How SCS Built It</div>
-          <p>The migration plan, the rule-mapping methodology, and the workshop process St. Edward's went through &mdash; available in the full case study&hellip;</p>
+          <p>The migration plan, the rule-mapping methodology, and the workshop process St. Edward’s went through &mdash; available in the full case study&hellip;</p>
         </div>
         <div class="cs-cta-row">
           <div class="lock-mini"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
@@ -128,7 +130,7 @@
         <div class="cs-eyebrow">Chapman University</div>
         <h3>Exponential Enforcement Productivity with LPR</h3>
         <div class="cs-section-label">The Challenge</div>
-        <p class="cs-challenge">Chapman's parking team needed to increase enforcement productivity while improving how the community perceived parking operations. Manual chalk-and-check enforcement was inefficient and adversarial &mdash; every citation became a confrontation.</p>
+        <p class="cs-challenge">Chapman’s parking team needed to increase enforcement productivity while improving how the community perceived parking operations. Manual chalk-and-check enforcement was inefficient and adversarial &mdash; every citation became a confrontation.</p>
         <div class="cs-metrics">
           <div class="cs-metric"><span class="cs-metric-num">[X.X]x</span><span class="cs-metric-label">Patrol coverage</span></div>
           <div class="cs-metric"><span class="cs-metric-num">[XX]%</span><span class="cs-metric-label">False citations down</span></div>
@@ -154,11 +156,11 @@
       <div class="cta-grid">
         <div class="cta-content reveal">
           <h2>Want to speak with a current SCS customer?</h2>
-          <p>Every SCS customer has agreed to act as a reference. To respect their time, we coordinate every call ourselves &mdash; fill out the form and we'll match you with the right customer for your situation.</p>
+          <p>Every SCS customer has agreed to act as a reference. To respect their time, we coordinate every call ourselves &mdash; fill out the form and we’ll match you with the right customer for your situation.</p>
         </div>
         <div class="cta-form-card reveal reveal-delay-2">
           <h3>Talk to a Customer</h3>
-          <p>We'll get back to you within one business day to schedule the call.</p>
+          <p>We’ll get back to you within one business day to schedule the call.</p>
           <form method="POST" action="/api/submit">
             <input type="hidden" name="form_name" value="Customer Reference Request">
             <div class="form-row">
@@ -166,7 +168,7 @@
               <div class="form-group"><label>Work Email</label><input type="email" name="email" placeholder="jane@university.edu" required></div>
             </div>
             <div class="form-row">
-              <div class="form-group"><label>Organization</label><input type="text" name="institution" placeholder="University of..." required></div>
+              <div class="form-group"><label>Organization</label><input type="text" name="institution" placeholder="University of…" required></div>
               <div class="form-group"><label>Title / Role</label><input type="text" name="title_role" placeholder="Director of Parking"></div>
             </div>
             <div class="form-row">
@@ -175,7 +177,7 @@
                 <select name="customer_preference" required>
                   <option value="any">Any &mdash; please match me with the most relevant</option>
                   <option value="utoledo">University of Toledo</option>
-                  <option value="st-edwards">St. Edward's University</option>
+                  <option value="st-edwards">St. Edward’s University</option>
                   <option value="princeton">Princeton University</option>
                   <option value="chapman">Chapman University</option>
                 </select>

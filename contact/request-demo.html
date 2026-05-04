@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="../assets/themed-select.css">
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to main content</a>
 <nav class="navbar" id="navbar">
     <div class="container nav-inner">
       <a href="../index.html" class="nav-logo"><img src="../assets/scs-icon.png" alt="Smarter City Solutions"></a>
@@ -28,10 +29,11 @@
           </div>
         </div>
       </div>
-      <a href="../account/signup.html" class="nav-customer-login">Customer Login</a><a href="../account/sourcewell-login.html" class="nav-cta" style="padding:6px 12px;height:42px;display:inline-flex;align-items:center;background:rgba(21,98,108,0.06);border:1px solid rgba(21,98,108,0.18);border-radius:10px;margin-left:0"><img src="../assets/sourcewell-logo.png" alt="Sourcewell Members" style="height:26px;width:auto;display:block"></a>
+      <a href="../account/signup.html" class="nav-customer-login">Customer Login</a><a href="../account/sourcewell-login.html" class="nav-cta" title="Sign in for Sourcewell-member pricing"><img src="../assets/sourcewell-logo.png" alt=""><span>Sign in</span></a>
       <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
+<a id="main" tabindex="-1" aria-hidden="true"></a>
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-inner">
       <a href="../solutions/vpermit.html">vPermit</a><a href="../solutions/vcompliance.html">vCompliance</a><a href="../solutions/vpark.html">vPark</a><a href="../solutions/platform.html">The Platform</a>
@@ -50,8 +52,8 @@
       <div class="demo-grid">
         <!-- Left: Value Props -->
         <div class="demo-value-col reveal">
-          <h1>Let's Brainstorm Your Parking Operation</h1>
-          <p>Spend 30 minutes with our team. We'll learn about your campus, share what we've seen work elsewhere, and walk through the platform if it's relevant. No hard sell &mdash; just open dialogue between parking people.</p>
+          <h1>Let’s Brainstorm Your Parking Operation</h1>
+          <p>Spend 30 minutes with our team. We’ll learn about your campus, share what we’ve seen work elsewhere, and walk through the platform if it’s relevant. No hard sell &mdash; just open dialogue between parking people.</p>
 
           <div class="demo-benefits">
             <div class="demo-benefit">
@@ -79,7 +81,7 @@
               <div class="client-logo"><img src="../assets/logos/university/harvard-university.png" alt="Harvard University"></div>
               <div class="client-logo"><img src="../assets/logos/university/princeton-university.png" alt="Princeton University"></div>
               <div class="client-logo"><img src="../assets/logos/university/chapman-university.png" alt="Chapman University"></div>
-              <div class="client-logo"><img src="../assets/logos/university/st-edwards-university.png" alt="St. Edward's University"></div>
+              <div class="client-logo"><img src="../assets/logos/university/st-edwards-university.png" alt="St. Edward’s University"></div>
             </div>
           </div>
 
@@ -93,7 +95,7 @@
         <div class="demo-form-col reveal reveal-delay-2">
           <div class="demo-form-card">
             <h3>Request a Demo</h3>
-            <p>We'll respond within one business day. No spam, ever.</p>
+            <p>We’ll respond within one business day. No spam, ever.</p>
             <form method="POST" action="/api/submit">
               <input type="hidden" name="form_name" value="Demo Request">
               <div class="form-row">
@@ -105,14 +107,14 @@
                 <div class="form-group"><label>Phone</label><input type="tel" name="phone" placeholder="+1 (555) 000-0000"></div>
               </div>
               <div class="form-row">
-                <div class="form-group"><label>Institution Name</label><input type="text" name="institution" placeholder="University of..." required></div>
+                <div class="form-group"><label>Institution Name</label><input type="text" name="institution" placeholder="University of…" required></div>
                 <div class="form-group"><label>Role / Title</label><input type="text" name="title_role" placeholder="Director of Parking"></div>
               </div>
               <div class="form-row">
                 <div class="form-group full">
                   <label>How did you hear about us?</label>
                   <select name="referral_source" class="themed-select">
-                    <option value="">Select one...</option>
+                    <option value="">Select one…</option>
                     <option>IPMI Conference</option>
                     <option>Colleague / Referral</option>
                     <option>Web Search</option>
@@ -124,9 +126,9 @@
               </div>
               <div class="form-row">
                 <div class="form-group full">
-                  <label>What's your biggest parking challenge? <span style="font-weight:400;color:var(--gray);font-size:12px">(optional)</span></label>
+                  <label>What’s your biggest parking challenge? <span style="font-weight:400;color:var(--gray);font-size:12px">(optional)</span></label>
                   <textarea name="challenge" rows="6" placeholder="Tell us about your current situation, systems, and pain points. The more detail you share, the more useful our conversation will be."></textarea>
-                  <p style="font-size:12px;color:var(--gray);margin-top:6px;font-style:italic">No character limit &mdash; share as much detail as you'd like.</p>
+                  <p style="font-size:12px;color:var(--gray);margin-top:6px;font-style:italic">No character limit &mdash; share as much detail as you’d like.</p>
                 </div>
               </div>
               <button type="submit" class="form-submit" style="background:var(--red)">Submit</button>

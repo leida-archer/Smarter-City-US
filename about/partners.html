@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to main content</a>
 <nav class="navbar" id="navbar">
     <div class="container nav-inner">
       <a href="../index.html" class="nav-logo"><img src="../assets/scs-icon.png" alt="Smarter City Solutions"></a>
@@ -27,10 +28,11 @@
           </div>
         </div>
       </div>
-      <a href="../account/signup.html" class="nav-customer-login">Customer Login</a><a href="../account/sourcewell-login.html" class="nav-cta" style="padding:6px 12px;height:42px;display:inline-flex;align-items:center;background:rgba(21,98,108,0.06);border:1px solid rgba(21,98,108,0.18);border-radius:10px;margin-left:0"><img src="../assets/sourcewell-logo.png" alt="Sourcewell Members" style="height:26px;width:auto;display:block"></a>
+      <a href="../account/signup.html" class="nav-customer-login">Customer Login</a><a href="../account/sourcewell-login.html" class="nav-cta" title="Sign in for Sourcewell-member pricing"><img src="../assets/sourcewell-logo.png" alt=""><span>Sign in</span></a>
       <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
+<a id="main" tabindex="-1" aria-hidden="true"></a>
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-inner">
       <a href="../solutions/vpermit.html">vPermit</a><a href="../solutions/vcompliance.html">vCompliance</a><a href="../solutions/vpark.html">vPark</a><a href="../solutions/platform.html">The Platform</a>
@@ -96,7 +98,7 @@
       <div class="cta-grid">
         <div class="cta-content reveal">
           <h2>Become a partner</h2>
-          <p>We're always expanding our integration ecosystem. If you're a technology provider in the parking, identity, or payments space, let's talk.</p>
+          <p>We’re always expanding our integration ecosystem. If you’re a technology provider in the parking, identity, or payments space, let’s talk.</p>
         </div>
         <div class="cta-form-card reveal reveal-delay-2">
           <h3>Partner Inquiry</h3><p>Tell us about your technology and how it complements SCS.</p>
@@ -106,7 +108,7 @@
             <div class="form-row"><div class="form-group"><label>Company</label><input type="text" name="company" placeholder="Company name" required></div><div class="form-group"><label>Category</label>
               <select name="category"><option value="">Select category</option><option>Identity / SSO</option><option>LPR / Cameras</option><option>Payments</option><option>HR / SIS</option><option>Analytics</option><option>Cloud / PARCS</option><option>Other</option></select>
             </div></div>
-            <div class="form-row"><div class="form-group full"><label>How does your technology complement SCS?</label><textarea name="message" rows="3" placeholder="Brief description..."></textarea></div></div>
+            <div class="form-row"><div class="form-group full"><label>How does your technology complement SCS?</label><textarea name="message" rows="3" placeholder="Brief description…"></textarea></div></div>
             <button type="submit" class="form-submit">Submit Inquiry</button>
           </form>
         </div>
