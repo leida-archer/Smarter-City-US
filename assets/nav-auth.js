@@ -88,10 +88,15 @@
     var userEmail = localStorage.getItem('scs_user') || '';
     var username = userEmail.split('@')[0] || 'account';
 
-    // Swap only the inner content — leave every class and inline style untouched.
+    // Add the authed-state modifier so styles.css can resize the button to
+    // a compact identity chip (matches nav-link proportions instead of the
+    // logged-out logo+wordmark geometry).
+    btn.classList.add('nav-cta--authed');
+
+    // Swap inner content. SVG bumped to 16x16 to match the now-14px text.
     btn.innerHTML =
       escapeHTML(username) +
-      ' <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0">' +
+      ' <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0">' +
       '<path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>';
 
     // Keep it as an <a> but send it nowhere; intercept click for logout.

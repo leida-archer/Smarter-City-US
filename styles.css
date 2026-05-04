@@ -265,38 +265,54 @@ section { position: relative; }
 
 /* Nav CTA — Sourcewell Member Sign-In button.
    Solid dark-teal default; "Sign in" text sits with its bounding-box bottom
-   flush against the bottom edge of the logo image. align-items: flex-end +
-   line-height: 1 makes the descender bottom of "g" align with the logo's
-   bottom edge. Logged-in state replaces innerHTML via nav-auth.js — the
-   alignment rules still work for the username + sign-out svg pair. */
+   flush against the bottom edge of the logo image (align-items: flex-end +
+   line-height: 1 puts the descender bottom of "g" at the logo bottom edge).
+   Sized to be visually distinct as the only login CTA without dwarfing the
+   surrounding nav-link buttons. Logged-in state uses the .nav-cta--authed
+   modifier (added by nav-auth.js) to drop the logo-pairing geometry and
+   match nav-links proportions instead. */
 .nav-cta {
   display: inline-flex;
   align-items: flex-end;
   gap: 10px;
-  height: 44px;
-  padding: 0 20px 10px;
+  height: 40px;
+  padding: 0 18px 9px;
   background: var(--dark-teal);
   color: #fff;
   border: 1px solid var(--dark-teal);
   border-radius: 10px;
   font-family: 'DM Sans', sans-serif;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1;
   letter-spacing: -0.2px;
   text-decoration: none;
   transition: background 0.2s, transform 0.15s;
-  margin-left: 8px;
 }
 .nav-cta:hover {
   background: #0E4A52;
   transform: translateY(-1px);
 }
 .nav-cta img {
-  height: 22px;
+  height: 20px;
   width: auto;
   display: block;
   filter: brightness(0) invert(1);
+}
+
+/* Logged-in modifier: nav-auth.js adds this class after auth so the button
+   becomes a compact identity chip — matching the rest of the nav (14px
+   DM Sans medium, 36px tall, centered) instead of bottom-aligned to a
+   logo that's no longer rendered. */
+.nav-cta.nav-cta--authed {
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.2px;
 }
 
 /* Customer Login — HIDDEN FOR NOW. The page at /account/signup.html
