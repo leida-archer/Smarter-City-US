@@ -73,7 +73,12 @@ button.btn-text:focus-visible {
 .slide-footer-end {
   justify-content: flex-end;     /* Next button anchored bottom-right (Slide 1) */
 }
-/* Software slide is the tallest — keep Back/Next visible without scrolling */
+/* Sticky footer keeps Back/Next visible while filling form-heavy slides.
+   Applied to slides 2, 3, and 4 (every slide that has Back/Next — slide 1
+   auto-advances on entity choice). When a slide's content fits the
+   viewport, sticky is inert and the footer sits at the natural bottom;
+   on taller slides, the buttons stay pinned at the bottom edge while
+   the user scrolls through inputs. */
 .slide-footer-sticky {
   position: sticky;
   bottom: 0;
