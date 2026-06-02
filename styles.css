@@ -522,6 +522,8 @@ section { position: relative; }
 }
 .product-card {
   position: relative;
+  display: flex;
+  flex-direction: column;
   padding: 48px 40px;
   background: var(--bg);
   border-radius: 16px;
@@ -608,7 +610,9 @@ section { position: relative; }
 
 .product-card .product-link {
   display: inline-flex; align-items: center; gap: 6px;
-  font-size: 14px; font-weight: 600; margin-top: 20px;
+  align-self: flex-start;
+  font-size: 14px; font-weight: 600;
+  margin-top: auto; padding-top: 20px;
   transition: gap 0.2s;
 }
 .product-link.green { color: var(--green); }
