@@ -45,28 +45,43 @@
 
   // The Sourcewell nav button is a .nav-cta whose only child is an <img>
   // with "sourcewell" in its src. Match by that structure.
+  // The nav auth button is the "Login / Join" .nav-cta in the navbar (it links
+  // to account/login.html). Some pages also tag it #navAuthBtn. When a member
+  // signs in this button is swapped to a username + logout chip.
   function findNavButton() {
-    var candidates = document.querySelectorAll('.nav-cta');
-    for (var i = 0; i < candidates.length; i++) {
-      var img = candidates[i].querySelector('img');
-      if (img && /sourcewell/i.test(img.getAttribute('src') || '')) {
-        return candidates[i];
-      }
-    }
-    return null;
+    return document.getElementById('navAuthBtn')
+        || document.querySelector('.nav-cta[href*="account/login.html"]')
+        || document.querySelector('.navbar .nav-cta');
   }
 
-  // Hide the Resources dropdown for unauthenticated visitors. The Resources
-  // surface (Pricing, Sales Deck, Newsletter, Library, Blog, Webinars, Tier
-  // Sheets, Case Studies) is members-only — see resources-gate.js for the
-  // page-level overlay that catches direct URL access.
-  function gateResourcesNav() {
-    var items = document.querySelectorAll('.nav-item.has-dropdown');
-    for (var i = 0; i < items.length; i++) {
-      var anchor = items[i].querySelector('a[href*="resources/"]');
-      if (anchor) {
-        items[i].style.display = 'none';
-      }
+  // Lock ONLY the Pricing Calculator link for unauthenticated visitors. The
+  // rest of the Resources surface (Sales Deck, Newsletter, Library, Blog,
+  // Webinars, Tier Sheets, Case Studies) is open to everyone — the Pricing
+  // Calculator is the only members-only page (the page-level gate lives in
+  // resources/pricing.html and catches direct URL access).
+  function lockPricingNav() {
+    var links = document.querySelectorAll('.dropdown a[href*="resources/pricing.html"]');
+    for (var i = 0; i < links.length; i++) {
+      var a = links[i];
+      a.classList.add('nav-locked');           // greyed + non-clickable (see styles.css)
+      a.setAttribute('aria-disabled', 'true');
+      a.setAttribute('tabindex', '-1');         // out of keyboard tab order
+    }
+  }
+
+  // Authed view: restore the Pricing Calculator link — drop the greyed/disabled
+  // state and hide its padlock icon so it reads as a normal menu item. Written
+  // to be idempotent so the post-login refresh() (no full reload) also unlocks.
+  function unlockPricingNav() {
+    var links = document.querySelectorAll('.dropdown a[href*="resources/pricing.html"]');
+    for (var i = 0; i < links.length; i++) {
+      var a = links[i];
+      a.classList.remove('nav-locked');
+      a.removeAttribute('aria-disabled');
+      a.removeAttribute('tabindex');
+      a.querySelectorAll('svg').forEach(function (svg) {
+        if (svg.innerHTML.indexOf('3 3 0 016 0') !== -1) svg.style.display = 'none';
+      });
     }
   }
 
@@ -75,9 +90,12 @@
     console.log('[nav-auth] loaded, authed=', authed);
 
     if (!authed) {
-      gateResourcesNav();
+      lockPricingNav();
       return;
     }
+
+    // Authed: make the Pricing Calculator link normal again.
+    unlockPricingNav();
 
     var btn = findNavButton();
     if (!btn) {
@@ -106,11 +124,6 @@
       e.preventDefault();
       logout();
       window.location.reload();
-    });
-
-    // Hide lock icons in dropdown menus (existing gating convention).
-    document.querySelectorAll('.dropdown a svg').forEach(function (svg) {
-      if (svg.innerHTML.indexOf('3 3 0 016 0') !== -1) svg.style.display = 'none';
     });
   }
 

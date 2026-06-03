@@ -3,11 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Corporate Campus Parking Solutions | Smarter City Solutions</title>
+  <title>Log In / Join | Smarter City Solutions</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
+  <style>
+    .login-choice-grid{
+      display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:760px;margin:0 auto;
+    }
+    .login-choice-card{
+      display:flex;flex-direction:column;align-items:flex-start;text-align:left;
+      background:#fff;border:1px solid rgba(0,0,0,.1);border-radius:16px;padding:32px 28px;
+      text-decoration:none;color:inherit;transition:border-color .2s,box-shadow .2s,transform .15s;
+    }
+    .login-choice-card:hover{border-color:var(--dark-teal);box-shadow:0 16px 40px rgba(0,0,0,.08);transform:translateY(-2px)}
+    .login-choice-icon{height:44px;display:flex;align-items:center;margin-bottom:18px}
+    .login-choice-icon img{height:30px;width:auto;display:block}
+    .login-choice-card h2{font-family:'DM Sans',sans-serif;font-size:20px;font-weight:600;color:var(--dark);margin:0 0 8px}
+    .login-choice-card p{font-size:14px;color:var(--gray);line-height:1.6;margin:0 0 22px;flex:1}
+    .login-choice-cta{font-family:'DM Sans',sans-serif;font-weight:600;font-size:15px;color:var(--dark-teal);display:inline-flex;align-items:center;gap:6px}
+    @media (max-width:640px){ .login-choice-grid{grid-template-columns:1fr} }
+  </style>
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to main content</a>
@@ -24,7 +41,7 @@
             <a href="../resources/case-studies.html">Problem Solved</a>
             <a href="../resources/sales-deck.html">Sales Deck</a>
             <a href="../resources/newsletter.html">Newsletter</a>
-            <a href="../resources/pricing.html">Pricing Calculator<svg width="10" height="11" viewBox="0 0 10 11" style="margin-left:6px;vertical-align:-1px;opacity:0.6"><path d="M2 5V3.5a3 3 0 016 0V5m-7 0h8v5H1V5z" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg></a>
+            <a href="../resources/pricing.html">Pricing Calculator</a>
           </div>
         </div>
       </div>
@@ -37,64 +54,34 @@
     <div class="mobile-menu-inner">
       <a href="../solutions/vpermit.html">vPermit</a><a href="../solutions/vcompliance.html">vCompliance</a><a href="../solutions/vpark.html">vPark</a><a href="../solutions/platform.html">The Platform</a>
       <a href="../industries/higher-education.html">Higher Education</a><a href="../industries/municipalities.html">Municipalities</a><a href="../industries/healthcare.html">Healthcare</a><a href="../industries/k12.html">K-12 Schools</a><a href="../industries/corporate-campus.html">Corporate Campus</a><a href="../about/index.html">About</a><a href="../resources/case-studies.html">Resources</a>
-      <a href="../account/login.html">Login / Join</a><a href="../contact/request-demo.html" class="mobile-cta">Contact Us</a>
+      <a href="../account/login.html">Login / Join</a>
+      <a href="../contact/request-demo.html" class="mobile-cta">Contact Us</a>
     </div>
   </div>
 
-  <section class="breadcrumb-bar">
-    <div class="container"><a href="../index.html">Home</a> <span>/</span> <span>Industries</span> <span>/</span> <span>Corporate Campus</span></div>
-  </section>
-
-  <section class="page-hero" style="border-top: 4px solid #2C7480">
+  <section class="auth-page">
     <div class="container">
-      <div class="page-hero-grid">
-        <div class="page-hero-inner reveal">
-          <h1>Parking That Works for Visitors, Employees &amp; Contractors</h1>
-          <p>Manage visitor, employee, and contractor parking across your corporate campus &mdash; from one platform.</p>
-          <a href="../contact/request-demo.html" class="btn-primary">Contact Us <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        </div>
-        <div class="page-hero-illustration reveal reveal-delay-2">
-          <img src="../assets/industries/corporate-campus.png" alt="Corporate campus parking">
-        </div>
-      </div>
-    </div>
-  </section>
+      <div class="auth-card reveal visible" style="max-width:820px;text-align:center">
+        <h1>Log In / Join</h1>
+        <p class="auth-sub" style="margin-bottom:32px">Choose how you'd like to access your account.</p>
 
-  <section class="features-section">
-    <div class="container">
-      <div class="section-header reveal"><h2>Corporate campus parking challenges</h2></div>
-      <div class="features-grid" style="grid-template-columns: repeat(2, 1fr)">
-        <div class="feature-card reveal"><h4>Visitor Flow &amp; Validation</h4><p>Guests, candidates, and clients arrive without context. Bad parking is the first impression they get of your company.</p></div>
-        <div class="feature-card reveal"><h4>Employee Permits Across Buildings</h4><p>Hybrid schedules, multi-building HQs, and shared lots make traditional permit assignments unworkable.</p></div>
-        <div class="feature-card reveal"><h4>Contractor &amp; Vendor Access</h4><p>Coordinating short-term parking for delivery drivers, construction crews, and outside vendors creates daily friction.</p></div>
-        <div class="feature-card reveal"><h4>Multi-Lot Enforcement</h4><p>Corporate campuses span multiple lots and garages with different rules, restrictions, and access tiers.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="values">
-    <div class="container">
-      <div class="values-header reveal"><h2>How SCS helps corporate campuses</h2></div>
-      <div class="values-grid" style="grid-template-columns: repeat(3, 1fr)">
-        <div class="value-item reveal"><div class="value-number">01</div><h4>vPermit for Staff &amp; Contractors</h4><p>Flexible permits for hybrid workers, contractors, and vendors. SSO with Okta, Workday, or Microsoft &mdash; no new accounts.</p></div>
-        <div class="value-item reveal"><div class="value-number">02</div><h4>vPark for Visitor Payments</h4><p>Mobile pay for guests and short-term visitors. Validate at the front desk or auto-comp via meeting invite.</p></div>
-        <div class="value-item reveal"><div class="value-number">03</div><h4>vCompliance Across Lots</h4><p>LPR enforcement that handles different rules per lot &mdash; reserved spaces, EV chargers, time limits, and visitor zones.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="cta-section">
-    <div class="container-wide">
-      <div class="cta-grid">
-        <div class="cta-content reveal"><h2>Better parking, better workplace experience</h2><p>The same platform powering America’s universities &mdash; now for corporate campuses. Let’s talk about your HQ.</p></div>
-        <div class="cta-form-card reveal reveal-delay-2">
-          <h3>Contact Us</h3><p>We’ll respond within one business day.</p>
-          <form method="POST" action="/api/submit">
-            <input type="hidden" name="form_name" value="Demo Request - Corporate Campus">
-            <div class="form-row"><div class="form-group"><label>Full Name</label><input type="text" name="full_name" placeholder="Jane Smith" required></div><div class="form-group"><label>Work Email</label><input type="email" name="email" placeholder="jane@company.com" required></div></div>
-            <div class="form-row"><div class="form-group"><label>Organization</label><input type="text" name="institution" placeholder="Company name" required></div><div class="form-group"><label>Title / Role</label><input type="text" name="title_role" placeholder="Facilities Manager"></div></div>
-            <button type="submit" class="form-submit">Get Started</button>
-          </form>
+        <div class="login-choice-grid">
+          <a href="../account/signup.html" class="login-choice-card">
+            <span class="login-choice-icon">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#15626C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </span>
+            <h2>Customer Login</h2>
+            <p>Sign up or log in to your SCS account and resource library.</p>
+            <span class="login-choice-cta">Continue &rarr;</span>
+          </a>
+          <a href="../account/sourcewell-login.html" class="login-choice-card">
+            <span class="login-choice-icon">
+              <img src="../assets/sourcewell-logo.png" alt="Sourcewell">
+            </span>
+            <h2>Sourcewell Members</h2>
+            <p>Members: sign in for member pricing, tier sheets, and the full resource library.</p>
+            <span class="login-choice-cta">Continue &rarr;</span>
+          </a>
         </div>
       </div>
     </div>
@@ -107,13 +94,13 @@
         <div class="footer-brand"><img src="../assets/scs-logo.png" alt="Smarter City Solutions"><p>Integrated (for) Life</p><p class="footer-contact-info">+1 (555) 123-4567</p><p class="footer-contact-info">info@smartercity.com</p></div>
         <div class="footer-col"><h5>Solutions</h5><a href="../solutions/vpermit.html">vPermit</a><a href="../solutions/vcompliance.html">vCompliance</a><a href="../solutions/vpark.html">vPark</a><a href="../solutions/platform.html">The Platform</a><a href="../solutions/integrations.html">Integrations</a></div>
         <div class="footer-col"><h5>Industries</h5><a href="../industries/higher-education.html">Higher Education</a><a href="../industries/municipalities.html">Municipalities</a><a href="../industries/healthcare.html">Healthcare</a><a href="../industries/k12.html">K-12 Schools</a><a href="../industries/corporate-campus.html">Corporate Campus</a></div>
-        <div class="footer-col"><h5>Resources</h5><a href="../resources/case-studies.html">Problem Solved</a><a href="../resources/blog.html">Blog</a><a href="../resources/webinars.html">Webinars</a></div>
+        <div class="footer-col"><h5>Resources</h5><a href="../resources/library.html">Library</a><a href="../resources/case-studies.html">Problem Solved</a><a href="../resources/blog.html">Blog</a><a href="../resources/webinars.html">Webinars</a></div>
         <div class="footer-col"><h5>Company</h5><a href="../about/index.html">About</a><a href="../about/team.html">Team</a><a href="../contact/index.html">Contact</a><a href="#">Careers</a></div>
       </div>
       <div class="footer-bottom"><p>&copy; 2026 Smarter City Solutions. All Rights Reserved.</p><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Accessibility Statement</a><a href="#">Terms of Service</a></div></div>
     </div>
   </footer>
   <script src="../script.js"></script>
-<script src="../assets/nav-auth.js"></script>
+  <script src="../assets/nav-auth.js"></script>
 </body>
 </html>

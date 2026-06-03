@@ -248,6 +248,17 @@ section { position: relative; }
   background: rgba(21,98,108,0.05);
   color: var(--dark-teal);
 }
+/* Locked Pricing Calculator link (logged-out only): greyed + non-interactive.
+   nav-auth.js adds .nav-locked when no member is signed in, and removes the
+   padlock icon once signed in. The page itself still enforces the real gate. */
+.dropdown a.nav-locked,
+.dropdown a.nav-locked:hover {
+  opacity: 0.45;
+  background: transparent;
+  color: var(--slate);
+  pointer-events: none;
+  cursor: default;
+}
 .dropdown-divider {
   height: 1px;
   background: rgba(0,0,0,0.06);
@@ -273,25 +284,25 @@ section { position: relative; }
    match nav-links proportions instead. */
 .nav-cta {
   display: inline-flex;
-  align-items: flex-end;
-  gap: 10px;
-  height: 40px;
-  padding: 0 18px 9px;
-  background: var(--dark-teal);
-  color: #fff;
-  border: 1px solid var(--dark-teal);
-  border-radius: 10px;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  background: rgba(21,98,108,0.12);     /* semi-transparent teal pane (matches the text color) */
+  border: 1px solid rgba(21,98,108,0.28);
+  border-radius: 9px;
+  color: var(--dark-teal);
   font-family: 'DM Sans', sans-serif;
-  font-weight: 400;
-  font-size: 16px;
+  font-weight: 700;
+  font-size: 15px;
   line-height: 1;
-  letter-spacing: -0.2px;
+  letter-spacing: 0.2px;
   text-decoration: none;
-  transition: background 0.2s, transform 0.15s;
+  transition: transform 0.15s ease, background 0.2s, box-shadow 0.2s, border-color 0.2s;
 }
 .nav-cta:hover {
-  background: #0E4A52;
   transform: translateY(-1px);
+  background: rgba(21,98,108,0.18);
+  box-shadow: 0 2px 8px rgba(21,98,108,0.16);
 }
 .nav-cta img {
   height: 20px;
@@ -564,18 +575,22 @@ section { position: relative; }
   justify-content: flex-start;
   margin-bottom: 24px;
 }
-.product-logo-slot--hero.vpermit .product-logo-mark { height: 32px; }
+/* Heights normalized so every wordmark renders at the same text height as
+   vCompliance (≈24.2px). The icon marks differ in proportion (vPark's pin
+   overhangs above/below the text), so display heights are not equal — they're
+   tuned per logo to equalize the *wordmark* caps. Measured via _logo-scale-tool.html. */
+.product-logo-slot--hero.vpermit .product-logo-mark { height: 38.2px; }
 .product-logo-slot--hero.vcompliance .product-logo-mark { height: 29px; }
-/* vPark image has icon overhang above/below text. Display height ≈52px so text portion renders ~32px (matches vPermit). */
-.product-logo-slot--hero.vpark .product-logo-mark { height: 52px; }
+.product-logo-slot--hero.vpark .product-logo-mark { height: 39.3px; }
 .product-logo-mark {
   width: auto;
   max-width: 100%;
   display: block;
 }
-.product-card.vpermit .product-logo-mark { height: 32px; }
+/* Wordmark-height normalized to vCompliance — see note above + _logo-scale-tool.html */
+.product-card.vpermit .product-logo-mark { height: 38.2px; }
 .product-card.vcompliance .product-logo-mark { height: 29px; }
-.product-card.vpark .product-logo-mark { height: 52px; }
+.product-card.vpark .product-logo-mark { height: 39.3px; }
 
 .product-card h3 {
   font-size: 24px; font-weight: 600; color: var(--dark);

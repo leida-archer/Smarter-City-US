@@ -8,6 +8,42 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
+  <style>
+    /* ── Team cards: populated headshots + 6-line bios (6/2 update) ──── */
+    .team-card { display: flex; flex-direction: column; text-align: center; }
+    .team-card .team-avatar {
+      width: 132px; height: 132px;
+      object-fit: cover; object-position: center top;
+      background: #e2eff1;
+      box-shadow: 0 6px 20px rgba(21,98,108,0.14);
+    }
+    .team-card h4 { font-size: 19px; margin-bottom: 2px; line-height: 1.3; height: 26px; overflow: hidden; }
+    /* Fixed title slot so every card lines up vertically */
+    .team-title {
+      font-size: 14px; font-weight: 600; color: var(--mid-teal); margin-bottom: 1px;
+      line-height: 1.3; height: 40px; display: flex; align-items: center; justify-content: center;
+      text-align: center; overflow: hidden;
+    }
+    .team-subtitle { font-size: 12.5px; color: var(--gray); font-style: italic; margin-bottom: 16px; }
+    /* Bio locked to exactly 6 lines -> identical card heights across both rows */
+    .team-bio {
+      text-align: left; margin: 0;
+      font-family: 'Inter', sans-serif; font-size: 13.5px; line-height: 1.6; color: var(--gray);
+      display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 6;
+      overflow: hidden;
+      height: calc(13.5px * 1.6 * 6);
+    }
+    .team-section-label {
+      font-size: 12px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 1.6px; color: var(--mid-teal);
+      text-align: center; margin: 8px 0 28px;
+    }
+    .team-section-label.second { margin-top: 64px; }
+    /* Both rows 3-up, identical card width. 4th support member wraps to row 2, col 1. */
+    .team-grid.support { grid-template-columns: repeat(3, 1fr); }
+    @media (max-width: 1024px) { .team-grid.support { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px)  { .team-grid.support { grid-template-columns: 1fr; max-width: 280px; margin: 0 auto; } }
+  </style>
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to main content</a>
@@ -22,13 +58,13 @@
           <a href="../resources/case-studies.html">Resources <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></a>
           <div class="dropdown">
             <a href="../resources/case-studies.html">Problem Solved</a>
-            <a href="../resources/pricing.html">Pricing &amp; Tiers<svg width="10" height="11" viewBox="0 0 10 11" style="margin-left:6px;vertical-align:-1px;opacity:0.6"><path d="M2 5V3.5a3 3 0 016 0V5m-7 0h8v5H1V5z" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg></a>
-            <a href="../resources/sales-deck.html">Sales Deck<svg width="10" height="11" viewBox="0 0 10 11" style="margin-left:6px;vertical-align:-1px;opacity:0.6"><path d="M2 5V3.5a3 3 0 016 0V5m-7 0h8v5H1V5z" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg></a>
-            <a href="../resources/newsletter.html">Newsletter<svg width="10" height="11" viewBox="0 0 10 11" style="margin-left:6px;vertical-align:-1px;opacity:0.6"><path d="M2 5V3.5a3 3 0 016 0V5m-7 0h8v5H1V5z" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg></a>
+            <a href="../resources/sales-deck.html">Sales Deck</a>
+            <a href="../resources/newsletter.html">Newsletter</a>
+            <a href="../resources/pricing.html">Pricing Calculator<svg width="10" height="11" viewBox="0 0 10 11" style="margin-left:6px;vertical-align:-1px;opacity:0.6"><path d="M2 5V3.5a3 3 0 016 0V5m-7 0h8v5H1V5z" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg></a>
           </div>
         </div>
       </div>
-      <a href="../account/signup.html" class="nav-customer-login">Customer Login</a><a href="../account/sourcewell-login.html" class="nav-cta" title="Sign in for Sourcewell-member pricing"><img src="../assets/sourcewell-logo.png" alt=""><span>Sign in</span></a>
+      <a href="../account/login.html" class="nav-cta">Login / Join</a>
       <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
@@ -37,7 +73,7 @@
     <div class="mobile-menu-inner">
       <a href="../solutions/vpermit.html">vPermit</a><a href="../solutions/vcompliance.html">vCompliance</a><a href="../solutions/vpark.html">vPark</a><a href="../solutions/platform.html">The Platform</a>
       <a href="../industries/higher-education.html">Higher Education</a><a href="../industries/municipalities.html">Municipalities</a><a href="../industries/healthcare.html">Healthcare</a><a href="../industries/k12.html">K-12 Schools</a><a href="../industries/corporate-campus.html">Corporate Campus</a><a href="../about/index.html">About</a><a href="../resources/case-studies.html">Resources</a>
-      <a href="../contact/request-demo.html" class="mobile-cta">Contact Us</a>
+      <a href="../account/login.html">Login / Join</a><a href="../contact/request-demo.html" class="mobile-cta">Contact Us</a>
     </div>
   </div>
 
@@ -54,50 +90,70 @@
     </div>
   </section>
 
-  <!-- Coming Soon Banner -->
   <section class="features-section">
     <div class="container">
-      <div class="coming-soon-banner reveal">
-        <p>Team photos and parking-experience taglines coming soon. For full career bios, see our gated <a href="#" style="color:inherit;text-decoration:underline">Resource Library</a>.</p>
-      </div>
 
-      <!-- Team Grid Placeholders -->
+      <!-- Executive Leadership -->
+      <div class="team-section-label reveal">Executive Leadership</div>
       <div class="team-grid">
         <div class="team-card reveal">
-          <div class="team-avatar"></div>
-          <h4>Team Member</h4>
-          <p>Chief Executive Officer</p>
-          <p style="font-style:italic;font-size:13px;color:var(--gray);margin-top:8px">[PLACEHOLDER: e.g. "15+ years building parking platforms for AU universities"]</p>
+          <img class="team-avatar" src="../assets/team/ori-almog.jpeg" alt="Ori Almog">
+          <h4>Ori Almog</h4>
+          <div class="team-title">Chief Executive Officer</div>
+          <div class="team-subtitle">Owner &amp; Co-founder</div>
+          <p class="team-bio">As co-founder and CEO, Ori has shaped SCS into an award-winning provider of PAYG and vPermit solutions across Australia and New Zealand &mdash; with integrated-system work recognized by the International Parking Institute.</p>
         </div>
-        <div class="team-card reveal">
-          <div class="team-avatar"></div>
-          <h4>Team Member</h4>
-          <p>Chief Technology Officer</p>
-          <p style="font-style:italic;font-size:13px;color:var(--gray);margin-top:8px">[PLACEHOLDER: parking-specific tech experience]</p>
+
+        <div class="team-card reveal reveal-delay-1">
+          <img class="team-avatar" src="../assets/team/jim-leida.png" alt="Jim Leida">
+          <h4>Jim Leida</h4>
+          <div class="team-title">Chief Operating Officer</div>
+          <div class="team-subtitle">Owner &amp; US Manager</div>
+          <p class="team-bio">With 15+ years in parking operations, Jim focuses on the challenges facing higher-education campuses of every size, leading nationwide rollouts of LPR-enabled virtual permitting and enforcement that improve efficiency and compliance.</p>
         </div>
-        <div class="team-card reveal">
-          <div class="team-avatar"></div>
-          <h4>Team Member</h4>
-          <p>VP of Sales, North America</p>
-          <p style="font-style:italic;font-size:13px;color:var(--gray);margin-top:8px">[PLACEHOLDER: e.g. "10+ years selling parking tech to US universities and cities"]</p>
+
+        <div class="team-card reveal reveal-delay-2">
+          <img class="team-avatar" src="../assets/team/shmulik-kachlon.png" alt="Shmulik &quot;Sam&quot; Kachlon">
+          <h4>Shmulik &ldquo;Sam&rdquo; Kachlon</h4>
+          <div class="team-title">Chief Technology Officer</div>
+          <div class="team-subtitle">Owner &amp; Co-founder</div>
+          <p class="team-bio">A career-long technology leader from the biometric and banking sectors, Shmulik has guided SCS to modern engineering and a cloud-native AWS stack, reshaping parking software into a flexible suite of digital services.</p>
         </div>
+      </div>
+
+      <!-- Delivery & Support -->
+      <div class="team-section-label second reveal">Delivery &amp; Support</div>
+      <div class="team-grid support">
         <div class="team-card reveal">
-          <div class="team-avatar"></div>
-          <h4>Team Member</h4>
-          <p>VP of Customer Success</p>
-          <p style="font-style:italic;font-size:13px;color:var(--gray);margin-top:8px">[PLACEHOLDER: years running parking operations on a major campus]</p>
+          <img class="team-avatar" src="../assets/team/mike-adams.png" alt="Mike Adams">
+          <h4>Mike Adams</h4>
+          <div class="team-title">Director of Growth</div>
+          <div class="team-subtitle">&nbsp;</div>
+          <p class="team-bio">With 15+ years across SaaS, PARCS, and complex parking operations, Mike leads growth at SCS &mdash; expanding business opportunities and deepening partner relationships with a focus on the customer experience.</p>
         </div>
-        <div class="team-card reveal">
-          <div class="team-avatar"></div>
-          <h4>Team Member</h4>
-          <p>Director of Engineering</p>
-          <p style="font-style:italic;font-size:13px;color:var(--gray);margin-top:8px">[PLACEHOLDER: years building parking enforcement / LPR systems]</p>
+
+        <div class="team-card reveal reveal-delay-1">
+          <img class="team-avatar" src="../assets/team/matt-hutchinson.png" alt="Matt Hutchinson">
+          <h4>Matt Hutchinson</h4>
+          <div class="team-title">Product Manager</div>
+          <div class="team-subtitle">&nbsp;</div>
+          <p class="team-bio">Matt has delivered large-scale systems across telecom, government, education, finance, and resources. A former SCS client at Curtin University, he pairs PRINCE2, PMI, and Agile delivery with deep operational insight.</p>
         </div>
-        <div class="team-card reveal">
-          <div class="team-avatar"></div>
-          <h4>Team Member</h4>
-          <p>Director of Implementation</p>
-          <p style="font-style:italic;font-size:13px;color:var(--gray);margin-top:8px">[PLACEHOLDER: number of campus deployments shipped]</p>
+
+        <div class="team-card reveal reveal-delay-2">
+          <img class="team-avatar" src="../assets/team/steve-ezrow.png" alt="Steve Ezrow">
+          <h4>Steve Ezrow</h4>
+          <div class="team-title">Director of Projects &amp; Support</div>
+          <div class="team-subtitle">&nbsp;</div>
+          <p class="team-bio">With 13+ years spanning operations and the vendor side, Steve has led 50+ parking implementations &mdash; SaaS platforms, access control, cameras, and guidance systems &mdash; and now drives project execution, training, and issue resolution at SCS.</p>
+        </div>
+
+        <div class="team-card reveal reveal-delay-3">
+          <img class="team-avatar" src="../assets/team/sekouba-sissoko.png" alt="Sekouba Sissoko">
+          <h4>Sekouba Sissoko</h4>
+          <div class="team-title">Solution Support &amp; Delivery Specialist</div>
+          <div class="team-subtitle">&nbsp;</div>
+          <p class="team-bio">With nearly 10 years supporting higher-education and municipal parking, plus prior healthcare IT, Sekouba excels at database configuration, mobile enforcement-device diagnostics, and LPR troubleshooting &mdash; methodical and customer-first.</p>
         </div>
       </div>
 
