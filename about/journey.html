@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Journey — 15+ Years of Parking Innovation | Smarter City Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    /* ── Our Journey: two-sided horizontal logo timeline (6/3, matches sales-deck slide 4) ── */
+    .journey-intro { max-width: 760px; margin: 0 auto 6px; text-align: center; }
+    .journey-hint { text-align: center; font-size: 13px; color: var(--gray); letter-spacing: .3px; margin: 4px 0 14px; }
+    .jtl-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 14px; }
+    .jtl-grid { display: inline-flex; align-items: stretch; min-width: max-content; padding: 12px 4px 0; }
+    .jtl-col { width: 150px; display: flex; flex-direction: column; }
+    /* logos stack upward from the axis */
+    .jtl-above { flex: 1; position: relative; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 16px; padding: 0 10px 20px; }
+    .jtl-above::before { content: ""; position: absolute; left: 50%; top: 18px; bottom: 0; width: 2px; background: rgba(21,98,108,.10); transform: translateX(-50%); z-index: 0; }
+    .jtl-above img { max-width: 116px; max-height: 54px; object-fit: contain; position: relative; z-index: 1; }
+    /* the year axis band */
+    .jtl-year { background: linear-gradient(180deg,#6f93a0,#4f7079); color: #fff; font-weight: 700; font-size: 15px; letter-spacing: .4px; text-align: center; padding: 13px 4px; white-space: nowrap; }
+    .jtl-col:first-child .jtl-year { border-radius: 8px 0 0 8px; }
+    .jtl-col:last-child .jtl-year { border-radius: 0 8px 8px 0; }
+    /* product / brand milestones hang below the axis with a connector */
+    .jtl-below { min-height: 132px; display: flex; justify-content: center; }
+    .jtl-mk { display: flex; flex-direction: column; align-items: center; }
+    .jtl-mk .jtl-dt { width: 13px; height: 13px; border-radius: 50%; background: #EB5B25; box-shadow: 0 0 0 4px rgba(235,91,37,.16); margin-top: -6px; }
+    .jtl-mk .jtl-ln { width: 2px; height: 26px; background: #c4d2d6; }
+    .jtl-mk img { max-width: 150px; max-height: 46px; object-fit: contain; margin-top: 10px; }
+    @media (max-width: 600px) {
+      .jtl-col { width: 124px; }
+      .jtl-above img { max-width: 96px; max-height: 46px; }
+      .jtl-year { font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<nav class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="../index.html" class="nav-logo"><img src="../assets/scs-icon.png" alt="Smarter City Solutions"></a>
+      <div class="nav-links">
+        <div class="nav-item has-dropdown"><a href="#">Solutions <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></a><div class="dropdown"><a href="../solutions/vpermit.html"><span class="dot green"></span>vPermit</a><a href="../solutions/vcompliance.html"><span class="dot orange"></span>vCompliance</a><a href="../solutions/vpark.html"><span class="dot amber"></span>vPark</a><div class="dropdown-divider"></div><a href="../solutions/platform.html">The Platform</a></div></div>
+        <div class="nav-item has-dropdown"><a href="#">Industries <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></a><div class="dropdown"><a href="../industries/higher-education.html">Higher Education</a><a href="../industries/municipalities.html">Municipalities</a><a href="../industries/healthcare.html">Healthcare</a><a href="../industries/k12.html">K-12 Schools</a><a href="../industries/corporate-campus.html">Corporate Campus</a></div></div>
+        <div class="nav-item has-dropdown"><a href="#">About <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></a><div class="dropdown"><a href="../about/journey.html">Our Journey</a><a href="../about/team.html">Team</a><a href="../about/partners.html">Partners</a></div></div>
+        <div class="nav-item has-dropdown">
+          <a href="../resources/case-studies.html">Resources <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></a>
+          <div class="dropdown">
+            <a href="../resources/case-studies.html">Problem Solved</a>
+            <a href="../resources/sales-deck.html">Sales Deck</a>
+            <a href="../resources/newsletter.html">Newsletter</a>
+            <a href="../resources/pricing.html">Pricing Calculator<svg width="10" height="11" viewBox="0 0 10 11" style="margin-left:6px;vertical-align:-1px;opacity:0.6"><path d="M2 5V3.5a3 3 0 016 0V5m-7 0h8v5H1V5z" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <a href="../account/login.html" class="nav-cta">Login / Join</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+<a id="main" tabindex="-1" aria-hidden="true"></a>
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <a href="../solutions/vpermit.html">vPermit</a><a href="../solutions/vcompliance.html">vCompliance</a><a href="../solutions/vpark.html">vPark</a><a href="../solutions/platform.html">The Platform</a>
+      <a href="../industries/higher-education.html">Higher Education</a><a href="../industries/municipalities.html">Municipalities</a><a href="../industries/healthcare.html">Healthcare</a><a href="../industries/k12.html">K-12 Schools</a><a href="../industries/corporate-campus.html">Corporate Campus</a><a href="../about/journey.html">About</a><a href="../resources/case-studies.html">Resources</a>
+      <a href="../account/login.html">Login / Join</a><a href="../contact/request-demo.html" class="mobile-cta">Contact Us</a>
+    </div>
+  </div>
+
+  <section class="breadcrumb-bar">
+    <div class="container"><a href="../index.html">Home</a> <span>/</span> <span>About</span> <span>/</span> <span>Our Journey</span></div>
+  </section>
+
+  <section class="page-hero" style="border-top: 4px solid #15626C">
+    <div class="container">
+      <div class="page-hero-inner reveal">
+        <h1>Our Journey</h1>
+        <p>From pioneering mobile parking payments in Australia to modernizing campus and city parking across the United States &mdash; 15+ years of integrated innovation, one partner at a time.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Two-sided horizontal logo timeline (from sales deck slide 4) -->
+  <section class="features-section" style="background:#fff">
+    <div class="container">
+      <div class="section-header reveal journey-intro">
+        <h2>15+ years, built one partnership at a time</h2>
+        <p>Campuses and cities above the line; our products and milestones below &mdash; in the order they joined the story.</p>
+      </div>
+      <p class="journey-hint reveal">Scroll to explore the timeline &rarr;</p>
+      <div class="jtl-scroll reveal">
+        <div class="jtl-grid">
+        <div class="jtl-col">
+          <div class="jtl-above">
+            <img src="../assets/journey/image11.png" alt="CellOPark Australia" title="CellOPark Australia" loading="lazy">
+            <img src="../assets/journey/image12.png" alt="Australia" title="Australia" loading="lazy">
+          </div>
+          <div class="jtl-year">2008 …</div>
+          <div class="jtl-below"></div>
+        </div>
+        <div class="jtl-col">
+          <div class="jtl-above">
+            <img src="../assets/journey/image13.png" alt="Curtin University" title="Curtin University" loading="lazy">
+          </div>
+          <div class="jtl-year">… 2013</div>
+          <div class="jtl-below"></div>
+        </div>
+        <div class="jtl-col">
+          <div class="jtl-above">
+            <img src="../assets/journey/image48.png" alt="Award of Merit — International Parking Institute" title="Award of Merit — International Parking Institute" loading="lazy">
+            <img src="../assets/journey/image49.png" alt="Australian National University" title="Australian National University" loading="lazy">
+            <img src="../assets/journey/image50.png" alt="Camden Council" title="Camden Council" loading="lazy">
+          </div>
+          <div class="jtl-year">2014 …</div>
+          <div class="jtl-below"><div class="jtl-mk"><span class="jtl-dt"></span><span class="jtl-ln"></span><img src="../assets/journey/image55.png" alt="vPermit launches" title="vPermit launches" loading="lazy"></div></div>
+        </div>
+        <div class="jtl-col">
+          <div class="jtl-above">
+            <img src="../assets/journey/image53.png" alt="La Trobe University" title="La Trobe University" loading="lazy">
+            <img src="../assets/journey/image52.png" alt="Deakin University" title="Deakin University" loading="lazy">
+            <img src="../assets/journey/image51.png" alt="The University of Queensland" title="The University of Queensland" loading="lazy">
+            <img src="../assets/journey/image54.png" alt="Brisbane City Council" title="Brisbane City Council" loading="lazy">
+          </div>
+          <div class="jtl-year">… 2016</div>
+          <div class="jtl-below"></div>
+        </div>
+        <div class="jtl-col">
+          <div class="jtl-above">
+            <img src="../assets/journey/image20.png" alt="City of Gold Coast" title="City of Gold Coast" loading="lazy">
+            <img src="../assets/journey/image23.png" alt="James Cook University" title="James Cook University" loading="lazy">
+            <img src="../assets/journey/image22.png" alt="City of Wollongong" title="City of Wollongong" loading="lazy">
+            <img src="../assets/journey/image21.jpeg" alt="Warrnambool City Council" title="Warrnambool City Council" loading="lazy">
+          </div>
+          <div class="jtl-year">2017</div>
+          <div class="jtl-below"><div class="jtl-mk"><span class="jtl-dt"></span><span class="jtl-ln"></span><img src="../assets/journey/image32.png" alt="vCompliance launches" title="vCompliance launches" loading="lazy"></div></div>
+        </div>
+        <div class="jtl-col">
+          <div class="jtl-above">
+            <img src="../assets/journey/image27.jpeg" alt="Flinders University" title="Flinders University" loading="lazy">
+            <img src="../assets/journey/image28.jpeg" alt="Macquarie University" title="Macquarie University" loading="lazy">
+            <img src="../assets/journey/image25.png" alt="Mosman Council" title="Mosman Council" loading="lazy">
+            <img src="../assets/journey/image24.png" alt="University of Sydney" title="University of Sydney" loading="lazy">
+            <img src="../assets/journey/image16.png" alt="Australia" title="Australia" loading="lazy">
+            <img src="../assets/journey/image26.png" alt="Australian campus partner" title="Australian campus partner" loading="lazy">
+          </div>
+          <div class="jtl-year">2018</div>
+          <div class="jtl-below"></div>
+        </div>
+        <div class="jtl-col">
+          <div class="jtl-above">
+            <img src="../assets/journey/image31.png" alt="University of the Sunshine Coast" title="University of the Sunshine Coast" loading="lazy">
+            <img src="../assets/journey/image30.jpeg" alt="UNSW Sydney" title="UNSW Sydney" loading="lazy">
+            <img src="../assets/journey/image29.png" alt="City of Ballarat" title="City of Ballarat" loading="lazy">
+          </div>
+          <div class="jtl-year">2019</div>
+          <div class="jtl-below"></div>
+        </div>
+        <div class="jtl-col">
+          <div class="jtl-above">
+            <img src="../assets/journey/image17.jpeg" alt="Town of Victoria Park" title="Town of Victoria Park" loading="lazy">
+            <img src="../assets/journey/image14.png" alt="Monash University" title="Monash University" loading="lazy">
+            <img src="../assets/journey/image16.png" alt="Australia" title="Australia" loading="lazy">
+          </div>
+          <div class="jtl-year">2020</div>
+          <div class="jtl-below"><div class="jtl-mk"><span class="jtl-dt"></span><span class="jtl-ln"></span><img src="../assets/journey/image15.png" alt="Smarter City Solutions" title="Smarter City Solutions" loading="lazy"></div></div>
+        </div>
+        <div class="jtl-col">
+          <div class="jtl-above">
+            <img src="../assets/journey/image19.png" alt="Federation University" title="Federation University" loading="lazy">
+            <img src="../assets/journey/image18.jpeg" alt="The Hills Shire Council" title="The Hills Shire Council" loading="lazy">
+          </div>
+          <div class="jtl-year">2021</div>
+          <div class="jtl-below"></div>
+        </div>
+        <div class="jtl-col">
+          <div class="jtl-above">
+            <img src="../assets/journey/image35.png" alt="The University of Newcastle" title="The University of Newcastle" loading="lazy">
+            <img src="../assets/journey/image34.png" alt="City of Darwin" title="City of Darwin" loading="lazy">
+            <img src="../assets/journey/image33.png" alt="United States" title="United States" loading="lazy">
+          </div>
+          <div class="jtl-year">2022</div>
+          <div class="jtl-below"><div class="jtl-mk"><span class="jtl-dt"></span><span class="jtl-ln"></span><img src="../assets/journey/image15.png" alt="Smarter City Solutions" title="Smarter City Solutions" loading="lazy"></div></div>
+        </div>
+        <div class="jtl-col">
+          <div class="jtl-above">
+            <img src="../assets/journey/image38.jpeg" alt="Chapman University" title="Chapman University" loading="lazy">
+            <img src="../assets/journey/image39.png" alt="St. Edward’s University" title="St. Edward’s University" loading="lazy">
+            <img src="../assets/journey/image36.png" alt="University of Wollongong" title="University of Wollongong" loading="lazy">
+          </div>
+          <div class="jtl-year">2023</div>
+          <div class="jtl-below"></div>
+        </div>
+        <div class="jtl-col">
+          <div class="jtl-above">
+            <img src="../assets/journey/image37.png" alt="University of Toledo" title="University of Toledo" loading="lazy">
+            <img src="../assets/journey/image42.png" alt="Liverpool City Council" title="Liverpool City Council" loading="lazy">
+            <img src="../assets/journey/image41.png" alt="Seton Hall University" title="Seton Hall University" loading="lazy">
+            <img src="../assets/journey/image40.png" alt="Princeton University" title="Princeton University" loading="lazy">
+          </div>
+          <div class="jtl-year">2024</div>
+          <div class="jtl-below"></div>
+        </div>
+        <div class="jtl-col">
+          <div class="jtl-above">
+            <img src="../assets/journey/image44.png" alt="University of Akron" title="University of Akron" loading="lazy">
+            <img src="../assets/journey/image46.png" alt="Strathfield Council" title="Strathfield Council" loading="lazy">
+            <img src="../assets/journey/image43.png" alt="Northern Beaches Council" title="Northern Beaches Council" loading="lazy">
+          </div>
+          <div class="jtl-year">2025</div>
+          <div class="jtl-below"></div>
+        </div>
+        <div class="jtl-col">
+          <div class="jtl-above">
+            <img src="../assets/journey/image45.png" alt="University of San Diego" title="University of San Diego" loading="lazy">
+            <img src="../assets/journey/image56.png" alt="Harvard University" title="Harvard University" loading="lazy">
+          </div>
+          <div class="jtl-year">2026</div>
+          <div class="jtl-below"><div class="jtl-mk"><span class="jtl-dt"></span><span class="jtl-ln"></span><img src="../assets/journey/image47.png" alt="vPark launches" title="vPark launches" loading="lazy"></div></div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact CTA -->
+  <section class="cta-section">
+    <div class="container-wide">
+      <div class="cta-grid">
+        <div class="cta-content reveal">
+          <h2>Get to know us</h2>
+          <p>We&rsquo;d love to hear about your parking challenges and show you how SCS can help.</p>
+        </div>
+        <div class="cta-form-card reveal reveal-delay-2">
+          <h3>Contact Us</h3><p>We&rsquo;ll respond within one business day.</p>
+          <form method="POST" action="/api/submit">
+            <input type="hidden" name="form_name" value="Contact - Our Journey">
+            <div class="form-row"><div class="form-group"><label>Full Name</label><input type="text" name="full_name" placeholder="Jane Smith" required></div><div class="form-group"><label>Work Email</label><input type="email" name="email" placeholder="jane@university.edu" required></div></div>
+            <div class="form-row"><div class="form-group"><label>Institution</label><input type="text" name="institution" placeholder="University of…" required></div><div class="form-group"><label>Title / Role</label><input type="text" name="title_role" placeholder="Director of Parking"></div></div>
+            <button type="submit" class="form-submit">Get Started</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="rainbow-bar"><div style="background:#15626C"></div><div style="background:#47BBE8"></div><div style="background:#429839"></div><div style="background:#88BF57"></div><div style="background:#F0AE25"></div><div style="background:#EB5B25"></div><div style="background:#D41B24"></div></div>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand"><img src="../assets/scs-logo.png" alt="Smarter City Solutions"><p>Integrated (for) Life</p><p class="footer-contact-info">+1 (555) 123-4567</p><p class="footer-contact-info">info@smartercity.com</p></div>
+        <div class="footer-col"><h5>Solutions</h5><a href="../solutions/vpermit.html">vPermit</a><a href="../solutions/vcompliance.html">vCompliance</a><a href="../solutions/vpark.html">vPark</a><a href="../solutions/platform.html">The Platform</a></div>
+        <div class="footer-col"><h5>Industries</h5><a href="../industries/higher-education.html">Higher Education</a><a href="../industries/municipalities.html">Municipalities</a><a href="../industries/healthcare.html">Healthcare</a><a href="../industries/k12.html">K-12 Schools</a><a href="../industries/corporate-campus.html">Corporate Campus</a></div>
+        <div class="footer-col"><h5>Resources</h5><a href="../resources/case-studies.html">Problem Solved</a><a href="../resources/blog.html">Blog</a><a href="../resources/webinars.html">Webinars</a></div>
+        <div class="footer-col"><h5>Company</h5><a href="../about/journey.html">About</a><a href="../about/team.html">Team</a><a href="../contact/index.html">Contact</a><a href="#">Careers</a></div>
+      </div>
+      <div class="footer-bottom"><p>&copy; 2026 Smarter City Solutions. All Rights Reserved.</p><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Accessibility Statement</a><a href="#">Terms of Service</a></div></div>
+    </div>
+  </footer>
+  <script src="../script.js"></script>
+<script src="../assets/nav-auth.js"></script>
+</body>
+</html>

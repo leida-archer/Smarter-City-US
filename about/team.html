@@ -24,23 +24,29 @@
       line-height: 1.3; height: 40px; display: flex; align-items: center; justify-content: center;
       text-align: center; overflow: hidden;
     }
-    .team-subtitle { font-size: 12.5px; color: var(--gray); font-style: italic; margin-bottom: 16px; }
-    /* Bio locked to exactly 6 lines -> identical card heights across both rows */
-    .team-bio {
-      text-align: left; margin: 0;
-      font-family: 'Inter', sans-serif; font-size: 13.5px; line-height: 1.6; color: var(--gray);
-      display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 6;
-      overflow: hidden;
-      height: calc(13.5px * 1.6 * 6);
+    .team-subtitle { font-size: 12.5px; color: var(--gray); font-style: italic; margin-bottom: 14px; }
+    /* Slide-6 tagline (replaces long bios; full writeups live on individual pages) */
+    .team-tagline {
+      text-align: center; margin: 0 0 16px;
+      font-family: 'Inter', sans-serif; font-size: 13.5px; line-height: 1.55; color: var(--gray);
+      min-height: calc(13.5px * 1.55 * 3);
     }
+    .team-tagline strong { color: #15626C; font-weight: 600; }
+    /* Links row pinned to the bottom so every card aligns */
+    .team-links { margin-top: auto; display: flex; align-items: center; justify-content: center; gap: 14px; padding-top: 4px; }
+    .team-more { font-size: 13px; font-weight: 600; color: var(--mid-teal); text-decoration: none; white-space: nowrap; }
+    .team-more:hover { text-decoration: underline; }
+    .team-li { display: inline-flex; align-items: center; color: #15626C; opacity: .7; transition: opacity .15s ease; }
+    .team-li:hover { opacity: 1; }
+    .team-li svg { width: 20px; height: 20px; }
     .team-section-label {
       font-size: 12px; font-weight: 600; text-transform: uppercase;
       letter-spacing: 1.6px; color: var(--mid-teal);
       text-align: center; margin: 8px 0 28px;
     }
     .team-section-label.second { margin-top: 64px; }
-    /* Both rows 3-up, identical card width. 4th support member wraps to row 2, col 1. */
-    .team-grid.support { grid-template-columns: repeat(3, 1fr); }
+    /* Delivery & support row: 4-up to match slide 6 layout */
+    .team-grid.support { grid-template-columns: repeat(4, 1fr); }
     @media (max-width: 1024px) { .team-grid.support { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 600px)  { .team-grid.support { grid-template-columns: 1fr; max-width: 280px; margin: 0 auto; } }
   </style>
@@ -51,9 +57,9 @@
     <div class="container nav-inner">
       <a href="../index.html" class="nav-logo"><img src="../assets/scs-icon.png" alt="Smarter City Solutions"></a>
       <div class="nav-links">
-        <div class="nav-item has-dropdown"><a href="#">Solutions <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></a><div class="dropdown"><a href="../solutions/vpermit.html"><span class="dot green"></span>vPermit</a><a href="../solutions/vcompliance.html"><span class="dot orange"></span>vCompliance</a><a href="../solutions/vpark.html"><span class="dot amber"></span>vPark</a><div class="dropdown-divider"></div><a href="../solutions/platform.html">The Platform</a><a href="../solutions/integrations.html">Integrations</a></div></div>
+        <div class="nav-item has-dropdown"><a href="#">Solutions <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></a><div class="dropdown"><a href="../solutions/vpermit.html"><span class="dot green"></span>vPermit</a><a href="../solutions/vcompliance.html"><span class="dot orange"></span>vCompliance</a><a href="../solutions/vpark.html"><span class="dot amber"></span>vPark</a><div class="dropdown-divider"></div><a href="../solutions/platform.html">The Platform</a></div></div>
         <div class="nav-item has-dropdown"><a href="#">Industries <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></a><div class="dropdown"><a href="../industries/higher-education.html">Higher Education</a><a href="../industries/municipalities.html">Municipalities</a><a href="../industries/healthcare.html">Healthcare</a><a href="../industries/k12.html">K-12 Schools</a><a href="../industries/corporate-campus.html">Corporate Campus</a></div></div>
-        <div class="nav-item has-dropdown"><a href="#">About <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></a><div class="dropdown"><a href="../about/index.html">Our Story</a><a href="../about/team.html">Team</a><a href="../about/partners.html">Partners</a></div></div>
+        <div class="nav-item has-dropdown"><a href="#">About <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></a><div class="dropdown"><a href="../about/journey.html">Our Journey</a><a href="../about/team.html">Team</a><a href="../about/partners.html">Partners</a></div></div>
         <div class="nav-item has-dropdown">
           <a href="../resources/case-studies.html">Resources <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></a>
           <div class="dropdown">
@@ -72,13 +78,13 @@
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-inner">
       <a href="../solutions/vpermit.html">vPermit</a><a href="../solutions/vcompliance.html">vCompliance</a><a href="../solutions/vpark.html">vPark</a><a href="../solutions/platform.html">The Platform</a>
-      <a href="../industries/higher-education.html">Higher Education</a><a href="../industries/municipalities.html">Municipalities</a><a href="../industries/healthcare.html">Healthcare</a><a href="../industries/k12.html">K-12 Schools</a><a href="../industries/corporate-campus.html">Corporate Campus</a><a href="../about/index.html">About</a><a href="../resources/case-studies.html">Resources</a>
+      <a href="../industries/higher-education.html">Higher Education</a><a href="../industries/municipalities.html">Municipalities</a><a href="../industries/healthcare.html">Healthcare</a><a href="../industries/k12.html">K-12 Schools</a><a href="../industries/corporate-campus.html">Corporate Campus</a><a href="../about/journey.html">About</a><a href="../resources/case-studies.html">Resources</a>
       <a href="../account/login.html">Login / Join</a><a href="../contact/request-demo.html" class="mobile-cta">Contact Us</a>
     </div>
   </div>
 
   <section class="breadcrumb-bar">
-    <div class="container"><a href="../index.html">Home</a> <span>/</span> <a href="../about/index.html">About</a> <span>/</span> <span>Team</span></div>
+    <div class="container"><a href="../index.html">Home</a> <span>/</span> <a href="../about/journey.html">About</a> <span>/</span> <span>Team</span></div>
   </section>
 
   <section class="page-hero" style="border-top: 4px solid #15626C">
@@ -101,7 +107,11 @@
           <h4>Ori Almog</h4>
           <div class="team-title">Chief Executive Officer</div>
           <div class="team-subtitle">Owner &amp; Co-founder</div>
-          <p class="team-bio">As co-founder and CEO, Ori has shaped SCS into an award-winning provider of PAYG and vPermit solutions across Australia and New Zealand &mdash; with integrated-system work recognized by the International Parking Institute.</p>
+          <p class="team-tagline"><strong>Proven Innovation since 2008</strong><br>Delivered, Award-Winning, and Just Getting Started.</p>
+          <div class="team-links">
+            <a class="team-more" href="team/ori-almog.html">More about Ori &rarr;</a>
+            <a class="team-li" href="https://www.linkedin.com/in/ori-almog/" target="_blank" rel="noopener" aria-label="Ori Almog on LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.3c0-1.26-.02-2.9-1.77-2.9-1.77 0-2.04 1.38-2.04 2.8V21H9z"/></svg></a>
+          </div>
         </div>
 
         <div class="team-card reveal reveal-delay-1">
@@ -109,7 +119,11 @@
           <h4>Jim Leida</h4>
           <div class="team-title">Chief Operating Officer</div>
           <div class="team-subtitle">Owner &amp; US Manager</div>
-          <p class="team-bio">With 15+ years in parking operations, Jim focuses on the challenges facing higher-education campuses of every size, leading nationwide rollouts of LPR-enabled virtual permitting and enforcement that improve efficiency and compliance.</p>
+          <p class="team-tagline"><strong>Solving Campus Parking since 2011</strong><br>From the Ground Up, at Every Scale.</p>
+          <div class="team-links">
+            <a class="team-more" href="team/jim-leida.html">More about Jim &rarr;</a>
+            <a class="team-li" href="https://www.linkedin.com/in/jim-leida-17862635" target="_blank" rel="noopener" aria-label="Jim Leida on LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.3c0-1.26-.02-2.9-1.77-2.9-1.77 0-2.04 1.38-2.04 2.8V21H9z"/></svg></a>
+          </div>
         </div>
 
         <div class="team-card reveal reveal-delay-2">
@@ -117,7 +131,11 @@
           <h4>Shmulik &ldquo;Sam&rdquo; Kachlon</h4>
           <div class="team-title">Chief Technology Officer</div>
           <div class="team-subtitle">Owner &amp; Co-founder</div>
-          <p class="team-bio">A career-long technology leader from the biometric and banking sectors, Shmulik has guided SCS to modern engineering and a cloud-native AWS stack, reshaping parking software into a flexible suite of digital services.</p>
+          <p class="team-tagline"><strong>From Code to Cloud since 2012</strong><br>Engineering the Future of Urban Mobility.</p>
+          <div class="team-links">
+            <a class="team-more" href="team/shmulik-kachlon.html">More about Shmulik &rarr;</a>
+            <a class="team-li" href="https://www.linkedin.com/in/shmulikkachlon/" target="_blank" rel="noopener" aria-label="Shmulik Kachlon on LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.3c0-1.26-.02-2.9-1.77-2.9-1.77 0-2.04 1.38-2.04 2.8V21H9z"/></svg></a>
+          </div>
         </div>
       </div>
 
@@ -129,15 +147,23 @@
           <h4>Mike Adams</h4>
           <div class="team-title">Director of Growth</div>
           <div class="team-subtitle">&nbsp;</div>
-          <p class="team-bio">With 15+ years across SaaS, PARCS, and complex parking operations, Mike leads growth at SCS &mdash; expanding business opportunities and deepening partner relationships with a focus on the customer experience.</p>
+          <p class="team-tagline"><strong>Partnership Over Pitch since 2012</strong><br>Growth Built on Lasting Value.</p>
+          <div class="team-links">
+            <a class="team-more" href="team/mike-adams.html">More about Mike &rarr;</a>
+            <a class="team-li" href="https://www.linkedin.com/in/mike-adams-b828951a/" target="_blank" rel="noopener" aria-label="Mike Adams on LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.3c0-1.26-.02-2.9-1.77-2.9-1.77 0-2.04 1.38-2.04 2.8V21H9z"/></svg></a>
+          </div>
         </div>
 
         <div class="team-card reveal reveal-delay-1">
-          <img class="team-avatar" src="../assets/team/matt-hutchinson.png" alt="Matt Hutchinson">
-          <h4>Matt Hutchinson</h4>
-          <div class="team-title">Product Manager</div>
+          <img class="team-avatar" src="../assets/team/sekouba-sissoko.png" alt="Sekouba Sissoko">
+          <h4>Sekouba Sissoko</h4>
+          <div class="team-title">Solution Support &amp; Delivery Specialist</div>
           <div class="team-subtitle">&nbsp;</div>
-          <p class="team-bio">Matt has delivered large-scale systems across telecom, government, education, finance, and resources. A former SCS client at Curtin University, he pairs PRINCE2, PMI, and Agile delivery with deep operational insight.</p>
+          <p class="team-tagline"><strong>Every Problem Solved since 2015</strong><br>Every Customer Heard.</p>
+          <div class="team-links">
+            <a class="team-more" href="team/sekouba-sissoko.html">More about Sekouba &rarr;</a>
+            <a class="team-li" href="https://www.linkedin.com/in/sekouba5151894/" target="_blank" rel="noopener" aria-label="Sekouba Sissoko on LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.3c0-1.26-.02-2.9-1.77-2.9-1.77 0-2.04 1.38-2.04 2.8V21H9z"/></svg></a>
+          </div>
         </div>
 
         <div class="team-card reveal reveal-delay-2">
@@ -145,28 +171,23 @@
           <h4>Steve Ezrow</h4>
           <div class="team-title">Director of Projects &amp; Support</div>
           <div class="team-subtitle">&nbsp;</div>
-          <p class="team-bio">With 13+ years spanning operations and the vendor side, Steve has led 50+ parking implementations &mdash; SaaS platforms, access control, cameras, and guidance systems &mdash; and now drives project execution, training, and issue resolution at SCS.</p>
+          <p class="team-tagline"><strong>Operations to Implementation since 2013</strong><br>The Full Picture, Every Project.</p>
+          <div class="team-links">
+            <a class="team-more" href="team/steve-ezrow.html">More about Steve &rarr;</a>
+            <a class="team-li" href="https://www.linkedin.com/in/steven-ezrow-281b9a71/" target="_blank" rel="noopener" aria-label="Steve Ezrow on LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.3c0-1.26-.02-2.9-1.77-2.9-1.77 0-2.04 1.38-2.04 2.8V21H9z"/></svg></a>
+          </div>
         </div>
 
         <div class="team-card reveal reveal-delay-3">
-          <img class="team-avatar" src="../assets/team/sekouba-sissoko.png" alt="Sekouba Sissoko">
-          <h4>Sekouba Sissoko</h4>
-          <div class="team-title">Solution Support &amp; Delivery Specialist</div>
+          <img class="team-avatar" src="../assets/team/matt-hutchinson.png" alt="Matt Hutchinson">
+          <h4>Matt Hutchinson</h4>
+          <div class="team-title">Product Manager</div>
           <div class="team-subtitle">&nbsp;</div>
-          <p class="team-bio">With nearly 10 years supporting higher-education and municipal parking, plus prior healthcare IT, Sekouba excels at database configuration, mobile enforcement-device diagnostics, and LPR troubleshooting &mdash; methodical and customer-first.</p>
-        </div>
-      </div>
-
-      <!-- Gated bios callout -->
-      <div class="reveal" style="margin-top: 56px; border-left: 4px solid #15626C; background: rgba(21,98,108,0.05); border-radius: 12px; padding: 32px 36px; display: flex; gap: 28px; align-items: center;">
-        <div style="background:rgba(21,98,108,0.12);color:#15626C;flex-shrink:0;width:64px;height:64px;border-radius:14px;display:flex;align-items:center;justify-content:center;">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-        </div>
-        <div style="flex:1">
-          <div style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: #15626C; margin-bottom: 6px;">For Serious Prospects</div>
-          <h3 style="margin: 0 0 8px 0; font-size: 22px;">Want the full story on each team member?</h3>
-          <p style="margin: 0 0 16px 0; color: var(--gray); font-size: 16px; line-height: 1.6;">Career history, prior roles, parking-specific expertise, and how they joined SCS &mdash; the long-form bios live behind our Resource Library, alongside pricing, tier sheets, and full case studies.</p>
-          <a href="../account/signup.html" class="btn-primary" style="font-size: 14px; padding: 10px 22px;">Sign up to read full bios <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="margin-left:4px;vertical-align:-2px"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <p class="team-tagline"><strong>Customer to Partner since 2017</strong><br>Large-Scale Delivery, Inside and Out.</p>
+          <div class="team-links">
+            <a class="team-more" href="team/matt-hutchinson.html">More about Matt &rarr;</a>
+            <a class="team-li" href="https://www.linkedin.com/in/hutchinsonmatt/" target="_blank" rel="noopener" aria-label="Matt Hutchinson on LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.3c0-1.26-.02-2.9-1.77-2.9-1.77 0-2.04 1.38-2.04 2.8V21H9z"/></svg></a>
+          </div>
         </div>
       </div>
     </div>
@@ -197,10 +218,10 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand"><img src="../assets/scs-logo.png" alt="Smarter City Solutions"><p>Integrated (for) Life</p><p class="footer-contact-info">+1 (555) 123-4567</p><p class="footer-contact-info">info@smartercity.com</p></div>
-        <div class="footer-col"><h5>Solutions</h5><a href="../solutions/vpermit.html">vPermit</a><a href="../solutions/vcompliance.html">vCompliance</a><a href="../solutions/vpark.html">vPark</a><a href="../solutions/platform.html">The Platform</a><a href="../solutions/integrations.html">Integrations</a></div>
+        <div class="footer-col"><h5>Solutions</h5><a href="../solutions/vpermit.html">vPermit</a><a href="../solutions/vcompliance.html">vCompliance</a><a href="../solutions/vpark.html">vPark</a><a href="../solutions/platform.html">The Platform</a></div>
         <div class="footer-col"><h5>Industries</h5><a href="../industries/higher-education.html">Higher Education</a><a href="../industries/municipalities.html">Municipalities</a><a href="../industries/healthcare.html">Healthcare</a><a href="../industries/k12.html">K-12 Schools</a><a href="../industries/corporate-campus.html">Corporate Campus</a></div>
         <div class="footer-col"><h5>Resources</h5><a href="../resources/case-studies.html">Problem Solved</a><a href="../resources/blog.html">Blog</a><a href="../resources/webinars.html">Webinars</a></div>
-        <div class="footer-col"><h5>Company</h5><a href="../about/index.html">About</a><a href="../about/team.html">Team</a><a href="../contact/index.html">Contact</a><a href="#">Careers</a></div>
+        <div class="footer-col"><h5>Company</h5><a href="../about/journey.html">About</a><a href="../about/team.html">Team</a><a href="../contact/index.html">Contact</a><a href="#">Careers</a></div>
       </div>
       <div class="footer-bottom"><p>&copy; 2026 Smarter City Solutions. All Rights Reserved.</p><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Accessibility Statement</a><a href="#">Terms of Service</a></div></div>
     </div>

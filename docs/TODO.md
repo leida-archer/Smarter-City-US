@@ -1,5 +1,12 @@
 # SCS USA Website — TODO
 
+## Our Journey timeline — follow-ups (6/3)
+- [ ] Identify 3 unlabeled slide-4 logos in the Our Journey timeline (about/journey.html) and fix their alt/title + captions:
+  - `assets/journey/image26.png` — dark eagle/bird mark in the 2018 column (currently "Australian campus partner")
+  - `assets/journey/image48.png` — "Award of Merit" certificate in the 2014 column (confirm exact award/year wording)
+  - confirm `assets/journey/image18.jpeg` reads as "The Hills Shire Council" (2021 column)
+- [ ] Confirm the two "Smarter City Solutions" rebrand markers below the axis (2020 & 2022) are both intentional (mirrors the slide); collapse to one if not.
+
 ## QA
 - [ ] Mobile QA: verify all 19 pages render correctly at 375px, 768px, 1280px on live site
 - [ ] Test hamburger menu open/close on all pages
