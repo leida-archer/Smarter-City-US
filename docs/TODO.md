@@ -1,5 +1,21 @@
 # SCS USA Website — TODO
 
+## Activate contact forms on Cloudflare deploy (6/4)
+The 22 lead/contact forms POST to `/api/submit` (Cloudflare Pages Function in `functions/api/submit.js`). They only work once the site is hosted on **Cloudflare Pages** — they 404 on GitHub Pages. To turn them on:
+- [ ] Host the site on **Cloudflare Pages** (build preset: None · build command: empty · output dir: `/`). See the "DNS Setup" section below.
+- [ ] Create a **Resend** account → API Keys → create key (`re_…`).
+- [ ] In Cloudflare Pages → Settings → Environment variables (set for **Production AND Preview**):
+  - `CONTACT_EMAIL` — **required**, the inbox all submissions go to (e.g. `info@smartercity.com`). ← decide the real recipient.
+  - `RESEND_API_KEY` — **required**, the `re_…` key.
+  - `FROM_EMAIL` — optional sender; defaults to `SCS Website <onboarding@resend.dev>`. For production set to a verified domain, e.g. `SCS Website <no-reply@smartercity.com>`. ← decide the real sender.
+- [ ] (Recommended) Verify the sending **domain in Resend** (Domains → Add Domain → add DNS records) so mail sends from your domain, not `@resend.dev` (better deliverability).
+- [ ] **Redeploy** after setting env vars (they only apply on a new deployment), then submit a test form and confirm the email arrives at `CONTACT_EMAIL` (subject `[SCS Website] New <Form> Submission`).
+- Note: the 5 auth/gate forms (account signup, Sourcewell/pricing sign-ins, pricing-legacy) are client-side only and are NOT affected by this.
+- Free-tier limits: Resend 100 emails/day (3,000/mo); Cloudflare Pages Functions 100k req/day.
+
+## Higher-Ed language audit — follow-ups (6/4)
+- [ ] **HOME-07** — Home "Trusted by" logo bar is currently 100% universities. Add city / municipal (and later healthcare / corporate) logos to balance the line-up. Archer to provide the logo list after all language edits are done.
+
 ## Our Journey timeline — follow-ups (6/3)
 - [ ] Identify 3 unlabeled slide-4 logos in the Our Journey timeline (about/journey.html) and fix their alt/title + captions:
   - `assets/journey/image26.png` — dark eagle/bird mark in the 2018 column (currently "Australian campus partner")
